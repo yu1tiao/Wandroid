@@ -1,0 +1,103 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion build_version.compileSdkVersion
+    buildToolsVersion build_version.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion build_version.minSdkVersion
+        targetSdkVersion build_version.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        consumerProguardFiles 'consumer-rules.pro'
+
+        javaCompileOptions{
+            annotationProcessorOptions.includeCompileClasspath = true
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = 1.8
+    }
+}
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api kotlinDeps.kotlin_stdlib
+    api androidxDeps.core_ktx
+    api androidxDeps.appcompat
+
+    api androidxDeps.constraint
+    api androidxDeps.swiperefresh
+    api androidxDeps.recyclerview
+    api androidxDeps.design
+    api androidxDeps.multidex
+
+    // Android Jetpack
+    api jetpackDeps.arch_core_extension
+    kapt jetpackDeps.arch_core_compiler
+//    api jetpackDeps.arch_room
+//    api jetpackDeps.arch_room_rxjava
+//    kapt jetpackDeps.arch_room_compiler
+    api jetpackDeps.lifecycle_ktx
+    api jetpackDeps.lifecycle_viewmodel_ktx
+    api jetpackDeps.lifecycle_livedata_ktx
+
+//    api koinDeps.koin
+//    api koinDeps.koin_android
+
+    // rx
+    api rxjavaDeps.rxjava
+    api rxjavaDeps.rxandroid
+    api rxjavaDeps.rxbinding
+
+    api rxjavaDeps.autodispose
+    api rxjavaDeps.autodispose_lifecycle
+    api rxjavaDeps.autodispose_arch
+
+    // net
+    api httpDeps.okhttp
+    api httpDeps.okhttp_logging
+    api httpDeps.retrofit
+    api httpDeps.retrofit_gson
+    api httpDeps.retrofit_rxjava
+
+    // image
+    api imageDeps.glide
+    kapt imageDeps.glide_compiler
+
+//    api otherDeps.material_dialog
+    api otherDeps.utilCode
+    api otherDeps.liteAdapter
+    api otherDeps.mmkv
+    api otherDeps.timber
+
+    api otherDeps.eventbus
+    kapt otherDeps.eventbus_compiler
+}

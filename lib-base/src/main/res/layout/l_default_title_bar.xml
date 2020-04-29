@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/titleBarRoot"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/ivLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent"
+        android:paddingStart="@dimen/m15"
+        android:paddingTop="@dimen/m16"
+        android:paddingEnd="@dimen/m15"
+        android:paddingBottom="@dimen/m16"
+        android:src="@drawable/ic_default_navigation_btn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="90dp"
+        android:layout_marginRight="90dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="标题" />
+
+
+    <TextView
+        android:id="@+id/tvRightText"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:visibility="gone"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/ivRight"
+        tools:text="设置" />
+
+    <ImageView
+        android:id="@+id/ivRight"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent"
+        android:paddingStart="@dimen/m15"
+        android:paddingTop="@dimen/m16"
+        android:paddingEnd="@dimen/m15"
+        android:paddingBottom="@dimen/m16"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="#f0f0f0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
