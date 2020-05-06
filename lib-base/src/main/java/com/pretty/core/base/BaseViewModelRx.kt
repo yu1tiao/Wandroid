@@ -1,10 +1,10 @@
 package com.pretty.core.base
 
-import com.uber.autodispose.lifecycle.CorrespondingEventsFunction
-import com.uber.autodispose.lifecycle.LifecycleEndedException
-import com.uber.autodispose.lifecycle.LifecycleScopeProvider
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
+import autodispose2.lifecycle.CorrespondingEventsFunction
+import autodispose2.lifecycle.LifecycleEndedException
+import autodispose2.lifecycle.LifecycleScopeProvider
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 /**
  * 实现 {@link LifecycleScopeProvider}，用于AutoDispose框架管理RxJava的生命周期，在{@code onCleared}时取消订阅

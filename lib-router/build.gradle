@@ -30,6 +30,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    api otherDeps.router
-    kapt otherDeps.router_compiler
+    api toolDeps.router
+    kapt toolDeps.router_compiler
 }

@@ -5,7 +5,7 @@ import timber.log.Timber
 
 object L {
 
-    fun initLogger(isDebug: Boolean = true, reporter: CrashReporter = CrashReporter) {
+    fun init(isDebug: Boolean, reporter: CrashLogReporter) {
         if (isDebug)
             Timber.plant(Timber.DebugTree())
         else
@@ -26,7 +26,7 @@ object L {
 
 }
 
-class CrashReportingTree(private val reporter: CrashReporter) : Timber.Tree() {
+class CrashReportingTree(private val reporter: CrashLogReporter) : Timber.Tree() {
 
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (priority == Log.VERBOSE || priority == Log.DEBUG) {
@@ -45,22 +45,8 @@ class CrashReportingTree(private val reporter: CrashReporter) : Timber.Tree() {
     }
 }
 
-interface CrashReporter {
+interface CrashLogReporter {
     fun log(priority: Int, tag: String?, message: String)
     fun logWarning(t: Throwable)
     fun logError(t: Throwable)
-
-    companion object : CrashReporter {
-        override fun log(priority: Int, tag: String?, message: String) {
-
-        }
-
-        override fun logWarning(t: Throwable) {
-
-        }
-
-        override fun logError(t: Throwable) {
-
-        }
-    }
 }

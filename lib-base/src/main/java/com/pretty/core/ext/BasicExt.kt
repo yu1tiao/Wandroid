@@ -13,7 +13,7 @@ import java.io.Serializable
  * @date 2019/5/7
  */
 
-inline fun <reified T> Any.safeCast(action: (T) -> Unit) {
+inline fun <reified T> Any.safeCast(crossinline action: (T) -> Unit) {
     if (this is T) action(this)
 }
 

@@ -17,11 +17,16 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         javaCompileOptions{
             annotationProcessorOptions.includeCompileClasspath = true
         }
 
         multiDexEnabled true
+    }
+    
+    dataBinding {
+        enabled = true
     }
 
     buildTypes {
@@ -34,6 +39,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 repositories {
     flatDir {
@@ -47,7 +53,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation project(":lib-router")
+//    implementation project(":lib-router")
     implementation project(":lib-base")
-    kapt otherDeps.eventbus_compiler
+    kapt toolDeps.eventbus_compiler
 }

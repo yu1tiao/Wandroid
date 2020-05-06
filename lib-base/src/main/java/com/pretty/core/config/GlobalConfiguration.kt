@@ -2,8 +2,7 @@ package com.pretty.core.config
 
 import android.widget.Toast
 import com.pretty.core.arch.commonpage.CommonPageFactory
-import com.pretty.core.util.AppSPUtil
-
+import com.pretty.core.util.CrashLogReporter
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
@@ -19,12 +18,9 @@ class GlobalConfiguration(
     var retrofitConfigCallback: RetrofitConfigCallback? = null,
     var toastFactory: ToastFactory = DefaultToastFactory(),     // 全局的Toast工厂，自定义toast
     var errorHandler: ErrorHandler = toastErrorHandler,     // 框架ViewModel中RxJava发生错误的时候回调
-    var commonPageFactory: CommonPageFactory = DefaultCommonPageFactory()
+    var commonPageFactory: CommonPageFactory = DefaultCommonPageFactory(),
+    var crashLogReporter: CrashLogReporter = FakeCrashLogReporter()
 ) {
-
-    init {
-        AppSPUtil.init()
-    }
 
     companion object {
         fun create(initializer: GlobalConfiguration.() -> Unit): GlobalConfiguration {

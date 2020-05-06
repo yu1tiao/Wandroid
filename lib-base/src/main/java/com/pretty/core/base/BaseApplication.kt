@@ -1,11 +1,15 @@
 package com.pretty.core.base
 
 import androidx.multidex.MultiDexApplication
+import com.pretty.core.BuildConfig
 import com.pretty.core.Foundation
 import com.pretty.core.arch.commonpage.CommonPageManager
 import com.pretty.core.config.ConfigurationProvider
 import com.pretty.core.config.GlobalConfiguration
 import com.pretty.core.config.NetPolicyProvider
+import com.pretty.core.util.AppSPUtil
+import com.pretty.core.util.L
+import com.pretty.eventbus.core.XBus
 
 /**
  * @author yu
@@ -22,6 +26,10 @@ abstract class BaseApplication : MultiDexApplication(), ConfigurationProvider, N
         Foundation.init(this)
         configuration = initGlobalConfiguration()
         CommonPageManager.initDefault(configuration.commonPageFactory)
+
+        L.init(BuildConfig.DEBUG, Foundation.getGlobalConfig().crashLogReporter)
+        AppSPUtil.init()
+        XBus.init()
     }
 
     override fun getGlobalConfiguration(): GlobalConfiguration {

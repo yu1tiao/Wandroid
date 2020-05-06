@@ -15,9 +15,11 @@ android {
 
         consumerProguardFiles 'consumer-rules.pro'
 
-        javaCompileOptions{
+        javaCompileOptions {
             annotationProcessorOptions.includeCompileClasspath = true
         }
+
+        multiDexEnabled true
     }
 
     dataBinding {
@@ -39,6 +41,7 @@ android {
     kotlinOptions {
         jvmTarget = 1.8
     }
+
 }
 repositories {
     flatDir {
@@ -52,19 +55,20 @@ dependencies {
     api kotlinDeps.kotlin_stdlib
     api androidxDeps.core_ktx
     api androidxDeps.appcompat
-
     api androidxDeps.constraint
     api androidxDeps.swiperefresh
     api androidxDeps.recyclerview
-    api androidxDeps.design
     api androidxDeps.multidex
 
+    api uiDeps.design
+    api uiDeps.flexboxLayout
+
     // Android Jetpack
-    api jetpackDeps.arch_core_extension
-    kapt jetpackDeps.arch_core_compiler
 //    api jetpackDeps.arch_room
 //    api jetpackDeps.arch_room_rxjava
 //    kapt jetpackDeps.arch_room_compiler
+    api jetpackDeps.arch_core_extension
+    kapt jetpackDeps.arch_core_compiler
     api jetpackDeps.lifecycle_ktx
     api jetpackDeps.lifecycle_viewmodel_ktx
     api jetpackDeps.lifecycle_livedata_ktx
@@ -73,9 +77,11 @@ dependencies {
 //    api koinDeps.koin_android
 
     // rx
-    api rxjavaDeps.rxjava
-    api rxjavaDeps.rxandroid
-    api rxjavaDeps.rxbinding
+    api rxjavaDeps.rxjava3
+    api rxjavaDeps.rxandroid3
+//    api(rxjavaDeps.rxbinding) {
+//        exclude group: 'io.reactivex.rxjava2'
+//    }
 
     api rxjavaDeps.autodispose
     api rxjavaDeps.autodispose_lifecycle
@@ -92,12 +98,13 @@ dependencies {
     api imageDeps.glide
     kapt imageDeps.glide_compiler
 
-//    api otherDeps.material_dialog
-    api otherDeps.utilCode
-    api otherDeps.liteAdapter
-    api otherDeps.mmkv
-    api otherDeps.timber
+//    api uiDeps.material_dialog
+//    api toolDeps.permission_assent
+    api toolDeps.utilCode
+    api toolDeps.liteAdapter
+    api toolDeps.mmkv
+    api toolDeps.timber
 
-    api otherDeps.eventbus
-    kapt otherDeps.eventbus_compiler
+    api toolDeps.eventbus
+    kapt toolDeps.eventbus_compiler
 }

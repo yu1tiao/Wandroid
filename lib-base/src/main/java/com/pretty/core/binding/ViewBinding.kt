@@ -1,15 +1,11 @@
 package com.pretty.core.binding
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.ColorStateList
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.jakewharton.rxbinding3.view.clicks
-import com.jakewharton.rxbinding3.view.longClicks
-import java.util.concurrent.TimeUnit
+import com.pretty.core.ext.throttleClick
 
 /**
  * @author yu
@@ -42,8 +38,10 @@ fun setVisible(view: View, visible: Boolean) {
 @SuppressLint("CheckResult")
 @BindingAdapter("bind_onLongClick")
 fun setOnLongClickEvent(view: View, consumer: ViewClickConsumer) {
-    view.longClicks()
-        .subscribe { consumer(view) }
+    view.setOnLongClickListener {
+        consumer(it)
+        true
+    }
 }
 
 /**
@@ -55,26 +53,7 @@ fun setOnLongClickEvent(view: View, consumer: ViewClickConsumer) {
 @SuppressLint("CheckResult")
 @BindingAdapter("bind_onClick")
 fun setOnClickEvent(view: View, consumer: ViewClickConsumer) {
-    view.clicks()
-        .throttleFirst(DEFAULT_THROTTLE_TIME, TimeUnit.MILLISECONDS)
-        .subscribe { consumer(view) }
-}
-
-/**
- * [View]被点击时,关闭输入框
- *
- * @param closed 当值为true时，启动该功能
- */
-@SuppressLint("CheckResult")
-@BindingAdapter("bind_onClick_closeSoftInput")
-fun closeSoftInputWhenClick(view: View, closed: Boolean) {
-    view.clicks()
-        .subscribe {
-            if (closed) {
-                val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(view.windowToken, 0)
-            }
-        }
+    view.throttleClick(DEFAULT_THROTTLE_TIME, consumer)
 }
 
 @SuppressLint("CheckResult")
