@@ -1,26 +1,25 @@
 package com.pretty.core.base
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.pretty.core.arch.*
 import com.pretty.core.arch.commonpage.CommonPageManager
 import com.pretty.core.arch.commonpage.ICommonPage
+import com.pretty.core.ext.observe
 
 
 /**
  * @author yu
  * @date 2018/10/29
  */
-abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity(), IView, ILoadable {
+abstract class BaseActivity : AppCompatActivity(), IView, ILoadable {
 
-    protected lateinit var mBinding: B
     protected abstract val mLayoutId: Int
     override val mDisplayDelegate: IDisplayDelegate by lazy { DisplayDelegate() }
     override val mDisposableManager: IDisposableManager by lazy { DisposableManager() }
@@ -28,26 +27,42 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity(), IView, I
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        beforeSetContent(savedInstanceState)
+        val root = prepareContentView()
+        afterSetContent(root)
+        subscribeBase()
+        initPage()
+    }
+
+    abstract fun initPage()
+
+    protected open fun beforeSetContent(savedInstanceState: Bundle?) {
         mDisposableManager.init(this)
-        mBinding = DataBindingUtil.setContentView<B>(this, mLayoutId)
-            .apply { lifecycleOwner = this@BaseActivity }
-        mDisplayDelegate.init(this, createCommonPage(mBinding.root))
-        subscribeBasic(mBinding)
+    }
+
+    protected open fun prepareContentView(): View {
+        val view = LayoutInflater.from(this).inflate(mLayoutId, null)
+        setContentView(view, ViewGroup.LayoutParams(-1, -1))
+        return view
+    }
+
+    protected open fun afterSetContent(root: View) {
+        mDisplayDelegate.init(this, createCommonPage(root))
     }
 
     @CallSuper
-    open fun subscribeBasic(binding: B) {
-        val viewModel = getViewModel() ?: ViewModelProvider(this).get(BaseViewModel::class.java)
+    open fun subscribeBase() {
+        val viewModel = getViewModel()
         if (viewModel is BaseViewModel) {
-            viewModel.tips.observe(this@BaseActivity, Observer { mDisplayDelegate.showTips(it) })
-            viewModel.loading.observe(this@BaseActivity, Observer {
+            observe(viewModel.tips) { mDisplayDelegate.showTips(it) }
+            observe(viewModel.loading) {
                 when (it) {
                     is LoadingState.Loading -> showLoading(it.message)
                     is LoadingState.Hide -> hideLoading()
                 }
-            })
+            }
+            observe(viewModel.tips) { mDisplayDelegate.showTips(it) }
         }
-        subscribeUi(binding)
     }
 
     override fun showLoading(message: String?) {
@@ -59,8 +74,6 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity(), IView, I
     }
 
     abstract fun getViewModel(): ViewModel?
-
-    abstract fun subscribeUi(binding: B)
 
     override fun createCommonPage(contentView: View): ICommonPage? {
         // 返回null不会自动注入empty、loading、error三个布局

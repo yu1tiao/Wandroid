@@ -1,4 +1,6 @@
 rootProject.name='Wandroid'
 include ':app'
 include ':lib-base'
-include ':lib-router'
+include ':lib-services'
+include ':module-user'
+include ':lib-base-rx'

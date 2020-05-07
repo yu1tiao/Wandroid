@@ -9,11 +9,12 @@ import com.pretty.core.util.SingleLiveEvent
  * @author yu
  * @date 2019/3/5
  */
-abstract class BaseListViewModel<T> : BaseViewModelRx() {
+abstract class BaseListViewModel<T> : BaseViewModel() {
 
     val dataSet: MutableLiveData<List<T>> = MutableLiveData()
     val loadMoreDataSet: MutableLiveData<List<T>> = MutableLiveData()
     val loadCompleted: SingleLiveEvent<Void> = SingleLiveEvent()
+    val loadMoreError: SingleLiveEvent<Void> = SingleLiveEvent()
     val noMore: SingleLiveEvent<Void> = SingleLiveEvent()
 
     abstract fun refresh()
@@ -33,6 +34,11 @@ abstract class BaseListViewModel<T> : BaseViewModelRx() {
     @MainThread
     protected fun loadCompleted() {
         loadCompleted.call()
+    }
+
+    @MainThread
+    protected fun loadMoreError() {
+        loadMoreError.call()
     }
 
     @MainThread

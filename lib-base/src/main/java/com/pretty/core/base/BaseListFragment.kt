@@ -2,11 +2,10 @@ package com.pretty.core.base
 
 import android.os.Bundle
 import android.view.View
-import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pretty.core.ext.observe
 import kotlinx.android.synthetic.main.l_common_recyclerview_page.*
 import me.yuu.liteadapter.core.LiteAdapterEx
 
@@ -14,7 +13,7 @@ import me.yuu.liteadapter.core.LiteAdapterEx
  * @author yu
  * @date 2019/2/27
  */
-abstract class BaseListFragment<D, VM : BaseListViewModel<D>> : BaseFragment<ViewDataBinding>() {
+abstract class BaseListFragment<D, VM : BaseListViewModel<D>> : BaseFragment() {
 
     protected lateinit var mAdapter: LiteAdapterEx<D>
 
@@ -23,13 +22,14 @@ abstract class BaseListFragment<D, VM : BaseListViewModel<D>> : BaseFragment<Vie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getListViewModel().run {
-            loadCompleted.observe(this@BaseListFragment, Observer {
+            observe(loadCompleted) {
                 refreshLayout.isRefreshing = false
                 mAdapter.loadMoreCompleted()
-            })
-            noMore.observe(this@BaseListFragment, Observer { mAdapter.noMore() })
-            loadMoreDataSet.observe(this@BaseListFragment, Observer { mAdapter.addAll(it!!) })
-            dataSet.observe(this@BaseListFragment, Observer { mAdapter.updateData(it!!) })
+            }
+            observe(noMore) { mAdapter.noMore() }
+            observe(loadMoreDataSet) { mAdapter.addAll(it) }
+            observe(dataSet) { mAdapter.updateData(it) }
+            observe(loadMoreError) { mAdapter.loadMoreError() }
         }
     }
 
@@ -38,9 +38,7 @@ abstract class BaseListFragment<D, VM : BaseListViewModel<D>> : BaseFragment<Vie
 
         mAdapter = createAdapter()
         initRecyclerView(recyclerView, mAdapter, getLayoutManager())
-
         refreshLayout.setOnRefreshListener { getListViewModel().refresh() }
-
         getListViewModel().refresh()
     }
 
@@ -59,8 +57,9 @@ abstract class BaseListFragment<D, VM : BaseListViewModel<D>> : BaseFragment<Vie
 
     protected abstract fun getListViewModel(): VM
 
-    protected open fun getLayoutManager(): RecyclerView.LayoutManager =
-        LinearLayoutManager(activity)
+    protected open fun getLayoutManager(): RecyclerView.LayoutManager {
+        return LinearLayoutManager(activity)
+    }
 
     protected abstract fun createAdapter(): LiteAdapterEx<D>
 

@@ -5,24 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.pretty.core.arch.*
 import com.pretty.core.arch.commonpage.CommonPageManager
 import com.pretty.core.arch.commonpage.ICommonPage
+import com.pretty.core.ext.observe
 
 
 /**
  * @author yu
  * @date 2018/10/29
  */
-abstract class BaseFragment<B : ViewDataBinding> : Fragment(), IView, ILoadable {
+abstract class BaseFragment : Fragment(), IView, ILoadable {
 
-    protected lateinit var mBinding: B
     protected abstract val mLayoutId: Int
     override val mDisplayDelegate: IDisplayDelegate by lazy { DisplayDelegate() }
     override val mDisposableManager: IDisposableManager by lazy { DisposableManager() }
@@ -33,29 +30,32 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment(), IView, ILoadable 
         savedInstanceState: Bundle?
     ): View? {
         mDisposableManager.init(this)
-        mBinding = DataBindingUtil.inflate<B>(inflater, mLayoutId, container, false)
-            .apply { lifecycleOwner = this@BaseFragment }
-        mDisplayDelegate.init(activity!!, createCommonPage(mBinding.root))
-        subscribeBasic(mBinding)
-        return mBinding.root
+        val root = inflateView(inflater, container)
+        mDisplayDelegate.init(activity!!, createCommonPage(root))
+        subscribeBase()
+        return root
+    }
+
+    protected open fun inflateView(inflater: LayoutInflater, container: ViewGroup?): View {
+        return inflater.inflate(mLayoutId, container, false)
     }
 
     @CallSuper
-    open fun subscribeBasic(binding: B) {
+    open fun subscribeBase() {
         val viewModel = getViewModel() ?: ViewModelProvider(this).get(BaseViewModel::class.java)
         if (viewModel is BaseViewModel) {
-            viewModel.tips.observe(viewLifecycleOwner, Observer {
-                mDisplayDelegate.showTips(it)
-            })
-            viewModel.loading.observe(viewLifecycleOwner, Observer {
+            observe(viewModel.tips) { mDisplayDelegate.showTips(it) }
+            observe(viewModel.loading) {
                 when (it) {
                     is LoadingState.Loading -> showLoading(it.message)
                     is LoadingState.Hide -> hideLoading()
                 }
-            })
+            }
+            observe(viewModel.tips) { mDisplayDelegate.showTips(it) }
         }
-        subscribeUi(binding)
     }
+
+    abstract fun getViewModel(): ViewModel?
 
     override fun showLoading(message: String?) {
         mDisplayDelegate.showLoading(message)
@@ -64,10 +64,6 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment(), IView, ILoadable 
     override fun hideLoading() {
         mDisplayDelegate.dismissLoading()
     }
-
-    abstract fun getViewModel(): ViewModel?
-
-    abstract fun subscribeUi(binding: B)
 
     override fun createCommonPage(contentView: View): ICommonPage? {
         // 返回null不会自动注入empty、loading、error三个布局

@@ -1,11 +1,11 @@
 package com.pretty.core.ext
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Parcelable
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import java.io.Serializable
 
 /**
@@ -51,17 +51,10 @@ fun Array<out Pair<String, Any>>.toBundle(): Bundle {
     }
 }
 
-fun <T : Activity> Context.jump2Activity(
-    clazz: Class<T>,
-    bundle: Bundle? = null
-) {
-    Intent(this, clazz)
-        .apply {
-            if (bundle != null && !bundle.isEmpty)
-                putExtras(bundle)
-            if (this@jump2Activity !is Activity)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }.run {
-            startActivity(this)
-        }
+fun <T> AppCompatActivity.observe(liveData: LiveData<T>, block: (T) -> Unit) {
+    liveData.observe(this, Observer { block(it) })
+}
+
+fun <T> Fragment.observe(liveData: LiveData<T>, block: (T) -> Unit) {
+    liveData.observe(this, Observer { block(it) })
 }

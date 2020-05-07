@@ -1,21 +1,19 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'WMRouter'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion build_version.compileSdkVersion
+    buildToolsVersion build_version.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.pretty.wandroid"
-        minSdkVersion 19
-        targetSdkVersion 29
+        minSdkVersion build_version.minSdkVersion
+        targetSdkVersion build_version.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
 
         javaCompileOptions {
             annotationProcessorOptions.includeCompileClasspath = true
@@ -34,9 +32,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 
     kotlinOptions {
@@ -52,12 +51,18 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    api project(":lib-base")
 
-    implementation project(":lib-base")
-    implementation project(':lib-services')
-    kapt toolDeps.eventbus_compiler
-    kapt toolDeps.wm_router_compiler
+    // rx
+    api rxjavaDeps.rxjava3
+    api rxjavaDeps.rxandroid3
+
+    api rxjavaDeps.autodispose
+    api rxjavaDeps.autodispose_lifecycle
+    api rxjavaDeps.autodispose_arch
+
+//    // rxbinding暂时没有支持rxjava3
+//    api(rxjavaDeps.rxbinding) {
+//        exclude group: 'io.reactivex.rxjava2'
+//    }
 }

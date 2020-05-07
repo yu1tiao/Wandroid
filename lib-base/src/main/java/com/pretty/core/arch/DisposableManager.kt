@@ -5,8 +5,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 
 /**
  * 绑定LifecycleOwner，在销毁时自动销毁添加的对象，如Dialog、Disposable、Destroyable
@@ -15,7 +13,7 @@ interface IDisposableManager {
 
     fun init(lifecycleOwner: LifecycleOwner)
 
-    fun addDisposable(disposable: Disposable)
+//    fun addDisposable(disposable: Disposable)
 
     fun handleDialog(dialog: Dialog)
 
@@ -30,7 +28,7 @@ interface Destroyable {
 
 class DisposableManager : IDisposableManager, LifecycleObserver {
 
-    private val compositeDisposable by lazy { CompositeDisposable() }
+//    private val compositeDisposable by lazy { CompositeDisposable() }
     private var mDestroyCallback: (() -> Unit)? = null
     private val mDialogs: MutableList<Dialog> = ArrayList()
     private val mDestroyable: MutableList<Destroyable> = ArrayList()
@@ -40,9 +38,9 @@ class DisposableManager : IDisposableManager, LifecycleObserver {
         lifecycleOwner.lifecycle.addObserver(this)
     }
 
-    override fun addDisposable(disposable: Disposable) {
-        compositeDisposable.add(disposable)
-    }
+//    override fun addDisposable(disposable: Disposable) {
+//        compositeDisposable.add(disposable)
+//    }
 
     override fun handleDialog(dialog: Dialog) {
         mDialogs.add(dialog)
@@ -58,8 +56,8 @@ class DisposableManager : IDisposableManager, LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun destroy() {
-        compositeDisposable.dispose()
-        compositeDisposable.clear()
+//        compositeDisposable.dispose()
+//        compositeDisposable.clear()
 
         mDialogs.forEach { if (it.isShowing) it.dismiss() }
         mDialogs.clear()
