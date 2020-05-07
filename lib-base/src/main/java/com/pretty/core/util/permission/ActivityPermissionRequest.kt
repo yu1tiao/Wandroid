@@ -13,7 +13,12 @@ class ActivityPermissionRequest(private val activity: FragmentActivity, requestC
     }
 
     override fun requestEach(permissions: Array<out String>) {
-        ActivityCompat.requestPermissions(activity, permissions, requestCode)
+        with(activity.supportFragmentManager) {
+            val f = RequestPermissionFragment()
+            beginTransaction().add(f, "requestPermissionFromActivity").commit()
+            executePendingTransactions()
+            f.requestPermissions(permissions, requestCode)
+        }
     }
 
     override fun shouldShowRequestPermissionRationale(permissions: Array<out String>): Boolean {

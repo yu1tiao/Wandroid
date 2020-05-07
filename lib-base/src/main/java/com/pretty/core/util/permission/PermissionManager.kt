@@ -4,13 +4,8 @@ import android.content.pm.PackageManager
 import android.util.SparseArray
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.blankj.utilcode.util.AppUtils
 
 /**
- * 可以在BaseActivity和BaseFragment重写onRequestPermissionsResult,
- * 添加代码:PermissionManager.onRequestResult(requestCode, permissions, grantResults)进行全局的处理
- * 也可以在具体的页面处理
- *
  * 用法：
     PermissionManager.with(this)
         .permissions(Manifest.permission.CAMERA)
@@ -41,7 +36,7 @@ object PermissionManager {
     }
 
     @JvmStatic
-    fun onRequestPermissionsResult(
+    internal fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray

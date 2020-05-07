@@ -99,7 +99,7 @@ dependencies {
     kapt imageDeps.glide_compiler
 
 //    api uiDeps.material_dialog
-//    api toolDeps.permission_assent
+    api toolDeps.permission_assent
     api toolDeps.utilCode
     api toolDeps.liteAdapter
     api toolDeps.mmkv

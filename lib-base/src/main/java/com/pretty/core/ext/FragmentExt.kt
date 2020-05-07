@@ -8,7 +8,11 @@ import androidx.fragment.app.FragmentActivity
  * @date 2019/4/8
  */
 
-fun FragmentActivity.replace(layoutId: Int, f: Fragment, bundle: Array<out Pair<String, Any>>? = null) {
+fun FragmentActivity.replace(
+    layoutId: Int,
+    f: Fragment,
+    bundle: Array<out Pair<String, Any>>? = null
+) {
     if (bundle != null) f.arguments = bundle.toBundle()
     supportFragmentManager.beginTransaction()
         .replace(layoutId, f, f.javaClass.name)
@@ -70,14 +74,14 @@ fun FragmentActivity.remove(f: Fragment) {
 }
 
 
-fun Fragment.replace(layoutId: Int, f: Fragment, bundle: Array<out Pair<String, Any>>?) {
+fun Fragment.replace(layoutId: Int, f: Fragment, bundle: Array<out Pair<String, Any>>? = null) {
     if (bundle != null) f.arguments = bundle.toBundle()
     childFragmentManager.beginTransaction()
         .replace(layoutId, f, f.javaClass.name)
         .commitAllowingStateLoss()
 }
 
-fun Fragment.add(layoutId: Int, f: Fragment, bundle: Array<out Pair<String, Any>>?) {
+fun Fragment.add(layoutId: Int, f: Fragment, bundle: Array<out Pair<String, Any>>? = null) {
     if (bundle != null) f.arguments = bundle.toBundle()
     childFragmentManager.beginTransaction()
         .add(layoutId, f, f.javaClass.name)
