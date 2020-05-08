@@ -1,6 +1,8 @@
 package com.pretty.core.http
 
 import com.pretty.core.Foundation
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
@@ -14,25 +16,30 @@ object RetrofitManager {
     private val mRetrofitServiceCache = mutableMapOf<String, Any>()
 
     private fun <T> createApiService(clazz: Class<T>): T {
-        if (mRetrofit == null)
-            initRetrofit()
+        if (mRetrofit == null) {
+            initDefaultRetrofit()
+        }
         return mRetrofit!!.create(clazz)
     }
 
-    private fun initRetrofit() {
+    private fun initDefaultRetrofit() {
         val configuration = Foundation.getGlobalConfig()
-        val client = OkHttpClient.Builder()
-            .run {
-                configuration.okHttpConfigCallback?.invoke(this) ?: this
-            }
-            .build()
 
         if (configuration.netPolicyProvider == null) {
             throw RuntimeException("u must set a default NetPolicyProvider at first!")
         }
 
+        val client = generateHttpClient()
+        val baseUrl =
+            configuration.netPolicyProvider?.getNetPolicy()?.getApiBaseUrl()?.toHttpUrlOrNull()
+
+        buildRetrofit(baseUrl!!, client)
+    }
+
+    private fun buildRetrofit(baseUrl: HttpUrl, client: OkHttpClient) {
+        val configuration = Foundation.getGlobalConfig()
         mRetrofit = Retrofit.Builder()
-            .baseUrl(configuration.netPolicyProvider!!.getNetPolicy().getApiBaseUrl())
+            .baseUrl(baseUrl)
             .client(client)
             .run {
                 configuration.retrofitConfigCallback?.invoke(this) ?: this
@@ -40,15 +47,37 @@ object RetrofitManager {
             .build()
     }
 
-    fun <T> obtainService(service: Class<T>): T {
-        var retrofitService: T?
+    private fun generateHttpClient(): OkHttpClient {
+        val configuration = Foundation.getGlobalConfig()
+        return OkHttpClient.Builder()
+            .run {
+                configuration.okHttpConfigCallback?.invoke(this) ?: this
+            }
+            .build()
+    }
+
+    /**
+     * 切换base url
+     */
+    fun changeServer(baseUrl: HttpUrl) {
+        buildRetrofit(baseUrl, generateHttpClient())
         synchronized(mRetrofitServiceCache) {
-            retrofitService = mRetrofitServiceCache[service.name] as T
-            if (retrofitService == null) {
-                retrofitService = createApiService(service)
-                mRetrofitServiceCache[service.name] = retrofitService!! as Any
+            mRetrofitServiceCache.clear()
+        }
+    }
+
+    /**
+     * 获取api
+     */
+    fun <T> obtainService(service: Class<T>): T {
+        var apiService: T?
+        synchronized(mRetrofitServiceCache) {
+            apiService = mRetrofitServiceCache[service.name] as T
+            if (apiService == null) {
+                apiService = createApiService(service)
+                mRetrofitServiceCache[service.name] = apiService!! as Any
             }
         }
-        return retrofitService!!
+        return apiService!!
     }
 }

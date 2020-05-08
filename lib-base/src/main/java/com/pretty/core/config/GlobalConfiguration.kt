@@ -17,9 +17,9 @@ class GlobalConfiguration(
     var okHttpConfigCallback: HttpClientConfigCallback? = null,
     var retrofitConfigCallback: RetrofitConfigCallback? = null,
     var toastFactory: ToastFactory = DefaultToastFactory(),     // 全局的Toast工厂，自定义toast
-    var errorHandler: ErrorHandler = toastErrorHandler,     // 框架ViewModel中RxJava发生错误的时候回调
-    var commonPageFactory: CommonPageFactory = DefaultCommonPageFactory(),
-    var crashLogReporter: CrashLogReporter = FakeCrashLogReporter()
+    var errorHandler: ErrorHandler = toastErrorHandler,     // 框架错误回调(网络请求，包括协程、rxjava等，默认弹出toast)
+    var commonPageFactory: CommonPageFactory = DefaultCommonPageFactory(),// 全局通用布局(包括空页面、加载中、错误等状态，BaseActivity中可以选择注入或者自定义注入)
+    var crashLogReporter: CrashLogReporter = FakeCrashLogReporter() // Timber日志上报
 ) {
 
     companion object {

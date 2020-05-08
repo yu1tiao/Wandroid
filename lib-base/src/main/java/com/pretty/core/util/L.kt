@@ -15,14 +15,19 @@ object L {
     }
 
     fun v(content: String) = Timber.v(content)
+    fun v(t: Throwable) = Timber.v(t)
 
     fun d(content: String) = Timber.d(content)
+    fun d(t: Throwable) = Timber.d(t)
 
     fun i(content: String) = Timber.i(content)
+    fun i(t: Throwable) = Timber.i(t)
 
     fun w(content: String) = Timber.w(content)
+    fun w(t: Throwable) = Timber.w(t)
 
     fun e(content: String) = Timber.e(content)
+    fun e(t: Throwable) = Timber.e(t)
 
 }
 

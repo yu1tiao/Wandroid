@@ -3,8 +3,13 @@ package com.pretty.wandroid
 import com.pretty.core.base.BaseApplication
 import com.pretty.core.config.GlobalConfiguration
 import com.pretty.core.config.INetPolicy
+import com.pretty.core.http.CommonHeaderInterceptor
+import com.pretty.core.util.L
 import com.sankuai.waimai.router.Router
 import com.sankuai.waimai.router.common.DefaultRootUriHandler
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class App : BaseApplication() {
 
@@ -16,25 +21,27 @@ class App : BaseApplication() {
 
     override fun initGlobalConfiguration(): GlobalConfiguration {
         return GlobalConfiguration.create {
-
+            netPolicyProvider = this@App
+            okHttpConfigCallback = {
+                it.connectTimeout(20, TimeUnit.SECONDS)
+                    .addInterceptor(CommonHeaderInterceptor())
+                    .addInterceptor(
+                        HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+                            override fun log(message: String) {
+                                L.d(message)
+                            }
+                        }).apply {
+                            level = HttpLoggingInterceptor.Level.BODY
+                        })
+            }
+            retrofitConfigCallback = {
+                it.addConverterFactory(GsonConverterFactory.create())
+//                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            }
         }
     }
 
     override fun getNetPolicy(): INetPolicy {
-        return DebugNetPolicy()
-    }
-}
-
-private class DebugNetPolicy : INetPolicy {
-    override fun getPolicyName(): String {
-        return INetPolicy.DEV
-    }
-
-    override fun getApiBaseUrl(): String {
-        return "https://github.com/"
-    }
-
-    override fun getWebHostUrl(): String {
-        return "https://github.com/"
+        return DevNetPolicy()
     }
 }

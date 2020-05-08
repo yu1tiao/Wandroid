@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.pretty.core.Foundation
 import com.pretty.core.arch.ILoadable
 import com.pretty.core.arch.LoadingState
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
@@ -51,16 +52,16 @@ open class BaseViewModel : ViewModel(), ILoadable {
     }
 
     /**
-     * 通过协程加载数据，运行在viewModelScope，可感知生命周期，自动取消协程
+     * 创建协程并执行，运行在viewModelScope，可感知生命周期，自动取消协程
      */
-    protected fun <T> loadAsync(
+    protected fun <T> launch(
         block: suspend () -> T,
         success: (T) -> Unit,
         failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler,
         finally: () -> Unit = {},
         showLoading: Boolean = false
-    ) {
-        viewModelScope.launch {
+    ): Job {
+        return viewModelScope.launch {
             if (showLoading) showLoading()
             try {
                 success(block())

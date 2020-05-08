@@ -38,10 +38,16 @@ abstract class AbsPermissionRequest(internal val requestCode: Int) {
         return this
     }
 
+    /**
+     * onRationale回调中调用，继续申请权限
+     */
     fun continueRequest() {
         requestEach(permissions!!)
     }
 
+    /**
+     * onRationale回调中调用，取消申请权限
+     */
     fun cancelRequest() {
         PermissionManager.removeRequest(requestCode)
     }
@@ -61,6 +67,11 @@ abstract class AbsPermissionRequest(internal val requestCode: Int) {
         return true
     }
 
+    /**
+     * 这个方法在某些厂商手机上也不一定靠谱，比如oppo，检查权限一定返回true，而要到真正调用的时候才去申请。
+     * 比如相机权限，一直返回true，要真正调用Camera.open()才会弹出权限申请框
+     * 对于这部分厂商，只能自己去适配了，一定要适配可以骚操作，先尝试打开相机触发权限申请
+     */
     private fun checkSelfPermission(permission: String): Boolean {
         return ActivityCompat.checkSelfPermission(
             getContext(),
