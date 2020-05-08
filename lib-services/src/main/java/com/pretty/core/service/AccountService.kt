@@ -1,16 +1,16 @@
 package com.pretty.core.service
 
-import com.pretty.core.service.entity.User
+import com.pretty.core.service.entity.LoginEntity
 
 interface AccountService {
 
     interface UserObserver {
-        fun onUserChange(user: User?)
+        fun onUserChange(user: LoginEntity?)
     }
 
     fun isLogin(): Boolean
 
-    fun getLoginUser(): User?
+    fun getLoginUser(): LoginEntity?
 
     fun startLoginActivity()
 

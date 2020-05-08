@@ -1,5 +1,6 @@
 package com.pretty.wandroid
 
+import android.util.Log
 import com.pretty.core.base.BaseApplication
 import com.pretty.core.config.GlobalConfiguration
 import com.pretty.core.config.INetPolicy
@@ -24,11 +25,11 @@ class App : BaseApplication() {
             netPolicyProvider = this@App
             okHttpConfigCallback = {
                 it.connectTimeout(20, TimeUnit.SECONDS)
-                    .addInterceptor(CommonHeaderInterceptor())
+//                    .addInterceptor(CommonHeaderInterceptor())
                     .addInterceptor(
                         HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
                             override fun log(message: String) {
-                                L.d(message)
+                                Log.d("okHttp_", message)
                             }
                         }).apply {
                             level = HttpLoggingInterceptor.Level.BODY

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.pretty.core.arch.*
 import com.pretty.core.arch.commonpage.CommonPageManager
 import com.pretty.core.arch.commonpage.ICommonPage
@@ -30,7 +29,7 @@ abstract class BaseActivity : AppCompatActivity(), IView, ILoadable {
         beforeSetContent(savedInstanceState)
         val root = prepareContentView()
         afterSetContent(root)
-        subscribeBase()
+        subscribeLiveData()
         initPage()
     }
 
@@ -51,7 +50,7 @@ abstract class BaseActivity : AppCompatActivity(), IView, ILoadable {
     }
 
     @CallSuper
-    open fun subscribeBase() {
+    open fun subscribeLiveData() {
         val viewModel = getViewModel()
         if (viewModel is BaseViewModel) {
             observe(viewModel.tips) { mDisplayDelegate.showTips(it) }

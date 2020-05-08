@@ -29,9 +29,17 @@ class ContainerActivity : AppCompatActivity() {
             .add(R.id.flContainer, fragmentClass, args)
             .commitAllowingStateLoss()
     }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
+    }
 }
 
-inline fun <reified T : Fragment> startInContainerActivity(
+inline fun <reified T : Fragment> launchFragmentInContainer(
     context: Context,
     fragment: Class<T>,
     args: Bundle? = null

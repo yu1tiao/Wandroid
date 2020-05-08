@@ -1,7 +1,7 @@
 package com.pretty.core.base
 
 import com.pretty.core.http.FlatResp
-import com.pretty.core.http.checkHttp
+import com.pretty.core.http.check
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -28,6 +28,6 @@ abstract class BaseModel : IModel {
      */
     protected suspend fun <T : FlatResp> requestHttp(block: suspend () -> T): T =
         withContext(Dispatchers.IO) {
-            return@withContext checkHttp(block())
+            return@withContext block().check()
         }
 }

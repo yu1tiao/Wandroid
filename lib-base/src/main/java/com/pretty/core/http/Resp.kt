@@ -8,7 +8,7 @@ import com.pretty.core.exception.ApiException
  * @date 2020/3/12
  */
 interface Resp<T> : FlatResp {
-    fun getData(): T?
+    fun getRespData(): T?
 }
 
 /**
@@ -22,11 +22,10 @@ interface FlatResp {
     fun isSuccessful(): Boolean
 }
 
-
-fun <T : FlatResp> checkHttp(t: T): T {
-    return if (t.isSuccessful()) {
-        t
+fun <T : FlatResp> T.check(): T {
+    return if (isSuccessful()) {
+        this
     } else {
-        throw ApiException(t.getCode(), t.getMessage())
+        throw ApiException(getCode(), getMessage())
     }
 }

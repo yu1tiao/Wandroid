@@ -10,19 +10,19 @@ import androidx.fragment.app.FragmentTransaction
  */
 
 fun FragmentActivity.transact(action: FragmentTransaction.() -> Unit) {
-    supportFragmentManager.beginTransaction()
-        .apply(action)
-        .commit()
+    supportFragmentManager.beginTransaction().apply(action).commit()
     supportFragmentManager.executePendingTransactions()
 }
 
 fun Fragment.transact(action: FragmentTransaction.() -> Unit) {
-    childFragmentManager.beginTransaction()
-        .apply(action)
-        .commit()
+    childFragmentManager.beginTransaction().apply(action).commit()
     childFragmentManager.executePendingTransactions()
 }
 
+fun Fragment.transactParent(action: FragmentTransaction.() -> Unit) {
+    parentFragmentManager.beginTransaction().apply(action).commit()
+    parentFragmentManager.executePendingTransactions()
+}
 
 fun FragmentActivity.showHide(showIndex: Int, list: List<Fragment>) {
     transact {

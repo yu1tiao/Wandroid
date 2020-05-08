@@ -4,7 +4,7 @@ import autodispose2.*
 import com.pretty.core.Foundation
 import com.pretty.core.arch.ILoadable
 import com.pretty.core.http.FlatResp
-import com.pretty.core.http.checkHttp
+import com.pretty.core.http.check
 import com.pretty.core.util.runOnMainThread
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.*
@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 private class HttpFunction<T : FlatResp> : Function<T, T> {
     override fun apply(t: T): T {
-        return checkHttp(t)
+        return t.check()
     }
 }
 

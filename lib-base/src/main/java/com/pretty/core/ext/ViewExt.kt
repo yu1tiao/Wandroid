@@ -14,7 +14,7 @@ fun View.throttleClick(seconds: Long = 1000, onNext: ((View) -> Unit)) {
     this.setOnClickListener(ThrottleClickListener(seconds, onNext))
 }
 
-private class ThrottleClickListener(private val timeout: Long, private val onNext: (View) -> Unit) :
+class ThrottleClickListener(private val timeout: Long, private val onNext: (View) -> Unit) :
     View.OnClickListener {
     private var lastClickTime = 0L
 

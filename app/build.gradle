@@ -60,4 +60,6 @@ dependencies {
     implementation project(':lib-services')
     kapt toolDeps.eventbus_compiler
     kapt toolDeps.wm_router_compiler
+
+    implementation project(':module-user')
 }

@@ -32,7 +32,7 @@ abstract class BaseFragment : Fragment(), IView, ILoadable {
         mDisposableManager.init(this)
         val root = inflateView(inflater, container)
         mDisplayDelegate.init(activity!!, createCommonPage(root))
-        subscribeBase()
+        subscribeLiveData()
         return root
     }
 
@@ -41,7 +41,7 @@ abstract class BaseFragment : Fragment(), IView, ILoadable {
     }
 
     @CallSuper
-    open fun subscribeBase() {
+    open fun subscribeLiveData() {
         val viewModel = getViewModel() ?: ViewModelProvider(this).get(BaseViewModel::class.java)
         if (viewModel is BaseViewModel) {
             observe(viewModel.tips) { mDisplayDelegate.showTips(it) }

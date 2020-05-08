@@ -19,8 +19,6 @@ open class BaseViewModel : ViewModel(), ILoadable {
     val tips = MutableLiveData<String>()
     val loading = MutableLiveData<LoadingState>()
 
-    private val mModelMap: MutableMap<Class<*>, BaseModel> = HashMap()
-
     protected fun showTips(message: String) = tips.postValue(message)
 
     override fun showLoading(message: String?) {
@@ -29,26 +27,6 @@ open class BaseViewModel : ViewModel(), ILoadable {
 
     override fun hideLoading() {
         loading.value = LoadingState.hide()
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    protected fun <M : BaseModel> getModel(modelClass: Class<M>): M {
-        val baseModel: BaseModel? = mModelMap[modelClass]
-        if (baseModel != null) {
-            return baseModel as M
-        }
-        try {
-            val model = modelClass.newInstance()
-            mModelMap[modelClass] = model
-            model.onCreate()
-            return model
-        } catch (e: IllegalAccessException) {
-            e.printStackTrace()
-            throw e
-        } catch (e: InstantiationException) {
-            e.printStackTrace()
-            throw e
-        }
     }
 
     /**
@@ -74,8 +52,4 @@ open class BaseViewModel : ViewModel(), ILoadable {
         }
     }
 
-    override fun onCleared() {
-        mModelMap.forEach { it.value.destroy() }
-        mModelMap.clear()
-    }
 }
