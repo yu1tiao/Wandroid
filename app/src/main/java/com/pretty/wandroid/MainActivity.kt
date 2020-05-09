@@ -1,9 +1,10 @@
 package com.pretty.wandroid
 
 import androidx.lifecycle.ViewModel
-import com.pretty.core.arch.launchFragmentInContainer
 import com.pretty.core.base.BaseActivity
-import com.pretty.wandroid.user.login.LoginFragment
+import com.pretty.core.router.RouterConstant
+import com.sankuai.waimai.router.Router
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
@@ -14,7 +15,9 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initPage() {
-        launchFragmentInContainer(this, LoginFragment::class.java)
+        btn_wandroid.setOnClickListener {
+            Router.startUri(this, RouterConstant.WANDROID_HOME_ACTIVITY)
+        }
     }
 
 }

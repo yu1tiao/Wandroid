@@ -1,0 +1,8 @@
+<resources>
+    <string name="login_page_sign_in">Sign in</string>
+    <string name="login_page_sign_up">Sign up</string>
+    <string name="login_page_desc">Sign in to WanAndroid</string>
+    <string name="login_page_username">Username</string>
+    <string name="login_page_password">Password</string>
+    <string name="login_page_confirm_password">Confirm password</string>
+</resources>

@@ -28,14 +28,14 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:title="sign in"
+                app:title="@string/login_page_sign_in"
                 app:titleTextColor="@color/white" />
 
             <ImageView
                 android:id="@+id/imageHeader"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
                 android:src="@mipmap/ic_logo_wandroid"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -48,7 +48,8 @@
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/m20"
-                android:text="Sign in to WanAndroid"
+                android:paddingEnd="0dp"
+                android:text="@string/login_page_desc"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="@dimen/f14"
                 app:layout_constraintBottom_toBottomOf="@id/imageHeader"
@@ -72,11 +73,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:background="@drawable/selector_login_edittext"
-                    android:hint="Username"
+                    android:hint="@string/login_page_username"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="@={viewModel.userName}"
+                    android:text="@={viewModel.username}"
                     android:textColor="@color/primaryTextColor"
                     android:textColorHint="@color/secondaryTextGray"
                     android:textSize="@dimen/f6" />
@@ -100,18 +101,18 @@
                     android:layout_height="45dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/selector_login_edittext"
-                    android:hint="Password"
+                    android:hint="@string/login_page_password"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="@={viewModel.passWord}"
+                    android:text="@={viewModel.password}"
                     android:textColor="@color/primaryTextColor"
                     android:textColorHint="@color/secondaryTextGray"
                     android:textSize="@dimen/f6" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <Button
+            <TextView
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -121,7 +122,7 @@
                 android:background="@drawable/selector_main_button"
                 android:enabled="false"
                 android:gravity="center"
-                android:text="Sign in"
+                android:text="@string/login_page_sign_in"
                 android:textColor="@color/white"
                 android:textSize="@dimen/f8"
                 app:bind_onClick="@{()->viewModel.btnLogin()}"
@@ -135,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/m10"
                 android:padding="10dp"
-                android:text="sign up"
+                android:text="@string/login_page_sign_up"
                 android:textColor="@color/primaryColor"
                 android:textSize="@dimen/f6"
                 app:layout_constraintEnd_toEndOf="@id/btnLogin"

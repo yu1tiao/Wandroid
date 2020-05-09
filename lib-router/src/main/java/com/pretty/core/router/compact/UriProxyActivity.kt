@@ -1,4 +1,4 @@
-package com.pretty.core.service.compact
+package com.pretty.core.router.compact
 
 import android.app.Activity
 import android.os.Bundle

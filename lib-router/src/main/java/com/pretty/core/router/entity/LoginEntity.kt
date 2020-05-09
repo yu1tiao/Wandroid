@@ -1,4 +1,4 @@
-package com.pretty.core.service.entity
+package com.pretty.core.router.entity
 
 import android.os.Parcel
 import android.os.Parcelable

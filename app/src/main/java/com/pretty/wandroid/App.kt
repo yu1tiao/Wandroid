@@ -5,17 +5,27 @@ import com.pretty.core.base.BaseApplication
 import com.pretty.core.config.GlobalConfiguration
 import com.pretty.core.config.INetPolicy
 import com.pretty.core.http.CommonHeaderInterceptor
-import com.pretty.core.util.L
 import com.sankuai.waimai.router.Router
 import com.sankuai.waimai.router.common.DefaultRootUriHandler
+import com.sankuai.waimai.router.components.DefaultLogger
+import com.sankuai.waimai.router.core.Debugger
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+
 
 class App : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
+
+        initRouter()
+    }
+
+    private fun initRouter() {
+        Debugger.setLogger(DefaultLogger())
+        Debugger.setEnableLog(true)
+        Debugger.setEnableDebug(true)
 
         Router.init(DefaultRootUriHandler(this))
     }
@@ -25,7 +35,7 @@ class App : BaseApplication() {
             netPolicyProvider = this@App
             okHttpConfigCallback = {
                 it.connectTimeout(20, TimeUnit.SECONDS)
-//                    .addInterceptor(CommonHeaderInterceptor())
+                    .addInterceptor(CommonHeaderInterceptor())
                     .addInterceptor(
                         HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
                             override fun log(message: String) {

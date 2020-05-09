@@ -1,4 +1,4 @@
-package com.pretty.core.arch
+package com.pretty.core.arch.container
 
 import android.app.Activity
 import android.content.Context
@@ -37,6 +37,7 @@ class ContainerActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
 }
 
 inline fun <reified T : Fragment> launchFragmentInContainer(

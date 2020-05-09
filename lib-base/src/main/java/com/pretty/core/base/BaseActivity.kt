@@ -20,7 +20,17 @@ import com.pretty.core.ext.observe
 abstract class BaseActivity : AppCompatActivity(), IView, ILoadable {
 
     protected abstract val mLayoutId: Int
+
+    /**
+     *  提供通用UI操作的能力，如显示隐藏loading，显示Empty、Error页面等
+     *  默认不注入空布局和错误布局，如需使用，需要修改{@see #injectCommonPage}的值
+     *  如需修改默认的Empty、Error页面，参见 @see #createCommonPage
+     */
     override val mDisplayDelegate: IDisplayDelegate by lazy { DisplayDelegate() }
+
+    /**
+     * 提供在页面销毁时自动清理的能力，防止内存泄露
+     */
     override val mDisposableManager: IDisposableManager by lazy { DisposableManager() }
 
     @CallSuper

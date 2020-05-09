@@ -45,7 +45,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(":lib-base")
-    implementation project(':lib-services')
+    implementation project(':lib-router')
 
     kapt toolDeps.wm_router_compiler
 }

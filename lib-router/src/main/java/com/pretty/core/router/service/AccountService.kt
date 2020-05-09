@@ -1,12 +1,14 @@
-package com.pretty.core.service
+package com.pretty.core.router.service
 
-import com.pretty.core.service.entity.LoginEntity
+import com.pretty.core.router.entity.LoginEntity
 
 interface AccountService {
 
     interface UserObserver {
         fun onUserChange(user: LoginEntity?)
     }
+
+    fun logout()
 
     fun isLogin(): Boolean
 
@@ -17,4 +19,6 @@ interface AccountService {
     fun registerUserObserver(observer: UserObserver)
 
     fun unRegisterUserObserver(observer: UserObserver)
+
+    fun runIfLogin(onNext: (LoginEntity) -> Unit)
 }

@@ -35,7 +35,7 @@
                 android:id="@+id/imageHeader"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
                 android:src="@mipmap/ic_logo_wandroid"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -48,7 +48,8 @@
                 android:layout_height="0dp"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/m20"
-                android:text="Sign up"
+                android:paddingEnd="0dp"
+                android:text="@string/login_page_sign_up"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="@dimen/f14"
                 app:layout_constraintBottom_toBottomOf="@id/imageHeader"
@@ -72,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:background="@drawable/selector_login_edittext"
-                    android:hint="Username"
+                    android:hint="@string/login_page_username"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -99,7 +100,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:background="@drawable/selector_login_edittext"
-                    android:hint="Password"
+                    android:hint="@string/login_page_password"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -126,7 +127,7 @@
                     android:layout_height="45dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/selector_login_edittext"
-                    android:hint="Confirm password"
+                    android:hint="@string/login_page_confirm_password"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -137,7 +138,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <Button
+            <TextView
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -147,7 +148,7 @@
                 android:background="@drawable/selector_main_button"
                 android:enabled="false"
                 android:gravity="center"
-                android:text="Sign up"
+                android:text="@string/login_page_sign_up"
                 android:textColor="@color/white"
                 android:textSize="@dimen/f8"
                 app:bind_onClick="@{()->viewModel.btnRegister()}"

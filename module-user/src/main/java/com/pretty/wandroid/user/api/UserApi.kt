@@ -1,7 +1,7 @@
 package com.pretty.wandroid.user.api
 
+import com.pretty.core.router.entity.LoginEntity
 import com.pretty.wandroid.user.WandroidResp
-import com.pretty.wandroid.user.entity.LoginEntity
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
