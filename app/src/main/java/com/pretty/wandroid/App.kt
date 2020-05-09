@@ -32,7 +32,6 @@ class App : BaseApplication() {
 
     override fun initGlobalConfiguration(): GlobalConfiguration {
         return GlobalConfiguration.create {
-            netPolicyProvider = this@App
             okHttpConfigCallback = {
                 it.connectTimeout(20, TimeUnit.SECONDS)
                     .addInterceptor(CommonHeaderInterceptor())
