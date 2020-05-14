@@ -1,13 +1,14 @@
 package com.pretty.wandroid.user.login
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModel
 import com.pretty.core.base.BaseDataBindFragment
+import com.pretty.core.ext.disableIfNoInput
 import com.pretty.core.ext.observe
 import com.pretty.core.ext.transactParent
+import com.pretty.core.util.ToolbarBuilder
 import com.pretty.wandroid.user.R
 import com.pretty.wandroid.user.databinding.FLoginBinding
 import com.pretty.wandroid.user.register.RegisterFragment
@@ -23,9 +24,7 @@ class LoginFragment : BaseDataBindFragment<FLoginBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding.viewModel = viewModel
-
-        mBinding.etUserName.addTextChangedListener(textWatcher)
-        mBinding.etPassWord.addTextChangedListener(textWatcher)
+        mBinding.btnLogin.disableIfNoInput(mBinding.etUserName, mBinding.etPassWord)
 
         mBinding.btnJump2Register.setOnClickListener {
             transactParent {
@@ -34,11 +33,11 @@ class LoginFragment : BaseDataBindFragment<FLoginBinding>() {
                     .addToBackStack(registerFragment.javaClass.canonicalName)
             }
         }
-        mBinding.toolbar.apply {
-            setNavigationIcon(R.drawable.ic_default_navigation_btn)
-            setNavigationOnClickListener {
-                activity?.onBackPressed()
-            }
+
+        ToolbarBuilder.build(mBinding.toolbar as Toolbar) { toolbar ->
+//            setCenterTitle(R.string.login_page_sign_in)
+            setTitle(R.string.login_page_sign_in, R.color.white)
+            setDefaultNavigationBtn(activity!!)
         }
     }
 
@@ -49,16 +48,4 @@ class LoginFragment : BaseDataBindFragment<FLoginBinding>() {
         }
     }
 
-    private val textWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {
-            mBinding.btnLogin.isEnabled = !(mBinding.etUserName.text.isNullOrEmpty()
-                    || mBinding.etPassWord.text.isNullOrEmpty())
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        }
-    }
 }

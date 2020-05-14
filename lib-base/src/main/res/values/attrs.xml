@@ -16,4 +16,14 @@
         <attr name="is_touch_select_mode_enabled" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="TitleBar">
+        <attr name="tb_title" format="string" />
+        <attr name="tb_title_size" format="dimension" />
+        <attr name="tb_title_color" format="color" />
+        <attr name="tb_right_text" format="string" />
+        <attr name="tb_right_text_size" format="dimension" />
+        <attr name="tb_right_text_color" format="color" />
+        <attr name="tb_right_icon" format="reference" />
+    </declare-styleable>
+
 </resources>
