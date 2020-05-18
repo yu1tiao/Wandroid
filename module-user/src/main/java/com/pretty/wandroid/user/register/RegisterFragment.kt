@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.pretty.core.base.BaseDataBindFragment
 import com.pretty.core.ext.disableIfNoInput
 import com.pretty.core.ext.observe
@@ -15,7 +16,7 @@ class RegisterFragment : BaseDataBindFragment<FRegisterBinding>() {
 
     override val mLayoutId: Int = R.layout.f_register
 
-    private val viewModel by lazy { RegisterViewModel() }
+    private val viewModel by lazy { ViewModelProvider(this).get(RegisterViewModel::class.java) }
 
     override fun getViewModel(): ViewModel? = viewModel
 

@@ -2,8 +2,7 @@ package com.pretty.core.ext
 
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import java.io.Serializable
@@ -51,10 +50,6 @@ fun Array<out Pair<String, Any>>.toBundle(): Bundle {
     }
 }
 
-fun <T> AppCompatActivity.observe(liveData: LiveData<T>, block: (T) -> Unit) {
-    liveData.observe(this, Observer { block(it) })
-}
-
-fun <T> Fragment.observe(liveData: LiveData<T>, block: (T) -> Unit) {
+fun <T> LifecycleOwner.observe(liveData: LiveData<T>, block: (T) -> Unit) {
     liveData.observe(this, Observer { block(it) })
 }

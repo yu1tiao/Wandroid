@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.pretty.core.arch.*
 import com.pretty.core.arch.commonpage.CommonPageManager
 import com.pretty.core.arch.commonpage.ICommonPage
@@ -40,9 +38,8 @@ abstract class BaseFragment : Fragment(), IView, ILoadable {
         return inflater.inflate(mLayoutId, container, false)
     }
 
-    @CallSuper
     open fun subscribeLiveData() {
-        val viewModel = getViewModel() ?: ViewModelProvider(this).get(BaseViewModel::class.java)
+        val viewModel = getViewModel()
         if (viewModel is BaseViewModel) {
             observe(viewModel.tips) { mDisplayDelegate.showTips(it) }
             observe(viewModel.loading) {
@@ -51,7 +48,6 @@ abstract class BaseFragment : Fragment(), IView, ILoadable {
                     is LoadingState.Hide -> hideLoading()
                 }
             }
-            observe(viewModel.tips) { mDisplayDelegate.showTips(it) }
         }
     }
 

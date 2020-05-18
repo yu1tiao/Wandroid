@@ -59,7 +59,6 @@ abstract class BaseActivity : AppCompatActivity(), IView, ILoadable {
         mDisplayDelegate.init(this, createCommonPage(root))
     }
 
-    @CallSuper
     open fun subscribeLiveData() {
         val viewModel = getViewModel()
         if (viewModel is BaseViewModel) {
@@ -70,7 +69,6 @@ abstract class BaseActivity : AppCompatActivity(), IView, ILoadable {
                     is LoadingState.Hide -> hideLoading()
                 }
             }
-            observe(viewModel.tips) { mDisplayDelegate.showTips(it) }
         }
     }
 
