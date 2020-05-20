@@ -95,7 +95,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tilUserName">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.pretty.core.widget.PasswordEditText
                     android:id="@+id/etPassWord"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -121,7 +121,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tilPassWord">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.pretty.core.widget.PasswordEditText
                     android:id="@+id/etRePassWord"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"

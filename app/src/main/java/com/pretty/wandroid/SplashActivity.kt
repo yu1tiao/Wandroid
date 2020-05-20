@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import com.pretty.core.base.BaseActivity
 import com.pretty.core.router.RouterConstant
 import com.sankuai.waimai.router.Router
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_splash.*
 
-class MainActivity : BaseActivity() {
+class SplashActivity : BaseActivity() {
 
-    override val mLayoutId: Int = R.layout.activity_main
+    override val mLayoutId: Int = R.layout.activity_splash
 
     override fun getViewModel(): ViewModel? {
         return null

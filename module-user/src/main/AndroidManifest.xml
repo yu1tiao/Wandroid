@@ -2,5 +2,9 @@
     package="com.pretty.wandroid.user">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <application>
+        <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait" />
+    </application>
 </manifest>

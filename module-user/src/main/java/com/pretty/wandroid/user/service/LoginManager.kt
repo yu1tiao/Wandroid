@@ -69,9 +69,7 @@ object LoginManager {
 
     }
 
-    fun isLogin(readCache: Boolean = false): Boolean = getLoginEntity(
-        readCache
-    ) != null
+    fun isLogin(readCache: Boolean = false): Boolean = getLoginEntity(readCache) != null
 
     fun onLoginPageFinish() {
         removeWhenLoginPageFinishObservers.clear()

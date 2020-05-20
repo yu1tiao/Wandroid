@@ -26,7 +26,7 @@ class WandroidHomeActivity : BaseActivity() {
     override fun initPage() {
         // 跳转登录页
         btn_login.setOnClickListener {
-            accountService.startLoginActivity()
+            Router.startUri(this, RouterConstant.WANDROID_LOGIN_ACTIVITY)
         }
         // 通过登录拦截器跳转收藏页面
         btn_collect.setOnClickListener {

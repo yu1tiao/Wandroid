@@ -48,7 +48,7 @@ ext {
             flexboxLayout  : "com.google.android:flexbox:2.0.1",
             material_dialog: "com.afollestad.material-dialogs:core:3.3.0",
             pickerView     : "com.contrarywind:Android-PickerView:4.1.9",
-
+            guideView      : 'com.github.AppIntro:AppIntro:6.0.0',
     ]
 
     imageDeps = [

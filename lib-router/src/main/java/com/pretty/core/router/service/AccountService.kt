@@ -14,8 +14,6 @@ interface AccountService {
 
     fun getLoginUser(): LoginEntity?
 
-    fun startLoginActivity()
-
     fun registerUserObserver(observer: UserObserver)
 
     fun unRegisterUserObserver(observer: UserObserver)
