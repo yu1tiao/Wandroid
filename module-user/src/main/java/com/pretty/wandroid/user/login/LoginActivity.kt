@@ -1,5 +1,6 @@
 package com.pretty.wandroid.user.login
 
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModel
 import com.pretty.core.R
 import com.pretty.core.base.BaseActivity
@@ -12,9 +13,9 @@ class LoginActivity : BaseActivity() {
     override val mLayoutId: Int = R.layout.a_fragment_container
 
     override fun initPage() {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.flContainer, LoginFragment::class.java, null)
-            .commitAllowingStateLoss()
+        supportFragmentManager.commit {
+            add(R.id.flContainer, LoginFragment::class.java, null)
+        }
     }
 
     override fun getViewModel(): ViewModel? {

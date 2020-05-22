@@ -54,6 +54,8 @@ dependencies {
 
     api kotlinDeps.kotlin_stdlib
     api androidxDeps.core_ktx
+    api androidxDeps.activity_ktx
+    api androidxDeps.fragment_ktx
     api androidxDeps.appcompat
     api androidxDeps.constraint
     api androidxDeps.swiperefresh

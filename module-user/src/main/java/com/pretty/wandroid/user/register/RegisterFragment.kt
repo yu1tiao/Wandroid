@@ -2,9 +2,8 @@ package com.pretty.wandroid.user.register
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.pretty.core.base.BaseDataBindFragment
 import com.pretty.core.ext.disableIfNoInput
 import com.pretty.core.ext.observe
@@ -16,26 +15,30 @@ class RegisterFragment : BaseDataBindFragment<FRegisterBinding>() {
 
     override val mLayoutId: Int = R.layout.f_register
 
-    private val viewModel by lazy { ViewModelProvider(this).get(RegisterViewModel::class.java) }
+    private val viewModel: RegisterViewModel by viewModels()
 
     override fun getViewModel(): ViewModel? = viewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding.viewModel = viewModel
-        mBinding.btnLogin.disableIfNoInput(mBinding.etUserName, mBinding.etPassWord, mBinding.etRePassWord)
+        mBinding.btnLogin.disableIfNoInput(
+            mBinding.etUserName,
+            mBinding.etPassWord,
+            mBinding.etRePassWord
+        )
 
-        ToolbarBuilder.build(mBinding.toolbar as Toolbar) { toolbar ->
+        ToolbarBuilder.build(mBinding.toolbar) {
 //            setCenterTitle(R.string.login_page_sign_in)
             setTitle(R.string.login_page_sign_up, R.color.white)
-            setDefaultNavigationBtn(activity!!)
+            setDefaultNavigationBtn(requireActivity())
         }
     }
 
     override fun subscribeLiveData() {
         super.subscribeLiveData()
         observe(viewModel.registerSuccess) {
-            activity?.onBackPressed()
+            requireActivity().onBackPressed()
         }
     }
 }

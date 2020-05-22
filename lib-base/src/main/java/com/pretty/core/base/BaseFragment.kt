@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.pretty.core.arch.*
@@ -22,6 +23,25 @@ abstract class BaseFragment : Fragment(), IView, ILoadable {
     override val mDisplayDelegate: IDisplayDelegate by lazy { DisplayDelegate() }
     override val mDisposableManager: IDisposableManager by lazy { DisposableManager() }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        onBackPressed()?.let {
+            requireActivity().onBackPressedDispatcher.addCallback(object :
+                OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    it.invoke()
+                }
+            })
+        }
+    }
+
+    /**
+     * 处理回退事件
+     */
+    open fun onBackPressed(): (() -> Unit)? {
+        return null
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,7 +49,7 @@ abstract class BaseFragment : Fragment(), IView, ILoadable {
     ): View? {
         mDisposableManager.init(this)
         val root = inflateView(inflater, container)
-        mDisplayDelegate.init(activity!!, createCommonPage(root))
+        mDisplayDelegate.init(requireActivity(), createCommonPage(root))
         subscribeLiveData()
         return root
     }
