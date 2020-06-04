@@ -1,2 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pretty.core.router" />
+    package="com.pretty.core.router">
+
+    <application>
+        <activity android:name=".compact.UriProxyActivity">
+            <intent-filter>
+                <!-- 接收所有scheme为demo的外部URI跳转，不区分host和path -->
+                <data android:scheme="${ROUTER_URI_SCHEME}" />
+            </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>

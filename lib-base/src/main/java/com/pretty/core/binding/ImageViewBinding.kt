@@ -10,18 +10,18 @@ import com.pretty.core.util.GlideApp
  * @author yu
  * @date 2018/10/26
  */
-@BindingAdapter("bind_imageUrl", "bind_place_holder", requireAll = false)
-fun loadImage(imageView: ImageView, url: String?, placeHolder: Int?) {
+@BindingAdapter(value = ["bind_url", "bind_place_holder", "bind_error"], requireAll = false)
+fun loadImage(imageView: ImageView, url: String?, placeHolder: Int?, error: Int?) {
     GlideApp.with(imageView.context)
         .load(url)
-        .apply(RequestOptions().placeholder(placeHolder ?: 0))
+        .apply(RequestOptions().placeholder(placeHolder ?: 0).error(error ?: 0))
         .into(imageView)
 }
 
-@BindingAdapter("bind_imageUrl_circle")
-fun loadImageCircle(imageView: ImageView, url: String?) {
+@BindingAdapter(value = ["bind_url_circle", "bind_place_holder", "bind_error"], requireAll = false)
+fun loadImageCircle(imageView: ImageView, url: String?, placeHolder: Int?, error: Int?) {
     GlideApp.with(imageView.context)
         .load(url)
-        .apply(RequestOptions().circleCrop())
+        .apply(RequestOptions().placeholder(placeHolder ?: 0).error(error ?: 0).circleCrop())
         .into(imageView)
 }

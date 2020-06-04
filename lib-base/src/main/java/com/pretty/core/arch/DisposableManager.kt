@@ -23,7 +23,7 @@ interface IDisposableManager {
 }
 
 interface Destroyable {
-    fun destroy()
+    fun onDestroy()
 }
 
 class DisposableManager : IDisposableManager, LifecycleObserver {
@@ -62,7 +62,7 @@ class DisposableManager : IDisposableManager, LifecycleObserver {
         mDialogs.forEach { if (it.isShowing) it.dismiss() }
         mDialogs.clear()
 
-        mDestroyable.forEach { it.destroy() }
+        mDestroyable.forEach { it.onDestroy() }
         mDestroyable.clear()
 
         mDestroyCallback?.invoke()

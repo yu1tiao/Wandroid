@@ -1,18 +1,13 @@
 package com.pretty.wandroid
 
-import androidx.lifecycle.ViewModel
-import com.pretty.core.base.BaseActivity
+import com.pretty.core.base.BaseSimpleActivity
 import com.pretty.core.router.RouterConstant
 import com.sankuai.waimai.router.Router
 import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashActivity : BaseActivity() {
+class SplashActivity : BaseSimpleActivity() {
 
     override val mLayoutId: Int = R.layout.activity_splash
-
-    override fun getViewModel(): ViewModel? {
-        return null
-    }
 
     override fun initPage() {
         btn_wandroid.setOnClickListener {

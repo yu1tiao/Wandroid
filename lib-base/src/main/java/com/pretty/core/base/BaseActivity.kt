@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import com.pretty.core.arch.*
 import com.pretty.core.arch.commonpage.CommonPageManager
 import com.pretty.core.arch.commonpage.ICommonPage
@@ -17,9 +16,10 @@ import com.pretty.core.ext.observe
  * @author yu
  * @date 2018/10/29
  */
-abstract class BaseActivity : AppCompatActivity(), IView, ILoadable {
+abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView, ILoadable {
 
     protected abstract val mLayoutId: Int
+    protected abstract val mViewModel: VM
 
     /**
      *  提供通用UI操作的能力，如显示隐藏loading，显示Empty、Error页面等
@@ -60,14 +60,11 @@ abstract class BaseActivity : AppCompatActivity(), IView, ILoadable {
     }
 
     open fun subscribeLiveData() {
-        val viewModel = getViewModel()
-        if (viewModel is BaseViewModel) {
-            observe(viewModel.tips) { mDisplayDelegate.showTips(it) }
-            observe(viewModel.loading) {
-                when (it) {
-                    is LoadingState.Loading -> showLoading(it.message)
-                    is LoadingState.Hide -> hideLoading()
-                }
+        observe(mViewModel.tips) { mDisplayDelegate.showTips(it) }
+        observe(mViewModel.loading) {
+            when (it) {
+                is LoadingState.Loading -> showLoading(it.message)
+                is LoadingState.Hide -> hideLoading()
             }
         }
     }
@@ -79,8 +76,6 @@ abstract class BaseActivity : AppCompatActivity(), IView, ILoadable {
     override fun hideLoading() {
         mDisplayDelegate.dismissLoading()
     }
-
-    abstract fun getViewModel(): ViewModel?
 
     override fun createCommonPage(contentView: View): ICommonPage? {
         // 返回null不会自动注入empty、loading、error三个布局

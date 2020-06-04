@@ -39,7 +39,7 @@ object AppSPUtil {
     fun getString(key: String, defaultValue: String = "") = sp.decodeString(key, defaultValue)
     fun getInt(key: String, defaultValue: Int = -1) = sp.decodeInt(key, defaultValue)
     fun getLong(key: String, defaultValue: Long = -1L) = sp.decodeLong(key, defaultValue)
-    fun getFloat(key: String, defaultValue: Float = 1F) = sp.decodeFloat(key, defaultValue)
+    fun getFloat(key: String, defaultValue: Float = -1F) = sp.decodeFloat(key, defaultValue)
     fun getBoolean(key: String, defaultValue: Boolean = false) = sp.decodeBool(key, defaultValue)
     fun getDouble(key: String, defaultValue: Double = 0.0) = sp.decodeDouble(key, defaultValue)
 

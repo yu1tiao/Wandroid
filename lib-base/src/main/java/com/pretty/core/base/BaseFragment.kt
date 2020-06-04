@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import com.pretty.core.arch.*
 import com.pretty.core.arch.commonpage.CommonPageManager
 import com.pretty.core.arch.commonpage.ICommonPage
@@ -17,9 +16,10 @@ import com.pretty.core.ext.observe
  * @author yu
  * @date 2018/10/29
  */
-abstract class BaseFragment : Fragment(), IView, ILoadable {
+abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView, ILoadable {
 
     protected abstract val mLayoutId: Int
+    protected abstract val mViewModel: VM
     override val mDisplayDelegate: IDisplayDelegate by lazy { DisplayDelegate() }
     override val mDisposableManager: IDisposableManager by lazy { DisposableManager() }
 
@@ -59,19 +59,14 @@ abstract class BaseFragment : Fragment(), IView, ILoadable {
     }
 
     open fun subscribeLiveData() {
-        val viewModel = getViewModel()
-        if (viewModel is BaseViewModel) {
-            observe(viewModel.tips) { mDisplayDelegate.showTips(it) }
-            observe(viewModel.loading) {
-                when (it) {
-                    is LoadingState.Loading -> showLoading(it.message)
-                    is LoadingState.Hide -> hideLoading()
-                }
+        observe(mViewModel.tips) { mDisplayDelegate.showTips(it) }
+        observe(mViewModel.loading) {
+            when (it) {
+                is LoadingState.Loading -> showLoading(it.message)
+                is LoadingState.Hide -> hideLoading()
             }
         }
     }
-
-    abstract fun getViewModel(): ViewModel?
 
     override fun showLoading(message: String?) {
         mDisplayDelegate.showLoading(message)

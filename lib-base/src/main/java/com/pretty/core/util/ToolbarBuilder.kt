@@ -11,14 +11,17 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import com.pretty.core.R
+import com.pretty.core.ext.safeCast
 import com.pretty.core.ext.toResColor
 import com.pretty.core.ext.toResString
 
 class ToolbarBuilder(private val toolbar: Toolbar) {
 
     companion object {
-        fun build(toolbar: Toolbar, action: ToolbarBuilder.(Toolbar) -> Unit) {
-            ToolbarBuilder(toolbar).action(toolbar)
+        fun build(toolbar: View, action: ToolbarBuilder.(Toolbar) -> Unit) {
+            toolbar.safeCast<Toolbar> {
+                ToolbarBuilder(it).action(it)
+            }
         }
     }
 
@@ -27,7 +30,7 @@ class ToolbarBuilder(private val toolbar: Toolbar) {
     }
 
     fun setTitle(title: String?, @ColorRes colorRes: Int? = -1) {
-        toolbar.setTitle(title)
+        toolbar.title = title
         if (colorRes != -1) {
             toolbar.setTitleTextColor(colorRes!!.toResColor())
         }
@@ -35,8 +38,11 @@ class ToolbarBuilder(private val toolbar: Toolbar) {
 
 
     /** 设置返回按钮 */
-    fun setDefaultNavigationBtn(activity: Activity) {
-        setNavigationBtn(R.drawable.ic_default_navigation_btn) {
+    fun setDefaultNavigationBtn(
+        activity: Activity,
+        iconRes: Int = R.drawable.ic_default_navigation_btn
+    ) {
+        setNavigationBtn(iconRes) {
             activity.onBackPressed()
         }
     }

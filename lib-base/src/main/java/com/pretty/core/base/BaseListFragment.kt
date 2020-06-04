@@ -2,7 +2,6 @@ package com.pretty.core.base
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pretty.core.ext.observe
@@ -13,7 +12,7 @@ import me.yuu.liteadapter.core.LiteAdapterEx
  * @author yu
  * @date 2019/2/27
  */
-abstract class BaseListFragment<D, VM : BaseListViewModel<D>> : BaseFragment() {
+abstract class BaseListFragment<D, VM : BaseListViewModel<D>> : BaseFragment<VM>() {
 
     protected lateinit var mAdapter: LiteAdapterEx<D>
 
@@ -21,7 +20,7 @@ abstract class BaseListFragment<D, VM : BaseListViewModel<D>> : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getListViewModel().run {
+        mViewModel.run {
             observe(loadCompleted) {
                 refreshLayout.isRefreshing = false
                 mAdapter.loadMoreCompleted()
@@ -38,8 +37,8 @@ abstract class BaseListFragment<D, VM : BaseListViewModel<D>> : BaseFragment() {
 
         mAdapter = createAdapter()
         initRecyclerView(recyclerView, mAdapter, getLayoutManager())
-        refreshLayout.setOnRefreshListener { getListViewModel().refresh() }
-        getListViewModel().refresh()
+        refreshLayout.setOnRefreshListener { mViewModel.refresh() }
+        mViewModel.refresh()
     }
 
     protected open fun initRecyclerView(
@@ -50,12 +49,6 @@ abstract class BaseListFragment<D, VM : BaseListViewModel<D>> : BaseFragment() {
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
     }
-
-    override fun getViewModel(): ViewModel? {
-        return getListViewModel()
-    }
-
-    protected abstract fun getListViewModel(): VM
 
     protected open fun getLayoutManager(): RecyclerView.LayoutManager {
         return LinearLayoutManager(activity)

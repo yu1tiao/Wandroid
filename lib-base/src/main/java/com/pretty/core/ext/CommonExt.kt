@@ -20,10 +20,6 @@ fun <T> T?.safeValue(valueIfNull: T): T {
     return this ?: valueIfNull
 }
 
-inline fun <reified T> List<T>?.toNonNullList(): List<T> {
-    return this ?: emptyList()
-}
-
 fun bundleOf(vararg pairs: Pair<String, Any> = emptyArray()): Bundle {
     return if (pairs.isNotEmpty())
         pairs.toBundle()

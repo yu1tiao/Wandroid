@@ -16,7 +16,7 @@ abstract class BaseModel : IModel {
 
     }
 
-    override fun destroy() {
+    override fun onDestroy() {
 
     }
 

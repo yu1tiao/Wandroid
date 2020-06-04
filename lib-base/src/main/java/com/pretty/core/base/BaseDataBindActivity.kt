@@ -11,7 +11,8 @@ import com.pretty.core.arch.ILoadable
  * @author yu
  * @date 2018/10/29
  */
-abstract class BaseDataBindActivity<B : ViewDataBinding> : BaseActivity(), IView, ILoadable {
+abstract class BaseDataBindActivity<B : ViewDataBinding, VM : BaseViewModel>
+    : BaseActivity<VM>(), IView, ILoadable {
 
     protected lateinit var mBinding: B
 

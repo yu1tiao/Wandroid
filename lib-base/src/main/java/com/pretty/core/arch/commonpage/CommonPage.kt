@@ -101,7 +101,7 @@ class CommonPage internal constructor(
         curState = status
     }
 
-    override fun destroy() {
+    override fun onDestroy() {
         statusViews.clear()
         contentView = null
     }

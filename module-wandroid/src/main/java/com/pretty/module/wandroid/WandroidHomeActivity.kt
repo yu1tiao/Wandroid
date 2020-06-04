@@ -1,7 +1,6 @@
 package com.pretty.module.wandroid
 
-import androidx.lifecycle.ViewModel
-import com.pretty.core.base.BaseActivity
+import com.pretty.core.base.BaseSimpleActivity
 import com.pretty.core.router.RouterConstant
 import com.pretty.core.router.service.AccountService
 import com.sankuai.waimai.router.Router
@@ -10,7 +9,7 @@ import kotlinx.android.synthetic.main.a_wandroid_home.*
 
 
 @RouterUri(path = [RouterConstant.WANDROID_HOME_ACTIVITY])
-class WandroidHomeActivity : BaseActivity() {
+class WandroidHomeActivity : BaseSimpleActivity() {
 
     // 使用ServiceLoader获取用户管理服务
     private val accountService by lazy {
@@ -18,10 +17,6 @@ class WandroidHomeActivity : BaseActivity() {
     }
 
     override val mLayoutId: Int = R.layout.a_wandroid_home
-
-    override fun getViewModel(): ViewModel? {
-        return null
-    }
 
     override fun initPage() {
         // 跳转登录页
@@ -33,5 +28,4 @@ class WandroidHomeActivity : BaseActivity() {
             Router.startUri(this, RouterConstant.WANDROID_COLLECT_ACTIVITY)
         }
     }
-
 }

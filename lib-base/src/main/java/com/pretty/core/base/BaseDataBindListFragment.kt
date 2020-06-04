@@ -5,22 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.pretty.core.arch.ILoadable
 
-
-/**
- * 支持DataBinding
- * @author yu
- * @date 2018/10/29
- */
-abstract class BaseDataBindFragment<B : ViewDataBinding, VM : BaseViewModel>
-    : BaseFragment<VM>(), IView, ILoadable {
+abstract class BaseDataBindListFragment<D, B : ViewDataBinding, VM : BaseListViewModel<D>>
+    : BaseListFragment<D, VM>() {
 
     protected lateinit var mBinding: B
 
     override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): View {
         mBinding = DataBindingUtil.inflate<B>(inflater, mLayoutId, container, false)
-            .apply { lifecycleOwner = this@BaseDataBindFragment }
+            .apply { lifecycleOwner = this@BaseDataBindListFragment }
         return mBinding.root
     }
 }

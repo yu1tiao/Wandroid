@@ -62,9 +62,9 @@ class DisplayDelegate : IDisplayDelegate {
         return context ?: throw NullPointerException("can not get context after destroy")
     }
 
-    override fun destroy() {
+    override fun onDestroy() {
         context = null
-        commonPage?.destroy()
+        commonPage?.onDestroy()
         commonPage = null
         if (loadingDialog?.isShowing == true) {
             loadingDialog?.dismiss()

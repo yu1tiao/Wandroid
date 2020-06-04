@@ -21,6 +21,11 @@ android {
             annotationProcessorOptions.includeCompileClasspath = true
         }
 
+        manifestPlaceholders = [
+                // 外部uri跳转路由的scheme，通过中转activity跳转
+                ROUTER_URI_SCHEME: "",
+        ]
+
         multiDexEnabled true
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.pretty.core.R
 
 /**
@@ -25,9 +26,9 @@ class ContainerActivity : AppCompatActivity() {
         val args = intent.getBundleExtra(KEY_ARGS)
         val fragmentClass = intent.getSerializableExtra(KEY_CLASS) as Class<Fragment>
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.flContainer, fragmentClass, args)
-            .commitAllowingStateLoss()
+        supportFragmentManager.commit(true) {
+            add(R.id.flContainer, fragmentClass, args)
+        }
     }
 
     override fun onBackPressed() {

@@ -13,16 +13,12 @@ import com.sankuai.waimai.router.core.UriRequest
 class LoginInterceptor : UriInterceptor {
 
     private val service by lazy {
-        Router.getService(AccountService::class.java,
-            RouterConstant.ACCOUNT_SERVICE
-        )
+        Router.getService(AccountService::class.java, RouterConstant.ACCOUNT_SERVICE)
     }
 
     override fun intercept(request: UriRequest, callback: UriCallback) {
-        service?.run {
-            runIfLogin {
-                callback.onNext()
-            }
+        service.runIfLogin {
+            callback.onNext()
         }
     }
 }
