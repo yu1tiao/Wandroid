@@ -1,7 +1,6 @@
 package com.pretty.core.ext
 
 import android.content.Context
-import android.content.res.Resources
 import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
@@ -46,11 +45,6 @@ fun View.showSoftInput() {
 fun View.hideSoftInput() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(windowToken, 0)
-}
-
-fun dp2px(dpValue: Int): Float {
-    val scale = Resources.getSystem().displayMetrics.density
-    return (dpValue * scale + 0.5f)
 }
 
 /**
