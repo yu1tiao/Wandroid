@@ -1,7 +1,7 @@
 package com.pretty.core.router
 
-object RouterConstant {
-    const val SCHEME = "y_router"
+object RC {
+    const val SCHEME = "wangx"
     const val HOST = "page"
     const val SCHEME_HOST = "$SCHEME://$HOST"
 
@@ -14,4 +14,8 @@ object RouterConstant {
     const val WANDROID_COLLECT_ACTIVITY = "/wandroid_collect_activity"
 
 
+}
+
+fun String.insertSchemeHost(): String {
+    return "${RC.SCHEME_HOST}$this"
 }

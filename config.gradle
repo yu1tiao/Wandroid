@@ -28,11 +28,10 @@ ext {
             cardview    : "androidx.cardview:cardview:1.0.0",
 
             multidex    : 'androidx.multidex:multidex:2.0.1',
+            startup     : 'androidx.startup:startup-runtime:1.0.0-alpha01',
     ]
 
     jetpackDeps = [
-
-
             // lifecycle
             lifecycle_ktx          : "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0",
             lifecycle_viewmodel_ktx: "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0",
@@ -57,6 +56,8 @@ ext {
     ]
 
     imageDeps = [
+            coil            : "io.coil-kt:coil:0.11.0",
+
             glide           : "com.github.bumptech.glide:glide:4.11.0",
             glide_compiler  : "com.github.bumptech.glide:compiler:4.11.0",
             glide_xformation: "jp.wasabeef:glide-transformations:4.1.0",
@@ -92,7 +93,7 @@ ext {
     toolDeps = [
             eventbus          : "com.github.yu1tiao:EventBus:1.0.2",
             eventbus_compiler : "com.github.yu1tiao.EventBus:bus-compiler:1.0.2",
-            liteAdapter       : "com.github.yu1tiao:LiteAdapter:1.1.0x",
+            liteAdapter       : "com.github.yu1tiao:LiteAdapter:1.1.1k",
 
             utilCode          : "com.blankj:utilcodex:1.28.4",
             mmkv              : "com.tencent:mmkv-static:1.1.1",

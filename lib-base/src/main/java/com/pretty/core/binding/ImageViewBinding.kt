@@ -2,8 +2,8 @@ package com.pretty.core.binding
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.request.RequestOptions
-import com.pretty.core.util.GlideApp
+import coil.api.load
+import coil.transform.CircleCropTransformation
 
 
 /**
@@ -12,16 +12,35 @@ import com.pretty.core.util.GlideApp
  */
 @BindingAdapter(value = ["bind_url", "bind_place_holder", "bind_error"], requireAll = false)
 fun loadImage(imageView: ImageView, url: String?, placeHolder: Int?, error: Int?) {
-    GlideApp.with(imageView.context)
-        .load(url)
-        .apply(RequestOptions().placeholder(placeHolder ?: 0).error(error ?: 0))
-        .into(imageView)
+//    GlideApp.with(imageView.context)
+//        .load(url)
+//        .apply(RequestOptions().placeholder(placeHolder ?: 0).error(error ?: 0))
+//        .into(imageView)
+    imageView.load(url.orEmpty()) {
+        crossfade(true)
+        if (placeHolder != null) {
+            placeholder(placeHolder)
+        }
+        if (error != null) {
+            error(error)
+        }
+    }
 }
 
 @BindingAdapter(value = ["bind_url_circle", "bind_place_holder", "bind_error"], requireAll = false)
 fun loadImageCircle(imageView: ImageView, url: String?, placeHolder: Int?, error: Int?) {
-    GlideApp.with(imageView.context)
-        .load(url)
-        .apply(RequestOptions().placeholder(placeHolder ?: 0).error(error ?: 0).circleCrop())
-        .into(imageView)
+//    GlideApp.with(imageView.context)
+//        .load(url)
+//        .apply(RequestOptions().placeholder(placeHolder ?: 0).error(error ?: 0).circleCrop())
+//        .into(imageView)
+    imageView.load(url.orEmpty()) {
+        crossfade(true)
+        if (placeHolder != null) {
+            placeholder(placeHolder)
+        }
+        if (error != null) {
+            error(error)
+        }
+        transformations(CircleCropTransformation())
+    }
 }

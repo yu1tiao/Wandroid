@@ -1,7 +1,7 @@
 package com.pretty.wandroid.user.service
 
 import com.pretty.core.Foundation
-import com.pretty.core.router.RouterConstant
+import com.pretty.core.router.RC
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.core.router.service.AccountService
 import com.sankuai.waimai.router.Router
@@ -9,7 +9,7 @@ import com.sankuai.waimai.router.annotation.RouterService
 
 @RouterService(
     interfaces = [AccountService::class],
-    key = [RouterConstant.ACCOUNT_SERVICE],
+    key = [RC.ACCOUNT_SERVICE],
     singleton = true
 )
 class AccountServiceImpl : AccountService {
@@ -44,7 +44,7 @@ class AccountServiceImpl : AccountService {
                     onNext(user!!)
                 }
             })
-            Router.startUri(Foundation.getTopActivity(), RouterConstant.WANDROID_LOGIN_ACTIVITY)
+            Router.startUri(Foundation.getTopActivity(), RC.WANDROID_LOGIN_ACTIVITY)
         }
     }
 }

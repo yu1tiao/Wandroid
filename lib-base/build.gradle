@@ -15,10 +15,6 @@ android {
 
         consumerProguardFiles 'consumer-rules.pro'
 
-        javaCompileOptions {
-            annotationProcessorOptions.includeCompileClasspath = true
-        }
-
         multiDexEnabled true
     }
 
@@ -86,11 +82,11 @@ dependencies {
     api httpDeps.retrofit_rxjava
 
     // image
-    api imageDeps.glide
-    kapt imageDeps.glide_compiler
+    api imageDeps.coil
+//    api imageDeps.glide
+//    kapt imageDeps.glide_compiler
 
 //    api uiDeps.material_dialog
-//    api toolDeps.permission_assent
     api toolDeps.utilCode
     api toolDeps.liteAdapter
     api toolDeps.mmkv

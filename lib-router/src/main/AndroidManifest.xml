@@ -2,8 +2,13 @@
     package="com.pretty.core.router">
 
     <application>
-        <activity android:name=".compact.UriProxyActivity">
+        <activity
+            android:name=".compact.UriProxyActivity"
+            android:exported="true">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
                 <!-- 接收所有scheme为demo的外部URI跳转，不区分host和path -->
                 <data android:scheme="${ROUTER_URI_SCHEME}" />
             </intent-filter>

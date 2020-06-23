@@ -5,6 +5,7 @@ import com.pretty.core.base.BaseApplication
 import com.pretty.core.config.GlobalConfiguration
 import com.pretty.core.config.INetPolicy
 import com.pretty.core.http.CommonHeaderInterceptor
+import com.pretty.core.router.RC
 import com.sankuai.waimai.router.Router
 import com.sankuai.waimai.router.common.DefaultRootUriHandler
 import com.sankuai.waimai.router.components.DefaultLogger
@@ -27,6 +28,8 @@ class App : BaseApplication() {
         Debugger.setEnableLog(true)
         Debugger.setEnableDebug(true)
 
+        // 配置了默认scheme和host的，跳转需要写完全路径
+//        Router.init(DefaultRootUriHandler(this, RC.SCHEME, RC.HOST))
         Router.init(DefaultRootUriHandler(this))
     }
 

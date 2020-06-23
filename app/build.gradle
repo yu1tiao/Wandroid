@@ -17,13 +17,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions.includeCompileClasspath = true
-        }
-
         manifestPlaceholders = [
                 // 外部uri跳转路由的scheme，通过中转activity跳转
-                ROUTER_URI_SCHEME: "",
+                ROUTER_URI_SCHEME: "wangx",
         ]
 
         multiDexEnabled true
@@ -57,7 +53,7 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
