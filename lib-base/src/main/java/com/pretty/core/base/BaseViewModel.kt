@@ -40,14 +40,14 @@ open class BaseViewModel : ViewModel(), ILoadable {
         showLoading: Boolean = false
     ): Job {
         return viewModelScope.launch {
-            if (showLoading) showLoading()
             try {
+                if (showLoading) showLoading()
                 success(block())
             } catch (e: Throwable) {
                 failure(e)
             } finally {
-                finally()
                 if (showLoading) hideLoading()
+                finally()
             }
         }
     }
