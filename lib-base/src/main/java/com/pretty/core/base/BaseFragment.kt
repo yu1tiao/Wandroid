@@ -7,16 +7,13 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.pretty.core.arch.*
-import com.pretty.core.arch.commonpage.CommonPageManager
-import com.pretty.core.arch.commonpage.ICommonPage
 import com.pretty.core.ext.observe
-
 
 /**
  * @author yu
  * @date 2018/10/29
  */
-abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView, ILoadable {
+abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
 
     protected abstract val mLayoutId: Int
     protected abstract val mViewModel: VM
@@ -49,7 +46,7 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView, ILoadable {
     ): View? {
         mDisposableManager.init(this)
         val root = inflateView(inflater, container)
-        mDisplayDelegate.init(requireActivity(), createCommonPage(root))
+        mDisplayDelegate.init(requireActivity())
         subscribeLiveData()
         return root
     }
@@ -59,41 +56,12 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView, ILoadable {
     }
 
     open fun subscribeLiveData() {
-        observe(mViewModel.tips) { mDisplayDelegate.showTips(it) }
         observe(mViewModel.loading) {
             when (it) {
-                is LoadingState.Loading -> showLoading(it.message)
-                is LoadingState.Hide -> hideLoading()
+                is LoadingState.Loading -> mDisplayDelegate.showLoading(it.message)
+                is LoadingState.Hide -> mDisplayDelegate.hideLoading()
             }
         }
-    }
-
-    override fun showLoading(message: String?) {
-        mDisplayDelegate.showLoading(message)
-    }
-
-    override fun hideLoading() {
-        mDisplayDelegate.dismissLoading()
-    }
-
-    override fun createCommonPage(contentView: View): ICommonPage? {
-        // 返回null不会自动注入empty、loading、error三个布局
-        if (injectCommonPage()) {
-            return CommonPageManager.getDefault().wrap(contentView).withRetry { reTry() }
-        }
-        return null
-    }
-
-    /**
-     * 是否注入默认的CommonPage
-     */
-    open fun injectCommonPage(): Boolean = false
-
-    /**
-     * 注入CommonPage后点击，错误页面或空页面点击重试会回调这里
-     */
-    open fun reTry() {
-
     }
 
 }

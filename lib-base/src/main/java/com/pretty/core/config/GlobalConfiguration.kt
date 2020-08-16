@@ -1,6 +1,7 @@
 package com.pretty.core.config
 
 import android.widget.Toast
+import androidx.annotation.IntDef
 import com.pretty.core.Foundation
 import com.pretty.core.arch.commonpage.CommonPageFactory
 import com.pretty.core.util.CrashLogReporter
@@ -19,7 +20,6 @@ class GlobalConfiguration(
     var retrofitConfigCallback: RetrofitConfigCallback? = null,// 配置retrofit
     var toastFactory: ToastFactory = DefaultToastFactory(),     // 全局的Toast工厂，自定义toast
     var errorHandler: ErrorHandler = toastErrorHandler,     // 框架错误回调(网络请求，包括协程、rxjava等，默认弹出toast)
-    var commonPageFactory: CommonPageFactory = DefaultCommonPageFactory(),// 全局通用布局(包括空页面、加载中、错误等状态，BaseActivity中可以选择是否注入或者自定义)
     var crashLogReporter: CrashLogReporter = FakeCrashLogReporter() // Timber日志上报
 ) {
 
@@ -37,4 +37,16 @@ typealias RetrofitConfigCallback = (Retrofit.Builder) -> Retrofit.Builder
 /** 全局的错误处理 */
 typealias ErrorHandler = (Throwable) -> Unit
 /** 全局的Toast工厂 */
-typealias ToastFactory = (CharSequence, Int) -> Toast
+typealias ToastFactory = (@ToastType Int, CharSequence, Int) -> Toast
+
+// toast 类型
+@Retention(AnnotationRetention.SOURCE)
+@Target(allowedTargets = [AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER])
+@IntDef(value = [ToastType.NORMAL, ToastType.SUCCESS, ToastType.FAIL])
+annotation class ToastType {
+    companion object {
+        const val NORMAL = 0
+        const val SUCCESS = 1
+        const val FAIL = 2
+    }
+}

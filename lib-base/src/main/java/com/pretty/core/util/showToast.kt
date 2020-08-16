@@ -4,14 +4,23 @@ import android.os.Handler
 import android.os.Message
 import android.widget.Toast
 import com.pretty.core.Foundation
+import com.pretty.core.config.ToastType
 import java.lang.reflect.Field
 
-fun showToast(message: String?) {
+fun showSuccessToast(message: String?) {
+    showToast(message, ToastType.SUCCESS)
+}
+
+fun showFailToast(message: String?) {
+    showToast(message, ToastType.FAIL)
+}
+
+fun showToast(message: String?, @ToastType type: Int = ToastType.NORMAL) {
     message?.let {
         if (it.isNotBlank()) {
             val block = {
                 val duration = if (it.length > 10) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
-                val toast = Foundation.getGlobalConfig().toastFactory(it, duration)
+                val toast = Foundation.getGlobalConfig().toastFactory.invoke(type, it, duration)
                 ToastCompat.hook(toast)
                 toast.show()
             }

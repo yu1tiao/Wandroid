@@ -1,14 +1,10 @@
 package com.pretty.core.arch
 
 import android.content.Context
-import com.pretty.core.arch.commonpage.ICommonPage
 
 interface IDisplayDelegate : Destroyable {
 
-    fun init(
-        context: Context,
-        commonPage: ICommonPage? = null
-    )
+    fun init(context: Context)
 
     /**
      * 显示Loading对话框
@@ -24,7 +20,7 @@ interface IDisplayDelegate : Destroyable {
     /**
      * 关闭Loading对话框
      */
-    fun dismissLoading()
+    fun hideLoading()
 
     /**
      * 更新Loading对话框文字（如果正在展示的话）
@@ -33,12 +29,6 @@ interface IDisplayDelegate : Destroyable {
     fun updateLoadingMsg(msg: String)
 
     fun showTips(text: String?)
-
-    fun showSuccess()
-
-    fun showError(iconRes: Int? = -1, errorText: String? = null)
-
-    fun showEmpty(iconRes: Int? = -1, emptyText: String? = null)
 
     fun getContext(): Context
 }

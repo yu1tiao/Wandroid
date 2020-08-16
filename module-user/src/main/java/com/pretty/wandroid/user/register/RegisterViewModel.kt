@@ -3,6 +3,7 @@ package com.pretty.wandroid.user.register
 import androidx.databinding.ObservableField
 import com.pretty.core.base.BaseViewModel
 import com.pretty.core.util.SingleLiveEvent
+import com.pretty.core.util.showToast
 
 
 class RegisterViewModel : BaseViewModel() {
@@ -17,7 +18,7 @@ class RegisterViewModel : BaseViewModel() {
 
     fun btnRegister() {
         if (rePassWord.get()!! != passWord.get()) {
-            showTips("重复输入密码错误")
+            showToast("重复输入密码错误")
             return
         }
 
@@ -25,7 +26,7 @@ class RegisterViewModel : BaseViewModel() {
             model.register(userName.get()!!, passWord.get()!!)
         }, success = {
             registerSuccess.call()
-            showTips("注册成功!")
+            showToast("注册成功!")
         }, showLoading = true)
     }
 

@@ -3,7 +3,7 @@ package com.pretty.core.rx
 import autodispose2.*
 import com.pretty.core.Foundation
 import com.pretty.core.arch.ILoadable
-import com.pretty.core.http.FlatResp
+import com.pretty.core.http.Resp
 import com.pretty.core.http.check
 import com.pretty.core.util.runOnMainThread
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -15,80 +15,80 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * 检查网络请求
  */
 
-private class HttpFunction<T : FlatResp> : Function<T, T> {
+private class HttpFunction<T : Resp<*>> : Function<T, T> {
     override fun apply(t: T): T {
         return t.check()
     }
 }
 
-fun <T : FlatResp> Observable<T>.checkHttpResp(): Observable<T> {
+fun <T : Resp<*>> Observable<T>.checkHttpResp(): Observable<T> {
     return this.map(HttpFunction())
 }
 
-fun <T : FlatResp> Flowable<T>.checkHttpResp(): Flowable<T> {
+fun <T : Resp<*>> Flowable<T>.checkHttpResp(): Flowable<T> {
     return this.map(HttpFunction())
 }
 
-fun <T : FlatResp> Single<T>.checkHttpResp(): Single<T> {
+fun <T : Resp<*>> Single<T>.checkHttpResp(): Single<T> {
     return this.map(HttpFunction())
 }
 
-fun <T : FlatResp> Maybe<T>.checkHttpResp(): Maybe<T> {
+fun <T : Resp<*>> Maybe<T>.checkHttpResp(): Maybe<T> {
     return this.map(HttpFunction())
 }
 
 /**
  * 应用默认的错误处理
  */
-inline fun <T> Observable<T>.apiSubscribe(
-    crossinline onNext: (T) -> Unit,
-    noinline onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
-) = subscribe({ onNext(it) }, onError)
+fun <T> Observable<T>.apiSubscribe(
+    onNext: (T) -> Unit,
+    onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
+) = subscribe(onNext, onError)
 
-inline fun <T> Flowable<T>.apiSubscribe(
-    crossinline onNext: (T) -> Unit,
-    noinline onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
-) = subscribe({ onNext(it) }, onError)
+fun <T> Flowable<T>.apiSubscribe(
+    onNext: (T) -> Unit,
+    onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
+) = subscribe(onNext, onError)
 
-inline fun <T> Single<T>.apiSubscribe(
-    crossinline onNext: (T) -> Unit,
-    noinline onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
-) = subscribe({ onNext(it) }, onError)
+fun <T> Single<T>.apiSubscribe(
+    onNext: (T) -> Unit,
+    onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
+) = subscribe(onNext, onError)
 
-inline fun <T> Maybe<T>.apiSubscribe(
-    crossinline onNext: (T) -> Unit,
-    noinline onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
-) = subscribe({ onNext(it) }, onError)
+fun <T> Maybe<T>.apiSubscribe(
+    onNext: (T) -> Unit,
+    onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
+) = subscribe(onNext, onError)
 
-inline fun Completable.apiSubscribe(
-    crossinline onNext: () -> Unit,
-    noinline onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
-) = subscribe({ onNext() }, onError)
+fun Completable.apiSubscribe(
+    onNext: () -> Unit,
+    onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
+) = subscribe(onNext, onError)
 
-inline fun <T> ObservableSubscribeProxy<T>.apiSubscribe(
-    crossinline onNext: (T) -> Unit,
-    noinline onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
-) = subscribe({ onNext(it) }, onError)
+fun <T> ObservableSubscribeProxy<T>.apiSubscribe(
+    onNext: (T) -> Unit,
+    onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
+) = subscribe(onNext, onError)
 
-inline fun <T> FlowableSubscribeProxy<T>.apiSubscribe(
-    crossinline onNext: (T) -> Unit,
-    noinline onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
-) = subscribe({ onNext(it) }, onError)
+fun <T> FlowableSubscribeProxy<T>.apiSubscribe(
+    onNext: (T) -> Unit,
+    onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
+) = subscribe(onNext, onError)
 
-inline fun <T> SingleSubscribeProxy<T>.apiSubscribe(
-    crossinline onNext: (T) -> Unit,
-    noinline onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
-) = subscribe({ onNext(it) }, onError)
+fun <T> SingleSubscribeProxy<T>.apiSubscribe(
+    onNext: (T) -> Unit,
+    onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
+) = subscribe(onNext, onError)
 
-inline fun <T> MaybeSubscribeProxy<T>.apiSubscribe(
-    crossinline onNext: (T) -> Unit,
-    noinline onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
-) = subscribe({ onNext(it) }, onError)
+fun <T> MaybeSubscribeProxy<T>.apiSubscribe(
+    onNext: (T) -> Unit,
+    onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
+) = subscribe(onNext, onError)
 
-inline fun CompletableSubscribeProxy.apiSubscribe(
-    crossinline onNext: () -> Unit,
-    noinline onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
-) = subscribe({ onNext() }, onError)
+fun CompletableSubscribeProxy.apiSubscribe(
+    onNext: () -> Unit,
+    onError: ((Throwable) -> Unit) = Foundation.getGlobalConfig().errorHandler
+) = subscribe(onNext, onError)
 
 /**
  * 切换线程

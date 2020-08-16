@@ -14,7 +14,7 @@ import com.pretty.core.arch.ILoadable
  * @date 2018/10/29
  */
 abstract class BaseDataBindFragment<B : ViewDataBinding, VM : BaseViewModel>
-    : BaseFragment<VM>(), IView, ILoadable {
+    : BaseFragment<VM>(), IView {
 
     protected lateinit var mBinding: B
 

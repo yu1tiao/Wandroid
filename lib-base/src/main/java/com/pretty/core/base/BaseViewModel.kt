@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.pretty.core.Foundation
 import com.pretty.core.arch.ILoadable
 import com.pretty.core.arch.LoadingState
+import com.pretty.core.http.Resp
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-
 
 /**
  * @author yu
@@ -16,10 +16,7 @@ import kotlinx.coroutines.launch
  */
 open class BaseViewModel : ViewModel(), ILoadable {
 
-    val tips = MutableLiveData<String>()
     val loading = MutableLiveData<LoadingState>()
-
-    protected fun showTips(message: String) = tips.postValue(message)
 
     override fun showLoading(message: String?) {
         loading.value = LoadingState.loading(message)
@@ -29,12 +26,9 @@ open class BaseViewModel : ViewModel(), ILoadable {
         loading.value = LoadingState.hide()
     }
 
-    /**
-     * 创建协程并执行，运行在viewModelScope，可感知生命周期，自动取消协程
-     */
     protected fun <T> launch(
-        block: suspend () -> T,
-        success: (T) -> Unit,
+        block: suspend () -> Resp<T>,
+        success: (Resp<T>) -> Unit,
         failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler,
         finally: () -> Unit = {},
         showLoading: Boolean = false
@@ -42,7 +36,8 @@ open class BaseViewModel : ViewModel(), ILoadable {
         return viewModelScope.launch {
             try {
                 if (showLoading) showLoading()
-                success(block())
+                val resp = block()
+                success(resp)
             } catch (e: Throwable) {
                 failure(e)
             } finally {

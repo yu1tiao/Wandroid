@@ -22,6 +22,4 @@ interface IView {
      */
     val mDisposableManager: IDisposableManager
 
-
-    fun createCommonPage(contentView: View): ICommonPage?
 }

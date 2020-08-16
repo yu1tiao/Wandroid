@@ -25,7 +25,6 @@ abstract class BaseApplication : MultiDexApplication(), ConfigurationProvider, N
         super.onCreate()
         Foundation.init(this)
         configuration = initGlobalConfiguration()
-        CommonPageManager.initDefault(configuration.commonPageFactory)
 
         L.init(BuildConfig.DEBUG, Foundation.getGlobalConfig().crashLogReporter)
         AppSPUtil.init()
