@@ -1,7 +1,7 @@
 package com.pretty.wandroid.user.api
 
+import com.pretty.core.http.Resp
 import com.pretty.core.router.entity.LoginEntity
-import com.pretty.wandroid.user.WandroidResp
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -13,7 +13,7 @@ interface UserApi {
     suspend fun login(
         @Field("username") username: String,
         @Field("password") password: String
-    ): WandroidResp<LoginEntity>
+    ): Resp<LoginEntity>
 
     @FormUrlEncoded
     @POST("user/register")
@@ -21,6 +21,6 @@ interface UserApi {
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("repassword") repassword: String
-    ): WandroidResp<Any>
+    ): Resp<Any>
 
 }

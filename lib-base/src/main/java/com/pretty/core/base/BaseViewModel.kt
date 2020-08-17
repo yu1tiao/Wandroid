@@ -7,6 +7,7 @@ import com.pretty.core.Foundation
 import com.pretty.core.arch.ILoadable
 import com.pretty.core.arch.LoadingState
 import com.pretty.core.http.Resp
+import com.pretty.core.http.check
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -36,7 +37,7 @@ open class BaseViewModel : ViewModel(), ILoadable {
         return viewModelScope.launch {
             try {
                 if (showLoading) showLoading()
-                val resp = block()
+                val resp = block().check()
                 success(resp)
             } catch (e: Throwable) {
                 failure(e)

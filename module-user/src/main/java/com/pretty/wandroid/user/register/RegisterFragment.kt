@@ -34,7 +34,7 @@ class RegisterFragment : BaseDataBindFragment<FRegisterBinding, RegisterViewMode
     override fun subscribeLiveData() {
         super.subscribeLiveData()
         observe(mViewModel.registerSuccess) {
-            requireActivity().onBackPressed()
+            parentFragmentManager.popBackStack()
         }
     }
 }

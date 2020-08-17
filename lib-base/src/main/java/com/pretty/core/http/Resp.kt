@@ -9,12 +9,12 @@ import java.io.Serializable
  * @date 2020/3/12
  */
 open class Resp<T>(
-    var code: String,
-    var message: String?,
-    var data: T?
+    var data: T?,
+    var errorCode: String,
+    var errorMsg: String?
 ) : Serializable {
-    fun isSuccessful(): Boolean {
-        return code == "200"
+    open fun isSuccessful(): Boolean {
+        return errorCode == "0"
     }
 }
 
@@ -22,6 +22,6 @@ fun <T : Resp<*>> T.check(): T {
     return if (isSuccessful()) {
         this
     } else {
-        throw ApiException(code, message)
+        throw ApiException(errorCode, errorMsg)
     }
 }

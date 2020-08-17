@@ -1,3 +1,4 @@
+include ':lib-asp'
 rootProject.name='Wandroid'
 include ':app'
 include ':lib-base'
