@@ -57,6 +57,7 @@ dependencies {
     api androidxDeps.swiperefresh
     api androidxDeps.recyclerview
     api androidxDeps.multidex
+    api androidxDeps.local_brocast
 
     api uiDeps.design
     api uiDeps.flexboxLayout

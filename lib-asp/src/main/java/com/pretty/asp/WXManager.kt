@@ -1,14 +1,18 @@
 package com.pretty.asp
 
-import com.blankj.utilcode.util.EncryptUtils
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.pretty.core.Foundation
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
 import com.tencent.mm.opensdk.modelmsg.SendAuth
+import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import okhttp3.*
 import java.io.IOException
-import kotlin.random.Random
 
 object WXManager {
     private var APP_ID = ""
@@ -17,13 +21,23 @@ object WXManager {
         WXAPIFactory.createWXAPI(Foundation.getAppContext(), APP_ID, true)
     }
 
-    fun init(appId: String) {
+    fun init() {
+        require(APP_ID.isNotEmpty()) {
+            throw RuntimeException("请先设置appId")
+        }
+        api.registerApp(APP_ID)
+    }
+
+    fun setAppId(appId: String) {
         require(appId.isNotEmpty()) {
             throw RuntimeException("错误的appId")
         }
-        this.APP_ID = appId
-        api.registerApp(APP_ID)
+        APP_ID = appId
     }
+
+    fun isInstalled(): Boolean = api.isWXAppInstalled
+
+    fun openApp() = api.openWXApp()
 
     /**
      * 唤起微信登录, 回调中返回code，用于获取access_token
@@ -37,7 +51,7 @@ object WXManager {
 
     fun requestAccessToken(code: Int, secret: String) {
         val url =
-            "https://api.weixin.qq.com/sns/oauth2/access_token?appid=${APP_ID}&secret=${secret}&code=${code}&grant_type=authorization_code"
+            "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$APP_ID&secret=${secret}&code=${code}&grant_type=authorization_code"
         val request = Request.Builder().url(url).get().build()
         OkHttpClient.Builder().build().newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -87,18 +101,22 @@ object WXManager {
     /**
      * 唤起微信支付
      */
-//    fun sendPayReq(orderPayInfo: OrderPayInfo) {
-//        val payReq = PayReq()
-//        payReq.appId = orderPayInfo.appid
-//        payReq.partnerId = orderPayInfo.partnerid
-//        payReq.prepayId = orderPayInfo.prepayid
-//        //Sign=WXPay
-//        payReq.packageValue = orderPayInfo.package
-//        payReq.nonceStr = orderPayInfo.noncestr
-//        payReq.timeStamp = orderPayInfo.timestamp
-//        payReq.sign = orderPayInfo.sign
-//        api.sendReq(payReq)
-//    }
+    fun sendPayReq(orderPayInfo: WXOrderPayInfo, callback: (Int) -> Unit) {
+        val payReq = PayReq()
+        payReq.appId = orderPayInfo.appid
+        payReq.partnerId = orderPayInfo.partnerId
+        payReq.prepayId = orderPayInfo.prepayId
+        //Sign=WXPay
+        payReq.packageValue = orderPayInfo.packageValue
+        payReq.nonceStr = orderPayInfo.nonceStr
+        payReq.timeStamp = orderPayInfo.timeStamp
+        payReq.sign = orderPayInfo.sign
+
+        api.sendReq(payReq)
+
+        // 接收回调，注意支付成功只是一个通知，具体是否成功要以服务端为准
+        PayResultReceiver.register(callback)
+    }
 
     /**
      * 打开小程序
@@ -118,19 +136,43 @@ object WXManager {
         api.sendReq(req)
     }
 
-    /**
-     * 生成随机字符串
-     */
-    private fun genNonceStr(): String {
-        val random = Random(System.currentTimeMillis())
-        return EncryptUtils.encryptMD5ToString(APP_ID + random.nextInt(10000) + System.currentTimeMillis())
+}
+
+data class WXOrderPayInfo(
+    var appid: String,
+    var partnerId: String,// 微信支付分配的商户号
+    var prepayId: String,// 支付交易会话ID
+    var packageValue: String = "Sign=WXPay",
+    var nonceStr: String,// 随机字符串
+    var timeStamp: String,// 时间戳/秒
+    var sign: String// 签名信息
+)
+
+class PayResultReceiver(private val callback: (Int) -> Unit) : BroadcastReceiver() {
+    companion object {
+        private const val ACTION_PAY_RESULT = "ACTION_PAY_RESULT"
+
+        fun register(callback: (Int) -> Unit) {
+            LocalBroadcastManager.getInstance(Foundation.getAppContext())
+                .registerReceiver(PayResultReceiver(callback), IntentFilter(ACTION_PAY_RESULT))
+        }
+
+        @JvmStatic
+        fun sendResult(code: Int) {
+            val intent = Intent().apply {
+                action = ACTION_PAY_RESULT
+                putExtra("PayResultCode", code)
+            }
+            LocalBroadcastManager.getInstance(Foundation.getAppContext()).sendBroadcast(intent)
+        }
+
     }
 
-    /**
-     * 获取时间戳字符串
-     */
-    private fun getTimestampStr(): String {
-        return (System.currentTimeMillis() * 1000).toString()
+    override fun onReceive(context: Context, intent: Intent) {
+        LocalBroadcastManager.getInstance(Foundation.getAppContext()).unregisterReceiver(this)
+        if (intent.action == ACTION_PAY_RESULT) {
+            val result = intent.getIntExtra("PayResultCode", -999)
+            callback.invoke(result)
+        }
     }
-
 }
