@@ -19,6 +19,7 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
     protected abstract val mViewModel: VM
     override val mDisplayDelegate: IDisplayDelegate by lazy { DisplayDelegate() }
     override val mDisposableManager: IDisposableManager by lazy { DisposableManager() }
+    private var subscribed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +48,11 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
         mDisposableManager.init(this)
         val root = inflateView(inflater, container)
         mDisplayDelegate.init(requireActivity())
-        subscribeLiveData()
+        if (!subscribed) {
+            // 防止多次订阅
+            subscribeLiveData()
+            subscribed = true
+        }
         return root
     }
 
@@ -56,7 +61,11 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
     }
 
     open fun subscribeLiveData() {
-        observe(mViewModel.loading) {
+        subscribeLoading(mViewModel)
+    }
+
+    fun subscribeLoading(viewModel: BaseViewModel) {
+        observe(viewModel.loading) {
             when (it) {
                 is LoadingState.Loading -> mDisplayDelegate.showLoading(it.message)
                 is LoadingState.Hide -> mDisplayDelegate.hideLoading()

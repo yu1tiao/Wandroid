@@ -16,7 +16,10 @@ class DisplayDelegate : IDisplayDelegate {
     override fun showLoading(msg: String?, needDimBehind: Boolean, cancelCallback: (() -> Unit)?) {
         if (loadingDialog == null)
             loadingDialog = LoadingDialog.create(getContext())
-        loadingDialog?.show(msg)
+        if (loadingDialog?.isShowing == true && !msg.isNullOrEmpty())
+            loadingDialog?.updateMessage(msg)
+        else
+            loadingDialog?.show(msg)
     }
 
     override fun hideLoading() {

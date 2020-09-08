@@ -18,6 +18,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
 
     protected abstract val mLayoutId: Int
     protected abstract val mViewModel: VM
+    private var subscribed = false
 
     /**
      *  提供通用UI操作的能力，如显示隐藏loading，显示Empty、Error页面等
@@ -37,7 +38,11 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
         beforeSetContent(savedInstanceState)
         val root = prepareContentView()
         afterSetContent(root)
-        subscribeLiveData()
+        if (!subscribed) {
+            // 防止多次订阅
+            subscribeLiveData()
+            subscribed = true
+        }
         initPage()
     }
 
@@ -58,7 +63,12 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
     }
 
     open fun subscribeLiveData() {
-        observe(mViewModel.loading) {
+        subscribeLoading(mViewModel)
+    }
+
+    // 一个页面使用多个viewModel时，需要订阅其他viewModel的loading
+    fun subscribeLoading(viewModel: BaseViewModel) {
+        observe(viewModel.loading) {
             when (it) {
                 is LoadingState.Loading -> mDisplayDelegate.showLoading(it.message)
                 is LoadingState.Hide -> mDisplayDelegate.hideLoading()
