@@ -18,9 +18,13 @@ import com.pretty.core.ext.toResString
 class ToolbarBuilder(private val toolbar: Toolbar) {
 
     companion object {
-        fun build(toolbar: View, action: ToolbarBuilder.(Toolbar) -> Unit) {
-            toolbar.safeCast<Toolbar> {
-                ToolbarBuilder(it).action(it)
+        fun build(toolbar: View, action: ToolbarBuilder.(Toolbar) -> Unit): ToolbarBuilder? {
+            return if (toolbar is Toolbar) {
+                ToolbarBuilder(toolbar).apply {
+                    action(toolbar)
+                }
+            } else {
+                null
             }
         }
     }
@@ -76,6 +80,10 @@ class ToolbarBuilder(private val toolbar: Toolbar) {
         }
     }
 
+    fun setRightBtnVisible(visible: Boolean) {
+        toolbar.findViewById<TextView>(R.id.toolbar_right_tv)?.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
     fun setRightBtn(
         @StringRes textResId: Int,
         @ColorRes colorRes: Int = -1,
@@ -110,6 +118,10 @@ class ToolbarBuilder(private val toolbar: Toolbar) {
         }
     }
 
+    fun setRightImageBtnVisible(visible: Boolean) {
+        toolbar.findViewById<ImageView>(R.id.toolbar_right_iv)?.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
     fun setRightImageBtn(@DrawableRes iconRes: Int, onClickListener: ((View) -> Unit)? = null) {
         toolbar.findViewById<ImageView>(R.id.toolbar_right_iv)?.apply {
             setImageResource(iconRes)
@@ -124,5 +136,6 @@ class ToolbarBuilder(private val toolbar: Toolbar) {
         toolbar.setNavigationOnClickListener {
             onClickListener(it)
         }
+        toolbar.findViewById<TextView>(R.id.toolbar_right_tv)?.visibility = View.GONE
     }
 }
