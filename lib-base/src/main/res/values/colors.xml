@@ -11,7 +11,9 @@
     <color name="grayE2">#e2e2e2</color>
     <color name="grayF0">#f0f0f0</color>
 
+    <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#00000000</color>
 
+    <color name="qmui_config_color_separator">#DEE0E2</color>
 </resources>

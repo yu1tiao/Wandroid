@@ -1,5 +1,6 @@
 package com.pretty.core.http
 
+import com.pretty.core.BuildConfig
 import com.pretty.core.Foundation
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
@@ -31,7 +32,7 @@ object RetrofitManager {
 
         val client = generateHttpClient()
         val baseUrl =
-            configuration.netPolicyProvider?.getNetPolicy()?.getApiBaseUrl()?.toHttpUrlOrNull()
+            configuration.netPolicyProvider?.getNetPolicy(BuildConfig.BUILD_TYPE)?.getApiBaseUrl()?.toHttpUrlOrNull()
 
         buildRetrofit(baseUrl!!, client)
     }

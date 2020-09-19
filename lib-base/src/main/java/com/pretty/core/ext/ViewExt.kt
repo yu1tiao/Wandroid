@@ -7,17 +7,22 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import com.pretty.core.R
 
 /**
  * @author mathew
  * @date 2020/1/8
  */
 
-fun View.throttleClick(seconds: Long = 1000, onNext: ((View) -> Unit)) {
+fun View.throttleClick(seconds: Long = 800, onNext: ((View) -> Unit)) {
     this.setOnClickListener(ThrottleClickListener(seconds, onNext))
 }
 
-class ThrottleClickListener(private val timeout: Long, private val onNext: (View) -> Unit) :
+fun View.debounceClick(seconds: Long = 800, onNext: ((View) -> Unit)) {
+    this.setOnClickListener(DebounceClickListener(seconds, onNext))
+}
+
+class ThrottleClickListener(private val timeout: Long = 800, private val onNext: (View) -> Unit) :
     View.OnClickListener {
     private var lastClickTime = 0L
 
@@ -26,6 +31,29 @@ class ThrottleClickListener(private val timeout: Long, private val onNext: (View
         if (diff > timeout) {
             onNext(v)
             lastClickTime = SystemClock.elapsedRealtime()
+        }
+    }
+}
+
+class DebounceClickListener(private val wait: Long = 800, private val onNext: ((View) -> Unit)) :
+    View.OnClickListener {
+    override fun onClick(v: View) {
+        var action = (v.getTag(R.id.click_debounce_action) as? DebounceAction)
+        if (action == null) {
+            action = DebounceAction(v, onNext)
+            v.setTag(R.id.click_debounce_action, action)
+        } else {
+            action.block = onNext
+        }
+        v.removeCallbacks(action)
+        v.postDelayed(action, wait)
+    }
+}
+
+private class DebounceAction(val view: View, var block: ((View) -> Unit)) : Runnable {
+    override fun run() {
+        if (view.isAttachedToWindow) {
+            block(view)
         }
     }
 }

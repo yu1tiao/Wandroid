@@ -4,22 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <com.pretty.core.widget.qmui.layout.QMUIButton
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/m15"
+        android:background="#f34567"
+        android:gravity="center"
+        android:padding="@dimen/m8"
         android:text="登录页面"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:qmui_radius="@dimen/m10"
+        app:qmui_shadowAlpha="100"
+        app:qmui_shadowColor="@color/gray9"
+        app:qmui_shadowElevation="8dp" />
 
-    <Button
+    <com.pretty.core.widget.qmui.layout.QMUIButton
         android:id="@+id/btn_collect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/m15"
+        android:background="#f34567"
+        android:gravity="center"
+        android:padding="@dimen/m8"
         android:text="通过登录拦截器跳转收藏页面"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_login" />
+        app:layout_constraintTop_toBottomOf="@id/btn_login"
+        app:qmui_radius="@dimen/m10"
+        app:qmui_shadowAlpha="100"
+        app:qmui_shadowColor="@color/gray9"
+        app:qmui_shadowElevation="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

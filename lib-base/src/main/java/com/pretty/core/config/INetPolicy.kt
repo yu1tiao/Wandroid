@@ -2,7 +2,7 @@ package com.pretty.core.config
 
 
 interface NetPolicyProvider {
-    fun getNetPolicy(): INetPolicy
+    fun getNetPolicy(buildType: String): INetPolicy
 }
 
 /**
@@ -14,6 +14,7 @@ interface INetPolicy {
         const val QA = "测试环境"
         const val RELEASE = "生产环境"
     }
+
     /**
      * 策略名字
      */

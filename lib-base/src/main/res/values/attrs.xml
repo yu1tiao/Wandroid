@@ -16,16 +16,6 @@
         <attr name="is_touch_select_mode_enabled" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="TitleBar">
-        <attr name="tb_title" format="string" />
-        <attr name="tb_title_size" format="dimension" />
-        <attr name="tb_title_color" format="color" />
-        <attr name="tb_right_text" format="string" />
-        <attr name="tb_right_text_size" format="dimension" />
-        <attr name="tb_right_text_color" format="color" />
-        <attr name="tb_right_icon" format="reference" />
-    </declare-styleable>
-
     <declare-styleable name="PasswordEditText">
         <attr name="pet_iconShow" format="integer" />
         <attr name="pet_iconHide" format="integer" />
@@ -34,4 +24,5 @@
         <attr name="pet_nonMonospaceFont" format="boolean" />
         <attr name="pet_disableIconAlpha" format="boolean" />
     </declare-styleable>
+
 </resources>

@@ -54,7 +54,11 @@ class App : BaseApplication() {
         }
     }
 
-    override fun getNetPolicy(): INetPolicy {
-        return DevNetPolicy()
+    override fun getNetPolicy(buildType: String): INetPolicy {
+        return when (buildType) {
+            "sit" -> SitNetPolicy()
+            "release" -> ReleaseNetPolicy()
+            else -> DevNetPolicy()
+        }
     }
 }
