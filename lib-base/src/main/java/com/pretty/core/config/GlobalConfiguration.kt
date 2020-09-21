@@ -3,7 +3,8 @@ package com.pretty.core.config
 import android.widget.Toast
 import androidx.annotation.IntDef
 import com.pretty.core.Foundation
-import com.pretty.core.arch.commonpage.CommonPageFactory
+import com.pretty.core.arch.state.StatePageConfig
+import com.pretty.core.arch.state.StatePageManager
 import com.pretty.core.util.CrashLogReporter
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -20,12 +21,16 @@ class GlobalConfiguration(
     var retrofitConfigCallback: RetrofitConfigCallback? = null,// 配置retrofit
     var toastFactory: ToastFactory = DefaultToastFactory(),     // 全局的Toast工厂，自定义toast
     var errorHandler: ErrorHandler = toastErrorHandler,     // 框架错误回调(网络请求，包括协程、rxjava等，默认弹出toast)
-    var crashLogReporter: CrashLogReporter = FakeCrashLogReporter() // Timber日志上报
+    var crashLogReporter: CrashLogReporter = FakeCrashLogReporter(), // Timber日志上报
+    var statePageConfig: StatePageConfig = globalStateConfig // 全局的空、错误、加载中布局
 ) {
 
     companion object {
         fun create(initializer: GlobalConfiguration.() -> Unit): GlobalConfiguration {
-            return GlobalConfiguration().apply(initializer)
+            return GlobalConfiguration().apply {
+                StatePageManager.initDefault(statePageConfig)
+                initializer()
+            }
         }
     }
 }

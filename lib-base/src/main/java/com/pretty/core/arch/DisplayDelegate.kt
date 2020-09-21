@@ -1,6 +1,7 @@
 package com.pretty.core.arch
 
 import android.content.Context
+import com.pretty.core.arch.state.StatePage
 import com.pretty.core.util.showToast
 import com.pretty.core.widget.LoadingDialog
 
@@ -8,26 +9,44 @@ class DisplayDelegate : IDisplayDelegate {
 
     private var context: Context? = null
     private var loadingDialog: LoadingDialog? = null
+    private var statePage: StatePage? = null
 
-    override fun init(context: Context) {
+    override fun init(context: Context, statePage: StatePage?) {
         this.context = context
+        this.statePage = statePage
     }
 
-    override fun showLoading(msg: String?, needDimBehind: Boolean, cancelCallback: (() -> Unit)?) {
+    override fun showLoading(loadingMsg: String?) {
         if (loadingDialog == null)
             loadingDialog = LoadingDialog.create(getContext())
-        if (loadingDialog?.isShowing == true && !msg.isNullOrEmpty())
-            loadingDialog?.updateMessage(msg)
+        if (loadingDialog?.isShowing == true && !loadingMsg.isNullOrEmpty())
+            loadingDialog?.updateMessage(loadingMsg)
         else
-            loadingDialog?.show(msg)
+            loadingDialog?.show(loadingMsg)
     }
 
-    override fun hideLoading() {
+    override fun showError(iconRes: Int?, errorText: String?) {
+        statePage?.showError(iconRes, errorText)
+    }
+
+    override fun showEmpty(iconRes: Int?, emptyText: String?) {
+        statePage?.showEmpty(iconRes, emptyText)
+    }
+
+    override fun showContent() {
+        statePage?.showContent()
+    }
+
+    override fun dismissLoading() {
         loadingDialog?.dismiss()
     }
 
-    override fun updateLoadingMsg(msg: String) {
-        loadingDialog?.updateMessage(msg)
+    override fun updateLoadingMessage(loadingText: String) {
+        if (statePage != null) {
+            statePage!!.updateLoadingMessage(loadingText)
+        } else {
+            loadingDialog?.updateMessage(loadingText)
+        }
     }
 
     override fun showTips(text: String?) {
@@ -40,6 +59,7 @@ class DisplayDelegate : IDisplayDelegate {
 
     override fun onDestroy() {
         context = null
+        statePage?.onDestroy()
         if (loadingDialog?.isShowing == true) {
             loadingDialog?.dismiss()
             loadingDialog = null

@@ -2,4 +2,6 @@
 <resources>
     <item name="data_binding_item_view_tag_id" type="id"/>
     <item name="click_debounce_action" type="id"/>
+
+    <item name="state_page_retry_id" type="id"/>
 </resources>

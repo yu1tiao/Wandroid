@@ -1,10 +1,8 @@
 package com.pretty.core.base
 
 
-import android.view.View
 import com.pretty.core.arch.IDisplayDelegate
 import com.pretty.core.arch.IDisposableManager
-import com.pretty.core.arch.commonpage.ICommonPage
 
 /**
  * @author yu

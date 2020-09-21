@@ -2,7 +2,9 @@
     package="com.pretty.module.wandroid">
 
     <application>
-        <activity android:name=".WandroidHomeActivity" />
+        <activity
+            android:name=".WandroidHomeActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity android:name=".CollectActivity" />
     </application>
 
