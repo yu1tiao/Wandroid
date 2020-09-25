@@ -1,6 +1,7 @@
 <resources>
 
     <style name="LightDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -14,7 +15,6 @@
     </style>
 
     <style name="BottomDialogStyle" parent="@style/LightDialog">
-        <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:backgroundDimAmount">0.5</item>
@@ -25,4 +25,18 @@
         <item name="android:windowEnterAnimation">@anim/bottom_in</item>
         <item name="android:windowExitAnimation">@anim/bottom_out</item>
     </style>
+
+
+    <style name="PrefsGroup">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:divider">@drawable/shape_divider_1px_vertical</item>
+        <item name="android:showDividers">beginning|middle|end</item>
+    </style>
+    <style name="PrefsItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+<!--        <item name="icon">@mipmap/ic_launcher</item>-->
+    </style>
+
 </resources>

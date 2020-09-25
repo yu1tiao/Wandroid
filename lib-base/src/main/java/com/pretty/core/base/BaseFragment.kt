@@ -89,7 +89,7 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
         subscribeLoading(mViewModel)
     }
 
-    fun subscribeLoading(viewModel: BaseViewModel) {
+    protected fun subscribeLoading(viewModel: BaseViewModel) {
         observe(viewModel.loading) {
             when (it) {
                 is LoadingState.Loading -> mDisplayDelegate.showLoading(it.message)

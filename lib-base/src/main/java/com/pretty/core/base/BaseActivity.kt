@@ -21,7 +21,6 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
     protected abstract val mLayoutId: Int
     protected abstract val mViewModel: VM
     protected open var injectStatePage = false // 是否注入空布局、错误布局和加载布局
-
     private var subscribed = false
 
     /**
@@ -71,7 +70,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
      */
     protected open fun createStatePage(view: View): StatePage? {
         if (injectStatePage) {
-           return StatePageManager.getDefault().wrap(view).retry { retry() }
+            return StatePageManager.getDefault().wrap(view).retry { retry() }
         }
         // 如果不想使用全局的StatePage
 //        StatePageManager.with {
@@ -92,7 +91,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
     }
 
     // 一个页面使用多个viewModel时，需要订阅其他viewModel的loading
-    fun subscribeLoading(viewModel: BaseViewModel) {
+    protected fun subscribeLoading(viewModel: BaseViewModel) {
         observe(viewModel.loading) {
             when (it) {
                 is LoadingState.Loading -> mDisplayDelegate.showLoading(it.message)

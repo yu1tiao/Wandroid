@@ -46,6 +46,6 @@ fun Array<out Pair<String, Any>>.toBundle(): Bundle {
     }
 }
 
-fun <T> LifecycleOwner.observe(liveData: LiveData<T>, block: (T) -> Unit) {
+inline fun <T> LifecycleOwner.observe(liveData: LiveData<T>, crossinline block: (T) -> Unit) {
     liveData.observe(this, Observer { block(it) })
 }

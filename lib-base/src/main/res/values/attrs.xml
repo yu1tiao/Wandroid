@@ -25,4 +25,19 @@
         <attr name="pet_disableIconAlpha" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="PrefsMenuGroup">
+        <attr name="groupTitle" format="string" />
+    </declare-styleable>
+    <declare-styleable name="PrefsMenuItem">
+        <attr name="itemTitle" format="string" />
+        <attr name="subTitle" format="string" />
+        <attr name="rightText" format="string" />
+        <attr name="icon" format="reference" />
+        <attr name="itemType" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="arrow" value="1" />
+            <enum name="switchButton" value="2" />
+        </attr>
+    </declare-styleable>
+
 </resources>

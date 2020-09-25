@@ -45,6 +45,6 @@
     <dimen name="r10">10dp</dimen>
 
     <!--分割线-->
-    <dimen name="common_divider">0.5dp</dimen>
+    <dimen name="divider_height">0.5dp</dimen>
 
 </resources>
