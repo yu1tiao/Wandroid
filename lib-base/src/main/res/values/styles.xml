@@ -7,18 +7,43 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
-    </style>
-
-    <style name="LightProgressDialog" parent="@style/LightDialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="BottomDialogStyle" parent="@style/LightDialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:backgroundDimAmount">0.5</item>
+    </style>
+
+    <!--  底部弹窗  -->
+    <style name="BottomDialogStyle" parent="@style/LightDialog">
         <item name="android:windowAnimationStyle">@style/bottom_in_bottom_out</item>
+    </style>
+    <!--  全屏弹窗  -->
+    <style name="FullScreenDialogStyle" parent="@style/LightDialog">
+        <!--    windowIsFloating为true时，设置全屏布局包括状态栏时会有闪烁的问题    -->
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <!--  Dialog样式的activity  -->
+    <style name="Theme.ActivityDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@style/bottom_in_bottom_out</item>
+    </style>
+
+    <!--  透明activity  -->
+    <style name="Theme.Activity.Translucent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="bottom_in_bottom_out" parent="@android:style/Animation.Dialog">
@@ -33,10 +58,11 @@
         <item name="android:divider">@drawable/shape_divider_1px_vertical</item>
         <item name="android:showDividers">beginning|middle|end</item>
     </style>
+
     <style name="PrefsItem">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
-<!--        <item name="icon">@mipmap/ic_launcher</item>-->
+        <!--        <item name="icon">@mipmap/ic_launcher</item>-->
     </style>
 
 </resources>

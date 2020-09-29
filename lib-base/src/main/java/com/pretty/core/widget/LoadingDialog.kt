@@ -35,7 +35,7 @@ class LoadingDialog private constructor(context: Context, theme: Int) : Dialog(c
 
     companion object {
         fun create(context: Context): LoadingDialog {
-            return LoadingDialog(context, R.style.LightProgressDialog)
+            return LoadingDialog(context, R.style.LightDialog)
         }
     }
 }
