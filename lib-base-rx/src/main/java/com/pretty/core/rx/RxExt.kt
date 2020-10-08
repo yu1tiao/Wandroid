@@ -3,13 +3,16 @@ package com.pretty.core.rx
 import autodispose2.*
 import com.pretty.core.Foundation
 import com.pretty.core.arch.ILoadable
+import com.pretty.core.config.ignoreErrorHandler
 import com.pretty.core.http.Resp
 import com.pretty.core.http.check
 import com.pretty.core.util.runOnMainThread
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.*
+import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.functions.Function
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 /**
  * 检查网络请求
@@ -145,3 +148,28 @@ fun Completable.showLoading(loadable: ILoadable, message: String? = null): Compl
     }.doFinally {
         runOnMainThread { loadable.hideLoading() }
     }
+
+
+interface CountDownCallback {
+    fun onTimeUpdate(time: Int)
+    fun onTimeOut()
+}
+
+/**
+ * 倒计时
+ */
+fun countDown(timeOut: Int, callback: CountDownCallback): Disposable? {
+    if (timeOut <= 0) {
+        return null
+    }
+    return Observable.interval(1, TimeUnit.SECONDS)
+        .ioToMain()
+        .subscribe({
+            val time = timeOut - it.toInt()
+            if (time > 0) {
+                callback.onTimeUpdate(time)
+            } else {
+                callback.onTimeOut()
+            }
+        }, ignoreErrorHandler)
+}

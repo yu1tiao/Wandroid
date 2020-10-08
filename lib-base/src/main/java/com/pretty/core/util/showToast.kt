@@ -4,18 +4,10 @@ import android.os.Handler
 import android.os.Message
 import android.widget.Toast
 import com.pretty.core.Foundation
-import com.pretty.core.config.ToastType
+import com.pretty.core.config.ToastStyle
 import java.lang.reflect.Field
 
-fun showSuccessToast(message: String?) {
-    showToast(message, ToastType.SUCCESS)
-}
-
-fun showFailToast(message: String?) {
-    showToast(message, ToastType.FAIL)
-}
-
-fun showToast(message: String?, @ToastType type: Int = ToastType.NORMAL) {
+fun showToast(message: String?, type: ToastStyle = ToastStyle.NORMAL) {
     message?.let {
         if (it.isNotBlank()) {
             val block = {

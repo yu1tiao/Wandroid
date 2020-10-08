@@ -92,7 +92,8 @@ dependencies {
     api toolDeps.liteAdapter
     api toolDeps.mmkv
     api toolDeps.timber
-    api toolDeps.ok2curl
+    api toolDeps.toasty
+//    api toolDeps.ok2curl
 
     api toolDeps.eventbus
     kapt toolDeps.eventbus_compiler

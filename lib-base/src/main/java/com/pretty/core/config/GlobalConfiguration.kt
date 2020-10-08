@@ -42,16 +42,8 @@ typealias RetrofitConfigCallback = (Retrofit.Builder) -> Retrofit.Builder
 /** 全局的错误处理 */
 typealias ErrorHandler = (Throwable) -> Unit
 /** 全局的Toast工厂 */
-typealias ToastFactory = (@ToastType Int, CharSequence, Int) -> Toast
+typealias ToastFactory = (ToastStyle, CharSequence, Int) -> Toast
 
-// toast 类型
-@Retention(AnnotationRetention.SOURCE)
-@Target(allowedTargets = [AnnotationTarget.TYPE, AnnotationTarget.VALUE_PARAMETER])
-@IntDef(value = [ToastType.NORMAL, ToastType.SUCCESS, ToastType.FAIL])
-annotation class ToastType {
-    companion object {
-        const val NORMAL = 0
-        const val SUCCESS = 1
-        const val FAIL = 2
-    }
+enum class ToastStyle {
+    ERROR, SUCCESS, INFO, WARNING, NORMAL
 }

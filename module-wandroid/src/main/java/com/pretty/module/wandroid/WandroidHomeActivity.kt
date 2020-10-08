@@ -3,6 +3,7 @@ package com.pretty.module.wandroid
 import android.view.Menu
 import android.view.MenuItem
 import com.pretty.core.base.BaseSimpleActivity
+import com.pretty.core.config.ToastStyle
 import com.pretty.core.router.RC
 import com.pretty.core.router.service.AccountService
 import com.pretty.core.util.showToast
@@ -31,6 +32,21 @@ class WandroidHomeActivity : BaseSimpleActivity() {
         // 通过登录拦截器跳转收藏页面
         btn_collect.setOnClickListener {
             Router.startUri(this, RC.WANDROID_COLLECT_ACTIVITY)
+        }
+        btn_normal.setOnClickListener {
+            showToast("我是消息", ToastStyle.NORMAL)
+        }
+        btn_warning.setOnClickListener {
+            showToast("我是消息", ToastStyle.WARNING)
+        }
+        btn_error.setOnClickListener {
+            showToast("我是消息", ToastStyle.ERROR)
+        }
+        btn_success.setOnClickListener {
+            showToast("我是消息", ToastStyle.SUCCESS)
+        }
+        btn_info.setOnClickListener {
+            showToast("我是消息", ToastStyle.INFO)
         }
     }
 
