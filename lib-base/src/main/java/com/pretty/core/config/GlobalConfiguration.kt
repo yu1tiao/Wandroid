@@ -1,7 +1,6 @@
 package com.pretty.core.config
 
 import android.widget.Toast
-import androidx.annotation.IntDef
 import com.pretty.core.Foundation
 import com.pretty.core.arch.state.StatePageConfig
 import com.pretty.core.arch.state.StatePageManager

@@ -94,8 +94,8 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
     protected fun subscribeLoading(viewModel: BaseViewModel) {
         observe(viewModel.loading) {
             when (it) {
-                is LoadingState.Loading -> mDisplayDelegate.showLoading(it.message)
-                is LoadingState.Hide -> mDisplayDelegate.dismissLoading()
+                is LoadingState.Loading -> mDisplayDelegate.showLoadingDialog(it.message)
+                is LoadingState.Hide -> mDisplayDelegate.dismissLoadingDialog()
             }
         }
     }

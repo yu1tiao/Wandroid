@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:qmui_radius="@dimen/m10"
-        app:qmui_shadowColor="@color/gray9"
+        app:qmui_shadowColor="@color/gray500"
         app:qmui_shadowElevation="8dp" />
 
     <com.pretty.core.widget.qmui.layout.QMUIButton
@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login"
         app:qmui_radius="@dimen/m10"
-        app:qmui_shadowColor="@color/gray9"
+        app:qmui_shadowColor="@color/gray500"
         app:qmui_shadowElevation="8dp" />
 
     <com.pretty.core.widget.qmui.layout.QMUIButton
@@ -49,7 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_collect"
         app:qmui_radius="@dimen/m10"
-        app:qmui_shadowColor="@color/gray9"
+        app:qmui_shadowColor="@color/gray500"
         app:qmui_shadowElevation="8dp" />
 
     <com.pretty.core.widget.qmui.layout.QMUIButton
@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_success"
         app:qmui_radius="@dimen/m10"
-        app:qmui_shadowColor="@color/gray9"
+        app:qmui_shadowColor="@color/gray500"
         app:qmui_shadowElevation="8dp" />
 
     <com.pretty.core.widget.qmui.layout.QMUIButton
@@ -81,7 +81,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_error"
         app:qmui_radius="@dimen/m10"
-        app:qmui_shadowColor="@color/gray9"
+        app:qmui_shadowColor="@color/gray500"
         app:qmui_shadowElevation="8dp" />
 
     <com.pretty.core.widget.qmui.layout.QMUIButton
@@ -97,7 +97,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_warning"
         app:qmui_radius="@dimen/m10"
-        app:qmui_shadowColor="@color/gray9"
+        app:qmui_shadowColor="@color/gray500"
         app:qmui_shadowElevation="8dp" />
 
     <com.pretty.core.widget.qmui.layout.QMUIButton
@@ -113,7 +113,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_info"
         app:qmui_radius="@dimen/m10"
-        app:qmui_shadowColor="@color/gray9"
+        app:qmui_shadowColor="@color/gray500"
         app:qmui_shadowElevation="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

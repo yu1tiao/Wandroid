@@ -4,9 +4,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.pretty.core.R
-import com.pretty.core.arch.state.StatePageConfig
 import com.pretty.core.arch.state.StatePage
 import com.pretty.core.arch.state.StatePageCallback
+import com.pretty.core.arch.state.StatePageConfig
 
 
 val globalStateConfig = StatePageConfig(
@@ -23,7 +23,6 @@ class DefaultStatePageCallback : StatePageCallback {
     private var errorIcon: ImageView? = null
     private var emptyMessage: TextView? = null
     private var errorMessage: TextView? = null
-    private var loadingMessage: TextView? = null
 
     override fun onEmptyCreated(
         parent: StatePage,
@@ -56,7 +55,7 @@ class DefaultStatePageCallback : StatePageCallback {
     }
 
     override fun onLoadingCreated(parent: StatePage, view: View) {
-        loadingMessage = view.findViewById(R.id.tvMessage)
+
     }
 
     override fun updateEmptyView(parent: StatePage, iconRes: Int?, text: String?) {
@@ -78,8 +77,6 @@ class DefaultStatePageCallback : StatePageCallback {
     }
 
     override fun updateLoadingMessage(parent: StatePage, loadingText: String?) {
-        loadingText?.let {
-            loadingMessage?.text = it
-        }
+
     }
 }

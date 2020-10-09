@@ -13,7 +13,7 @@
 
     <!--  StatePage  -->
     <string name="loading_default_message">正在加载</string>
-    <string name="empty_default_message">什么都没有</string>
+    <string name="empty_default_message">暂无相关内容</string>
     <string name="error_default_message">出错了,请稍后再试</string>
 
 </resources>

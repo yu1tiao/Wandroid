@@ -16,13 +16,9 @@ class DisplayDelegate : IDisplayDelegate {
         this.statePage = statePage
     }
 
+    /////////////////////////////// StatePage 页面级 //////////////////////////////
     override fun showLoading(loadingMsg: String?) {
-        if (loadingDialog == null)
-            loadingDialog = LoadingDialog.create(getContext())
-        if (loadingDialog?.isShowing == true && !loadingMsg.isNullOrEmpty())
-            loadingDialog?.updateMessage(loadingMsg)
-        else
-            loadingDialog?.show(loadingMsg)
+        statePage?.showLoading(loadingMsg)
     }
 
     override fun showError(iconRes: Int?, errorText: String?) {
@@ -36,18 +32,26 @@ class DisplayDelegate : IDisplayDelegate {
     override fun showContent() {
         statePage?.showContent()
     }
+    /////////////////////////////// StatePage 页面级 //////////////////////////////
 
-    override fun dismissLoading() {
+    /////////////////////////////// loading dialog //////////////////////////////
+    override fun showLoadingDialog(message: String?) {
+        if (loadingDialog == null)
+            loadingDialog = LoadingDialog.create(getContext())
+        if (loadingDialog?.isShowing == true && !message.isNullOrEmpty())
+            loadingDialog?.updateMessage(message)
+        else
+            loadingDialog?.show(message)
+    }
+
+    override fun dismissLoadingDialog() {
         loadingDialog?.dismiss()
     }
 
     override fun updateLoadingMessage(loadingText: String) {
-        if (statePage != null) {
-            statePage!!.updateLoadingMessage(loadingText)
-        } else {
-            loadingDialog?.updateMessage(loadingText)
-        }
+        loadingDialog?.updateMessage(loadingText)
     }
+    /////////////////////////////// loading dialog //////////////////////////////
 
     override fun showTips(text: String?) {
         showToast(text.toString())
@@ -62,7 +66,7 @@ class DisplayDelegate : IDisplayDelegate {
         statePage?.onDestroy()
         if (loadingDialog?.isShowing == true) {
             loadingDialog?.dismiss()
-            loadingDialog = null
         }
+        loadingDialog = null
     }
 }

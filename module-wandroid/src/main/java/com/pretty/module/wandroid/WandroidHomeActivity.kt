@@ -6,6 +6,7 @@ import com.pretty.core.base.BaseSimpleActivity
 import com.pretty.core.config.ToastStyle
 import com.pretty.core.router.RC
 import com.pretty.core.router.service.AccountService
+import com.pretty.core.util.runOnMainThread
 import com.pretty.core.util.showToast
 import com.sankuai.waimai.router.Router
 import com.sankuai.waimai.router.annotation.RouterUri
@@ -48,6 +49,7 @@ class WandroidHomeActivity : BaseSimpleActivity() {
         btn_info.setOnClickListener {
             showToast("我是消息", ToastStyle.INFO)
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

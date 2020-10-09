@@ -14,7 +14,6 @@ class StatePage constructor(
     private val contentView: View
     private var retryTask: (() -> Unit)? = null
 
-    private var lastStatus = Status.CONTENT
     var currentState = Status.CONTENT
         private set
 
@@ -74,25 +73,12 @@ class StatePage constructor(
         innerShow(Status.CONTENT)
     }
 
-    override fun dismissLoading() {
-        if (currentState == Status.LOADING) {
-            innerShow(lastStatus)
-        }
-    }
-
-    override fun updateLoadingMessage(loadingText: String) {
-        if (currentState == Status.LOADING) {
-            config.callback?.updateLoadingMessage(this, loadingText)
-        }
-    }
-
     private fun innerShow(status: Status, iconRes: Int? = null, text: String? = null) {
         if (currentState == status) {
             return
         }
 
         // 拿到当前状态的view，如果没有则创建了放入缓存，并添加到wrapper中
-        // 为了保证LOADING状态在最上层,避免loading被覆盖，将LOADING往后加，其他状态加入在CONTENT之前
         if (statusViews[status] == null) {
             when (status) {
                 Status.LOADING -> {
@@ -103,7 +89,7 @@ class StatePage constructor(
                 }
                 Status.EMPTY -> {
                     inflateLayout(wrapper, config.emptyLayout).apply {
-                        wrapper.addView(this, 0, ViewGroup.LayoutParams(-1, -1))
+                        wrapper.addView(this, ViewGroup.LayoutParams(-1, -1))
                         config.callback?.onEmptyCreated(
                             this@StatePage,
                             this,
@@ -114,7 +100,7 @@ class StatePage constructor(
                 }
                 Status.ERROR -> {
                     inflateLayout(wrapper, config.errorLayout).apply {
-                        wrapper.addView(this, 0, ViewGroup.LayoutParams(-1, -1))
+                        wrapper.addView(this, ViewGroup.LayoutParams(-1, -1))
                         config.callback?.onErrorCreated(
                             this@StatePage,
                             this,
@@ -141,7 +127,6 @@ class StatePage constructor(
         statusViews[currentState]?.visibility = View.GONE
         statusViews[status]?.visibility = View.VISIBLE
 
-        lastStatus = currentState
         currentState = status
     }
 
