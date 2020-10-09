@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.collection.ArrayMap
 
-class StatePage constructor(
+class StatePage internal constructor(
     private val wrapper: ViewGroup,
     private var config: StatePageConfig
 ) : IStatePage {

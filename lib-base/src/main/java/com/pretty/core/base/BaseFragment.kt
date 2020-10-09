@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.pretty.core.Foundation
 import com.pretty.core.arch.*
 import com.pretty.core.arch.state.StatePage
 import com.pretty.core.arch.state.StatePageManager
@@ -20,7 +21,7 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
     protected abstract val mLayoutId: Int
     protected abstract val mViewModel: VM
     protected open var injectStatePage = false // 是否注入空布局、错误布局和加载布局
-    override val mDisplayDelegate: IDisplayDelegate by lazy { DisplayDelegate() }
+    override val mDisplayDelegate: IDisplayDelegate by lazy { Foundation.getGlobalConfig().displayDelegateFactory.invoke() }
     override val mDisposableManager: IDisposableManager by lazy { DisposableManager() }
     private var subscribed = false
 

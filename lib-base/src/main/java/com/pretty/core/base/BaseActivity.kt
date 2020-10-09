@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
+import com.pretty.core.Foundation
 import com.pretty.core.arch.*
 import com.pretty.core.arch.state.StatePage
 import com.pretty.core.arch.state.StatePageManager
@@ -28,7 +29,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
      *  默认不注入空布局和错误布局，如需使用，需要修改{@see #injectStatePage}的值
      *  如需修改默认的Empty、Error页面，参见 @see #createStatePage
      */
-    override val mDisplayDelegate: IDisplayDelegate by lazy { DisplayDelegate() }
+    override val mDisplayDelegate: IDisplayDelegate by lazy { Foundation.getGlobalConfig().displayDelegateFactory.invoke() }
 
     /**
      * 提供在页面销毁时自动清理的能力，防止内存泄露
