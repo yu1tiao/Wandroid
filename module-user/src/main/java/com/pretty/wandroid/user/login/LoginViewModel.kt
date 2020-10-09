@@ -1,30 +1,36 @@
 package com.pretty.wandroid.user.login
 
-import androidx.databinding.ObservableField
 import com.pretty.core.base.BaseViewModel
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.core.router.service.LoginReceiver
 import com.pretty.core.util.SingleLiveEvent
+import com.pretty.core.util.showToast
 import com.pretty.wandroid.user.service.LoginManager
 
 class LoginViewModel : BaseViewModel() {
 
-    val username = ObservableField<String>()
-    val password = ObservableField<String>()
     val loginSuccess = SingleLiveEvent<LoginEntity>()
-
     private var isLoginSuccess = false
 
     private val model by lazy { LoginModel() }
 
-    fun btnLogin() {
+    fun btnLogin(username: String, password: String) {
+        if (username.isEmpty()) {
+            showToast("用户名为空")
+            return
+        }
+        if (password.isEmpty()) {
+            showToast("密码为空")
+            return
+        }
         launch({
-            model.login(username.get()!!, password.get()!!)
+            model.login(username, password)
         }, {
+            isLoginSuccess = true
             LoginManager.saveLoginEntity(it.data!!)
             LoginReceiver.sendLoginSuccess(it.data!!)
             loginSuccess.postValue(it.data)
-        }, showLoading = true)
+        })
     }
 
     override fun onCleared() {

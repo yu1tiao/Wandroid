@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/login_bg_image1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/user_login_bg1" />
+
+        <ImageView
+            android:id="@+id/login_bg_image2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/user_login_bg4" />
+
+
+        <com.pretty.core.widget.qmui.layout.QMUIButton
+            android:id="@+id/btn_login"
+            android:layout_width="100dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="100dp"
+            android:background="@color/accentColor"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/f6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_register"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:qmui_radius="@dimen/m20" />
+
+        <com.pretty.core.widget.qmui.layout.QMUIButton
+            android:id="@+id/btn_register"
+            android:layout_width="100dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="100dp"
+            android:background="@color/accentColor2"
+            android:gravity="center"
+            android:text="注册"
+            android:textColor="@color/white"
+            android:textSize="@dimen/f6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_login"
+            app:qmui_radius="@dimen/m20" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

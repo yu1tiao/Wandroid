@@ -6,7 +6,7 @@ import android.view.Gravity
 import android.view.WindowManager
 import com.pretty.core.R
 
-abstract class BaseDialog(context: Context) : Dialog(context) {
+abstract class BaseDialog(context: Context) : Dialog(context, R.style.LightDialog) {
 
     open fun layoutBottom() {
         window?.run {

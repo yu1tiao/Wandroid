@@ -3,7 +3,6 @@ package com.pretty.module.wandroid
 import android.view.Menu
 import android.view.MenuItem
 import com.pretty.core.base.BaseSimpleActivity
-import com.pretty.core.config.ToastStyle
 import com.pretty.core.router.RC
 import com.pretty.core.router.service.AccountService
 import com.pretty.core.util.runOnMainThread
@@ -34,22 +33,11 @@ class WandroidHomeActivity : BaseSimpleActivity() {
         btn_collect.setOnClickListener {
             Router.startUri(this, RC.WANDROID_COLLECT_ACTIVITY)
         }
-        btn_normal.setOnClickListener {
-            showToast("我是消息", ToastStyle.NORMAL)
-        }
-        btn_warning.setOnClickListener {
-            showToast("我是消息", ToastStyle.WARNING)
-        }
-        btn_error.setOnClickListener {
-            showToast("我是消息", ToastStyle.ERROR)
-        }
-        btn_success.setOnClickListener {
-            showToast("我是消息", ToastStyle.SUCCESS)
-        }
-        btn_info.setOnClickListener {
-            showToast("我是消息", ToastStyle.INFO)
-        }
 
+        mDisplayDelegate.showLoading()
+        runOnMainThread(1000) {
+            mDisplayDelegate.showContent()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -68,6 +56,6 @@ class WandroidHomeActivity : BaseSimpleActivity() {
     }
 
     override fun retry() {
-        showToast("dianj")
+        showToast("重新加载")
     }
 }
