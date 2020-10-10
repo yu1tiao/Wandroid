@@ -10,6 +10,9 @@ import java.net.SocketTimeoutException
 class ToastErrorHandler : ErrorHandler {
 
     override fun invoke(throwable: Throwable) {
+        if (BuildConfig.DEBUG) {
+            throwable.printStackTrace()
+        }
         val msg = when (throwable) {
             is ApiException -> throwable.message
             is ConnectException -> "网络连接失败"

@@ -42,6 +42,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(":lib-base")
     implementation project(':lib-router')
+    implementation uiDeps.banner
 
     kapt toolDeps.wm_router_compiler
 }

@@ -10,7 +10,7 @@ import java.io.Serializable
  */
 open class Resp<T>(
     var data: T?,
-    var errorCode: String,
+    var errorCode: String?,
     var errorMsg: String?
 ) : Serializable {
     open fun isSuccessful(): Boolean {
@@ -22,6 +22,6 @@ fun <T : Resp<*>> T.check(): T {
     return if (isSuccessful()) {
         this
     } else {
-        throw ApiException(errorCode, errorMsg)
+        throw ApiException(errorCode.orEmpty(), errorMsg)
     }
 }

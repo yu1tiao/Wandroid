@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 /**
  *
  * 1, 获取全局配置的
-    val statePage = StatePageManager.getDefault().wrap(this)
-    StatePageManager.with {
-        // 会copy全局设置，修改需要自定义的选项就可以
-    }.wrap(this)
+val statePage = StatePageManager.getDefault().wrap(this)
+StatePageManager.with {
+// 会copy全局设置，修改需要自定义的选项就可以
+}.wrap(this)
  *
  *
  */

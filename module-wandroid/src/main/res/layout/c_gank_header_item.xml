@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/m10"
+    android:paddingEnd="@dimen/m10"
+    android:text="热门分类"
+    android:textColor="@color/gray900"
+    android:textSize="@dimen/f6" />

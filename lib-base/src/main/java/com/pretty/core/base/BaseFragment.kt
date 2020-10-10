@@ -51,13 +51,14 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
     ): View? {
         mDisposableManager.init(this)
         val root = inflateView(inflater, container)
-        mDisplayDelegate.init(requireActivity(), createStatePage(root))
+        val statePage = createStatePage(root)
+        mDisplayDelegate.init(requireActivity(), statePage)
         if (!subscribed) {
             // 防止多次订阅
             subscribeLiveData()
             subscribed = true
         }
-        return root
+        return statePage?.wrapper ?: root
     }
 
     protected open fun inflateView(inflater: LayoutInflater, container: ViewGroup?): View {

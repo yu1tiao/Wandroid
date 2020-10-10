@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.pretty.core.widget.qmui.layout.QMUIConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/m10"
+    android:layout_marginTop="@dimen/m5"
+    android:layout_marginEnd="@dimen/m10"
+    android:layout_marginBottom="@dimen/m5"
+    android:background="@color/white"
+    android:padding="@dimen/m10"
+    app:qmui_radius="@dimen/m10"
+    app:qmui_shadowAlpha=".3"
+    app:qmui_shadowColor="@color/gray500"
+    app:qmui_shadowElevation="@dimen/m5">
+
+    <com.pretty.core.widget.RadiusImageView
+        android:id="@+id/iv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:corner_radius="@dimen/m5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/m10"
+        android:layout_marginBottom="@dimen/m10"
+        android:maxLines="3"
+        android:textColor="@color/gray900"
+        android:textSize="@dimen/f6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Android" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:maxLines="2"
+        android:textColor="@color/gray500"
+        android:textSize="@dimen/f4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Android" />
+
+    <TextView
+        android:id="@+id/tv_who"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/m10"
+        android:maxLines="2"
+        android:textColor="@color/gray500"
+        android:textSize="@dimen/f4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv"
+        tools:text="Android" />
+
+</com.pretty.core.widget.qmui.layout.QMUIConstraintLayout>
