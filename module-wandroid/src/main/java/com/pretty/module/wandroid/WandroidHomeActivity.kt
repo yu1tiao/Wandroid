@@ -4,6 +4,7 @@ import com.pretty.core.arch.container.launchFragmentInContainer
 import com.pretty.core.base.BaseSimpleActivity
 import com.pretty.core.router.RC
 import com.pretty.core.util.showToast
+import com.pretty.module.wandroid.gank.GankGirlsFragment
 import com.pretty.module.wandroid.gank.GankHomeFragment
 import com.pretty.module.wandroid.gank.GankTodayFragment
 import com.sankuai.waimai.router.Router
@@ -26,7 +27,7 @@ class WandroidHomeActivity : BaseSimpleActivity() {
             Router.startUri(this, RC.WANDROID_COLLECT_ACTIVITY)
         }
         btn_gank.setOnClickListener {
-            launchFragmentInContainer(this, GankTodayFragment::class.java)
+            launchFragmentInContainer(this, GankHomeFragment::class.java)
         }
     }
 

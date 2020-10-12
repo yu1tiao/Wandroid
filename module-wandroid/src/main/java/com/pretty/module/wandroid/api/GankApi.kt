@@ -22,6 +22,14 @@ interface GankApi {
         @Path("count") count: Int
     ): GankResp<List<GankBean>>
 
+    @GET("https://gank.io/api/v2/data/category/{category}/type/{type}/page/{page}/count/{count}")
+    suspend fun getCategoryData(
+        @Path("category") category: String,
+        @Path("type") type: String,
+        @Path("page") page: Int,
+        @Path("count") count: Int
+    ): GankResp<List<GankBean>>
+
     @GET("https://gank.io/api/v2/hot/{type}/category/{category}/count/{count}")
     suspend fun getHotData(
         @Path("type") type: String,

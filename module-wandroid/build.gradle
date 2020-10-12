@@ -43,6 +43,7 @@ dependencies {
     implementation project(":lib-base")
     implementation project(':lib-router')
     implementation uiDeps.banner
+    implementation uiDeps.like_button
 
     kapt toolDeps.wm_router_compiler
 }

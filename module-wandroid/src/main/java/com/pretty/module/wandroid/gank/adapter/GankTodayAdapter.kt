@@ -1,4 +1,4 @@
-package com.pretty.module.wandroid.gank
+package com.pretty.module.wandroid.gank.adapter
 
 import android.content.Context
 import android.widget.ImageView

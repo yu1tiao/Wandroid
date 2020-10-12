@@ -22,7 +22,14 @@
             android:id="@+id/tab_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:tabIndicatorColor="@color/gray700"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorHeight="@dimen/m3"
+            app:tabMaxWidth="80dp"
+            app:tabMode="auto"
+            app:tabSelectedTextColor="@color/gray700"
+            app:tabTextColor="@color/gray400" />
 
         <ImageView
             android:id="@+id/iv_search"

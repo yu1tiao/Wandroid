@@ -55,6 +55,7 @@ ext {
             pickerView     : "com.contrarywind:Android-PickerView:4.1.9",
             guideView      : 'com.github.AppIntro:AppIntro:6.0.0',
             banner         : 'com.youth.banner:banner:2.1.0',
+            like_button    : 'com.github.jd-alexander:LikeButton:0.2.3',
     ]
 
     imageDeps = [

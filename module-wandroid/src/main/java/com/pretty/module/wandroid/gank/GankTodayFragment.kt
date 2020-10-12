@@ -8,15 +8,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.pretty.core.arch.state.StatePage
-import com.pretty.core.arch.state.StatePageManager
 import com.pretty.core.base.BaseFragment
-import com.pretty.core.base.BaseViewModel
 import com.pretty.core.ext.dp
 import com.pretty.core.ext.observe
 import com.pretty.core.ext.toResColor
 import com.pretty.core.util.runOnMainThread
 import com.pretty.module.wandroid.R
+import com.pretty.module.wandroid.gank.adapter.GankTodayAdapter
 import com.pretty.module.wandroid.gank.widget.GankBannerView
 import com.pretty.module.wandroid.gank.widget.GankCategoryView
 import kotlinx.android.synthetic.main.f_gank_today.*
