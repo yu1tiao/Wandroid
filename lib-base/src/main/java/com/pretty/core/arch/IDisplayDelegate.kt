@@ -1,15 +1,13 @@
 package com.pretty.core.arch
 
 import android.content.Context
-import com.pretty.core.arch.state.IStatePage
-import com.pretty.core.arch.state.StatePage
 
-interface IDisplayDelegate : Destroyable, IStatePage {
-    fun init(context: Context, statePage: StatePage? = null)
+interface IDisplayDelegate : Destroyable {
+    fun init(context: Context)
     fun getContext(): Context
     fun showTips(text: String?)
 
-    fun showLoadingDialog(message: String? = null)
-    fun dismissLoadingDialog()
+    fun showLoading(message: String? = null)
+    fun dismissLoading()
     fun updateLoadingMessage(loadingText: String)
 }

@@ -1,12 +1,7 @@
 package com.pretty.core.arch.state
 
-import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.RelativeLayout
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
 
 /**
  *
@@ -20,65 +15,24 @@ StatePageManager.with {
  */
 class StatePageManager(private val config: StatePageConfig) {
 
-    fun wrap(activity: Activity): StatePage {
-        val contentView = activity.findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
-        return wrap(contentView)
-    }
-
-    fun wrap(fragment: Fragment): StatePage {
-        val contentView = fragment.view
-        requireNotNull(contentView) {
-            "请在Fragmnet设置view之后再调用StatePageManager.wrap(fragment)"
-        }
-        return wrap(contentView)
-    }
-
     /**
      * 包装普通的view，切换状态时自动添加adapter中的loading、error等布局
      */
     fun wrap(view: View): StatePage {
-        var wrapper: ViewGroup? = null
+        val wrapper = StatePage(view.context)
+        wrapper.config = this.config
 
-        // 如果当前view的parent是ConstraintLayout、FrameLayout或RelativeLayout，并且有且只有自己一个孩子，
-        // 自己宽高还是MATCH_PARENT的，就可以把loading、error、empty布局加在parent中，减少布局层级
+        // 从parent中移除view
         if (view.parent != null) {
             val parent = view.parent as ViewGroup
-            if (parent.childCount == 1) {
-                val lp = view.layoutParams
-                if (lp != null && lp.width == -1 && lp.height == -1) {
-                    when (parent) {
-                        is ConstraintLayout,
-                        is FrameLayout,
-                        is RelativeLayout -> wrapper = parent
-                    }
-                }
-            }
+            val index = parent.indexOfChild(view)
+            parent.removeView(view)
+            parent.addView(wrapper, index, view.layoutParams)
         }
 
-        if (wrapper == null) {
-            // 当前的view作为content，用FrameLayout包裹后返回
-            wrapper = FrameLayout(view.context)
+        wrapper.addView(view, 0)
 
-            val lp = view.layoutParams
-            if (lp != null) {
-                wrapper.layoutParams = lp
-            }
-
-            if (view.parent != null) {
-                val parent = view.parent as ViewGroup
-                val index = parent.indexOfChild(view)
-                parent.removeView(view)
-                parent.addView(wrapper, index)
-            }
-
-            val newLp = FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
-            )
-            wrapper.addView(view, newLp)
-        }
-
-        return StatePage(wrapper, config)
+        return wrapper
     }
 
     companion object {

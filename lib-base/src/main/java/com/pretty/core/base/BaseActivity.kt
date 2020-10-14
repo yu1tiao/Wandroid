@@ -21,13 +21,10 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
 
     protected abstract val mLayoutId: Int
     protected abstract val mViewModel: VM
-    protected open var injectStatePage = false // 是否注入空布局、错误布局和加载布局
     private var subscribed = false
 
     /**
-     *  提供通用UI操作的能力，如显示隐藏loading，显示Empty、Error页面等
-     *  默认不注入空布局和错误布局，如需使用，需要修改{@see #injectStatePage}的值
-     *  如需修改默认的Empty、Error页面，参见 @see #createStatePage
+     *  提供通用UI操作的能力，如显示隐藏loading
      */
     override val mDisplayDelegate: IDisplayDelegate by lazy { Foundation.getGlobalConfig().displayDelegateFactory.invoke() }
 
@@ -63,28 +60,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
     }
 
     protected open fun afterSetContent(root: View) {
-        mDisplayDelegate.init(this, createStatePage(root))
-    }
-
-    /**
-     * injectStatePage = true时，自动注入全局的StatePage
-     */
-    protected open fun createStatePage(view: View): StatePage? {
-        if (injectStatePage) {
-            return StatePageManager.getDefault().wrap(view).retry { retry() }
-        }
-        // 如果不想使用全局的StatePage
-//        StatePageManager.with {
-//            // copy全局设置，在这里修改自己的自定义设置就好了
-//        }.wrap(view).retry { retry() }
-        return null
-    }
-
-    /**
-     * 错误或者空页面点击重试会回调这里
-     */
-    protected open fun retry() {
-
+        mDisplayDelegate.init(this)
     }
 
     open fun subscribeLiveData() {
@@ -95,8 +71,8 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
     protected fun subscribeLoading(viewModel: BaseViewModel) {
         observe(viewModel.loading) {
             when (it) {
-                is LoadingState.Loading -> mDisplayDelegate.showLoadingDialog(it.message)
-                is LoadingState.Hide -> mDisplayDelegate.dismissLoadingDialog()
+                is LoadingState.Loading -> mDisplayDelegate.showLoading(it.message)
+                is LoadingState.Hide -> mDisplayDelegate.dismissLoading()
             }
         }
     }

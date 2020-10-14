@@ -9,33 +9,13 @@ class DisplayDelegate : IDisplayDelegate {
 
     private var context: Context? = null
     private var loadingDialog: LoadingDialog? = null
-    private var statePage: StatePage? = null
 
-    override fun init(context: Context, statePage: StatePage?) {
+    override fun init(context: Context) {
         this.context = context
-        this.statePage = statePage
     }
-
-    /////////////////////////////// StatePage 页面级 //////////////////////////////
-    override fun showLoading(loadingMsg: String?) {
-        statePage?.showLoading(loadingMsg)
-    }
-
-    override fun showError(iconRes: Int?, errorText: String?) {
-        statePage?.showError(iconRes, errorText)
-    }
-
-    override fun showEmpty(iconRes: Int?, emptyText: String?) {
-        statePage?.showEmpty(iconRes, emptyText)
-    }
-
-    override fun showContent() {
-        statePage?.showContent()
-    }
-    /////////////////////////////// StatePage 页面级 //////////////////////////////
 
     /////////////////////////////// loading dialog //////////////////////////////
-    override fun showLoadingDialog(message: String?) {
+    override fun showLoading(message: String?) {
         if (loadingDialog == null)
             loadingDialog = LoadingDialog.create(getContext())
         if (loadingDialog?.isShowing == true && !message.isNullOrEmpty())
@@ -44,7 +24,7 @@ class DisplayDelegate : IDisplayDelegate {
             loadingDialog?.show(message)
     }
 
-    override fun dismissLoadingDialog() {
+    override fun dismissLoading() {
         loadingDialog?.dismiss()
     }
 
@@ -63,7 +43,6 @@ class DisplayDelegate : IDisplayDelegate {
 
     override fun onDestroy() {
         context = null
-        statePage?.onDestroy()
         if (loadingDialog?.isShowing == true) {
             loadingDialog?.dismiss()
         }

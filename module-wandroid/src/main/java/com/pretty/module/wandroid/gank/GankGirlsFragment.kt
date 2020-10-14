@@ -21,8 +21,6 @@ import kotlinx.android.synthetic.main.f_gank_girls.*
 class GankGirlsFragment : BaseFragment<GankGirlsViewModel>() {
 
     private lateinit var adapter: GankGirlsAdapter
-    private var isFirstLoad = true
-    override var injectStatePage: Boolean = true
     override val mLayoutId: Int = com.pretty.module.wandroid.R.layout.f_gank_girls
     override val mViewModel: GankGirlsViewModel by viewModels()
 
@@ -39,10 +37,6 @@ class GankGirlsFragment : BaseFragment<GankGirlsViewModel>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if (isFirstLoad) {
-            mDisplayDelegate.showLoading()
-            isFirstLoad = false
-        }
         mViewModel.refresh()
     }
 
@@ -57,7 +51,6 @@ class GankGirlsFragment : BaseFragment<GankGirlsViewModel>() {
     override fun subscribeLiveData() {
         super.subscribeLiveData()
         observe(mViewModel.ldGirls) {
-            mDisplayDelegate.showContent()
             adapter.updateData(it)
             rl_girls.refreshComplete()
             adapter.loadMoreCompleted()

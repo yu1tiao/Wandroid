@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.pretty.core.Foundation
 import com.pretty.core.base.BaseViewModel
 import com.pretty.core.http.check
+import com.pretty.core.util.SingleLiveEvent
 import com.pretty.module.wandroid.entity.BannerBean
 import com.pretty.module.wandroid.entity.GankBean
 import com.pretty.module.wandroid.entity.GankCategoryBean
@@ -16,12 +17,16 @@ class GankTodayViewModel : BaseViewModel() {
     val ldBanner = MutableLiveData<List<BannerBean>>()
     val ldCategory = MutableLiveData<List<GankCategoryBean>>()
     val ldHot = MutableLiveData<List<Any>>()
+    val ldError = SingleLiveEvent<Void>()
 
     private val model by lazy { GankTodayModel() }
 
     fun getBanner() {
         launch({ model.getBanner() }, {
             ldBanner.value = it.data
+        }, {
+            Foundation.getGlobalConfig().errorHandler.invoke(it)
+            ldError.call()
         })
     }
 
@@ -43,6 +48,7 @@ class GankTodayViewModel : BaseViewModel() {
                 ldHot.value = list
             } catch (e: Exception) {
                 Foundation.getGlobalConfig().errorHandler.invoke(e)
+                ldError.call()
             }
         }
     }
@@ -65,6 +71,9 @@ class GankTodayViewModel : BaseViewModel() {
             c
         }, {
             ldCategory.value = it.data
+        }, {
+            Foundation.getGlobalConfig().errorHandler.invoke(it)
+            ldError.call()
         })
     }
 

@@ -9,7 +9,6 @@ class StatePageConfig(
     @LayoutRes var loadingLayout: Int,
     @LayoutRes var emptyLayout: Int,
     @LayoutRes var errorLayout: Int,
-    var retryIds: List<Int>?,
     var callback: StatePageCallback?
 ) {
 
@@ -22,7 +21,6 @@ class StatePageConfig(
                 this.loadingLayout,
                 this.emptyLayout,
                 this.errorLayout,
-                this.retryIds,
                 this.callback
             )
         )
