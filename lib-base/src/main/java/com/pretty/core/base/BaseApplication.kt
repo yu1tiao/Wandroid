@@ -9,7 +9,6 @@ import com.pretty.core.config.GlobalConfiguration
 import com.pretty.core.config.NetPolicyProvider
 import com.pretty.core.util.AppSPUtil
 import com.pretty.core.util.L
-import com.pretty.eventbus.core.XBus
 
 /**
  * @author yu
@@ -29,7 +28,6 @@ abstract class BaseApplication : MultiDexApplication(), ConfigurationProvider, N
         AppSPUtil.init()
         StatePageManager.initDefault(configuration.statePageConfig)
         L.init(BuildConfig.DEBUG, Foundation.getGlobalConfig().crashLogReporter)
-        XBus.init()
     }
 
     override fun getGlobalConfiguration(): GlobalConfiguration {

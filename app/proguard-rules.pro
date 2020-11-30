@@ -20,7 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.pretty.eventbus.core.BusRegisterImpl {*;}
+#-keep class com.pretty.eventbus.core.BusRegisterImpl {*;}
 
 # WMRouter start
 -keep class com.sankuai.waimai.router.generated.ServiceLoaderInit { *; }

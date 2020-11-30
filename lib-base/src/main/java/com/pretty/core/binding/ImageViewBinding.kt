@@ -2,7 +2,7 @@ package com.pretty.core.binding
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import coil.api.load
+import coil.load
 import coil.transform.CircleCropTransformation
 
 

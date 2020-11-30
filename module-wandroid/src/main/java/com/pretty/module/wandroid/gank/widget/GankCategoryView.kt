@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import coil.load
 import com.pretty.core.ext.dp
 import com.pretty.core.widget.RadiusImageView
 import com.pretty.module.wandroid.R

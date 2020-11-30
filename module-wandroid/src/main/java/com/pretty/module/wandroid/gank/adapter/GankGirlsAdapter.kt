@@ -3,7 +3,7 @@ package com.pretty.module.wandroid.gank.adapter
 import android.content.Context
 import android.widget.ImageView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import coil.api.load
+import coil.load
 import com.pretty.module.wandroid.R
 import com.pretty.module.wandroid.entity.GankBean
 import me.yuu.liteadapter.core.LiteAdapterEx

@@ -18,7 +18,7 @@ android {
         multiDexEnabled true
     }
 
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
     }
 
@@ -95,6 +95,4 @@ dependencies {
     api toolDeps.toasty
 //    api toolDeps.ok2curl
 
-    api toolDeps.eventbus
-    kapt toolDeps.eventbus_compiler
 }
