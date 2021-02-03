@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import com.pretty.core.Foundation
-import com.pretty.core.arch.*
-import com.pretty.core.arch.state.StatePage
-import com.pretty.core.arch.state.StatePageManager
+import com.pretty.core.arch.DisposableManager
+import com.pretty.core.arch.IDisplayDelegate
+import com.pretty.core.arch.IDisposableManager
+import com.pretty.core.arch.LoadingState
 import com.pretty.core.ext.observe
 
 
@@ -40,7 +41,6 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
         val root = prepareContentView()
         afterSetContent(root)
         if (!subscribed) {
-            // 防止多次订阅
             subscribeLiveData()
             subscribed = true
         }
@@ -68,7 +68,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
     }
 
     // 一个页面使用多个viewModel时，需要订阅其他viewModel的loading
-    protected fun subscribeLoading(viewModel: BaseViewModel) {
+    protected open fun subscribeLoading(viewModel: BaseViewModel) {
         observe(viewModel.loading) {
             when (it) {
                 is LoadingState.Loading -> mDisplayDelegate.showLoading(it.message)

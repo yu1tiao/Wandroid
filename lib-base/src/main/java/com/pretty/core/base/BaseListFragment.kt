@@ -14,7 +14,7 @@ import me.yuu.liteadapter.core.LiteAdapterEx
  */
 abstract class BaseListFragment<D, VM : BaseListViewModel<D>> : BaseFragment<VM>() {
 
-    protected lateinit var mAdapter: LiteAdapterEx<D>
+    protected open lateinit var mAdapter: LiteAdapterEx<D>
 
     override val mLayoutId: Int = com.pretty.core.R.layout.l_common_recyclerview_page
 

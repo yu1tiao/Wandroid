@@ -1,7 +1,13 @@
 package com.pretty.core.ext
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.Html
+import android.text.Spanned
+import androidx.core.content.getSystemService
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -14,10 +20,6 @@ import java.io.Serializable
 
 inline fun <reified T> Any.safeCast(crossinline action: (T) -> Unit) {
     if (this is T) action(this)
-}
-
-fun <T> T?.safeValue(valueIfNull: T): T {
-    return this ?: valueIfNull
 }
 
 fun bundleOf(vararg pairs: Pair<String, Any> = emptyArray()): Bundle {
@@ -43,6 +45,23 @@ fun Array<out Pair<String, Any>>.toBundle(): Bundle {
                 else -> throw RuntimeException("un support type")
             }
         }
+    }
+}
+
+
+/**
+ * 复制文本到粘贴板
+ */
+fun Context.copyToClipboard(text: String, label: String = "JetpackMvvm") {
+    val clipData = ClipData.newPlainText(label, text)
+    getSystemService<ClipboardManager>()?.setPrimaryClip(clipData)
+}
+
+fun String.toHtml(flag: Int = Html.FROM_HTML_MODE_LEGACY): Spanned {
+    return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        Html.fromHtml(this, flag)
+    } else {
+        Html.fromHtml(this)
     }
 }
 

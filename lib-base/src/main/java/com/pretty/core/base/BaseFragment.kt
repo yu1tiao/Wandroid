@@ -50,7 +50,6 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
         val root = inflateView(inflater, container)
         mDisplayDelegate.init(requireActivity())
         if (!subscribed) {
-            // 防止多次订阅
             subscribeLiveData()
             subscribed = true
         }
@@ -65,7 +64,7 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
         subscribeLoading(mViewModel)
     }
 
-    protected fun subscribeLoading(viewModel: BaseViewModel) {
+    protected open fun subscribeLoading(viewModel: BaseViewModel) {
         observe(viewModel.loading) {
             when (it) {
                 is LoadingState.Loading -> mDisplayDelegate.showLoading(it.message)

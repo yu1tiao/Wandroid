@@ -58,6 +58,35 @@ private class DebounceAction(val view: View, var block: ((View) -> Unit)) : Runn
     }
 }
 
+
+fun View.visible() {
+    visibility = View.VISIBLE
+}
+
+fun View.invisible() {
+    visibility = View.INVISIBLE
+}
+
+fun View.gone() {
+    visibility = View.GONE
+}
+
+fun View.visibleGone(flag: Boolean) {
+    visibility = if (flag) {
+        View.VISIBLE
+    } else {
+        View.GONE
+    }
+}
+
+fun View.visibleOrInvisible(flag: Boolean) {
+    visibility = if (flag) {
+        View.VISIBLE
+    } else {
+        View.INVISIBLE
+    }
+}
+
 /**
  * 弹出软键盘
  */
@@ -79,7 +108,7 @@ fun View.hideSoftInput() {
  * 所有输入框都有值时设置按钮可用
  * @param ext 可选的其他判断，也要为true按钮才可用
  */
-fun View.disableIfNoInput(vararg edittext: EditText, ext: (() -> Boolean)? = null): TextWatcher {
+fun View.disableIfEmpty(vararg edittext: EditText, ext: (() -> Boolean)? = null): TextWatcher {
     val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             var btnEnable = true

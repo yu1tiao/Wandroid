@@ -1,6 +1,5 @@
 package com.pretty.core.http
 
-import com.pretty.core.exception.ApiException
 import java.io.Serializable
 
 /**

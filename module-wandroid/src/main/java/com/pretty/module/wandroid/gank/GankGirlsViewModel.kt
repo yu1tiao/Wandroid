@@ -1,17 +1,10 @@
 package com.pretty.module.wandroid.gank
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.pretty.core.Foundation
 import com.pretty.core.base.BaseViewModel
 import com.pretty.core.config.toastErrorHandler
-import com.pretty.core.http.check
-import com.pretty.core.util.SingleLiveEvent
-import com.pretty.module.wandroid.entity.BannerBean
+import com.pretty.core.ext.launch
 import com.pretty.module.wandroid.entity.GankBean
-import com.pretty.module.wandroid.entity.GankCategoryBean
-import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class GankGirlsViewModel : BaseViewModel() {
 
@@ -19,8 +12,8 @@ class GankGirlsViewModel : BaseViewModel() {
     private val pageSize = 10
     val ldGirls = MutableLiveData<List<GankBean>>()
     val ldGirlsLoadMore = MutableLiveData<List<GankBean>>()
-    val ldNoMore = SingleLiveEvent<Void>()
-    val ldError = SingleLiveEvent<Void>()
+    val ldNoMore = MutableLiveData<Void>()
+    val ldError = MutableLiveData<Void>()
 
     private val model by lazy { GankGirlsModel() }
 
@@ -39,7 +32,7 @@ class GankGirlsViewModel : BaseViewModel() {
         launch({ model.getCategoryData("Girl", "Girl", pageIndex, count) }, {
             if (isLoadMore) {
                 if (it.data?.isNullOrEmpty() == true) {
-                    ldNoMore.call()
+                    ldNoMore.value = null
                 } else {
                     ldGirlsLoadMore.value = it.data
                 }
@@ -49,7 +42,7 @@ class GankGirlsViewModel : BaseViewModel() {
         }, {
             toastErrorHandler(it)
             page--
-            ldError.call()
+            ldError.value = null
         })
     }
 

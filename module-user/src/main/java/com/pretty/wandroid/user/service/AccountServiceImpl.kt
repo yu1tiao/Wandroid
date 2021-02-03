@@ -3,11 +3,11 @@ package com.pretty.wandroid.user.service
 import android.content.IntentFilter
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.pretty.core.Foundation
+import com.pretty.core.ext.logi
 import com.pretty.core.router.RC
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.core.router.service.AccountService
 import com.pretty.core.router.service.LoginReceiver
-import com.pretty.core.util.L
 import com.sankuai.waimai.router.Router
 import com.sankuai.waimai.router.annotation.RouterService
 
@@ -62,7 +62,7 @@ class AccountServiceImpl : AccountService {
 
             override fun onCancel() {
                 // do nothing
-                L.i("用户取消登录")
+                "用户取消登录".logi()
             }
         }
     }

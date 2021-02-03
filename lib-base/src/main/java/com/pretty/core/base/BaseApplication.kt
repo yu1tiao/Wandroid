@@ -1,36 +1,50 @@
 package com.pretty.core.base
 
-import androidx.multidex.MultiDexApplication
-import com.pretty.core.BuildConfig
+import android.app.Application
+import androidx.lifecycle.HasDefaultViewModelProviderFactory
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import com.pretty.core.Foundation
-import com.pretty.core.arch.state.StatePageManager
-import com.pretty.core.config.ConfigurationProvider
 import com.pretty.core.config.GlobalConfiguration
-import com.pretty.core.config.NetPolicyProvider
-import com.pretty.core.util.AppSPUtil
-import com.pretty.core.util.L
 
 /**
  * @author yu
  * @date 2018/11/9
  */
-abstract class BaseApplication : MultiDexApplication(), ConfigurationProvider, NetPolicyProvider {
+abstract class BaseApplication : Application(), ViewModelStoreOwner,
+    HasDefaultViewModelProviderFactory {
 
-    private lateinit var configuration: GlobalConfiguration
+    private lateinit var mAppViewModelStore: ViewModelStore
 
-    protected abstract fun initGlobalConfiguration(): GlobalConfiguration
+    abstract var mConfiguration: GlobalConfiguration
 
     override fun onCreate() {
         super.onCreate()
         Foundation.init(this)
-        configuration = initGlobalConfiguration()
-
-        AppSPUtil.init()
-        StatePageManager.initDefault(configuration.statePageConfig)
-        L.init(BuildConfig.DEBUG, Foundation.getGlobalConfig().crashLogReporter)
+        mAppViewModelStore = ViewModelStore()
     }
 
-    override fun getGlobalConfiguration(): GlobalConfiguration {
-        return this.configuration
+    override fun getViewModelStore(): ViewModelStore {
+        return mAppViewModelStore
+    }
+
+    /**
+     * 获取一个应用级的ViewModelProvider，可以用来全局的数据
+     */
+    fun getAppViewModelProvider(): ViewModelProvider {
+        return ViewModelProvider(this)
+    }
+
+    override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory {
+        return ViewModelProvider.AndroidViewModelFactory.getInstance(this)
     }
 }
+
+/**
+ * 获取应用级别作用域的ViewModel
+ */
+inline fun <reified VM : BaseViewModel> getAppViewModel(): VM {
+    return Foundation.getAppContext().getAppViewModelProvider().get(VM::class.java)
+}
+

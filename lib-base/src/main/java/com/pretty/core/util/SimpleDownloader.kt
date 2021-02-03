@@ -1,4 +1,4 @@
-package com.pretty.core.http
+package com.pretty.core.util
 
 import android.annotation.SuppressLint
 import android.os.Handler

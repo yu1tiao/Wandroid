@@ -2,14 +2,8 @@ package com.pretty.core.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.pretty.core.Foundation
 import com.pretty.core.arch.ILoadable
 import com.pretty.core.arch.LoadingState
-import com.pretty.core.http.Resp
-import com.pretty.core.http.check
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 /**
  * @author yu
@@ -26,26 +20,4 @@ open class BaseViewModel : ViewModel(), ILoadable {
     override fun hideLoading() {
         loading.value = LoadingState.hide()
     }
-
-    protected fun <T> launch(
-        block: suspend () -> Resp<T>,
-        success: (Resp<T>) -> Unit,
-        failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler,
-        finally: () -> Unit = {},
-        showLoading: Boolean = false
-    ): Job {
-        return viewModelScope.launch {
-            try {
-                if (showLoading) showLoading()
-                val resp = block().check()
-                success(resp)
-            } catch (e: Throwable) {
-                failure(e)
-            } finally {
-                if (showLoading) hideLoading()
-                finally()
-            }
-        }
-    }
-
 }

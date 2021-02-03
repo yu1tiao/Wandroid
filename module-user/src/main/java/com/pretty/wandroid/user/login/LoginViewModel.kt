@@ -1,15 +1,16 @@
 package com.pretty.wandroid.user.login
 
+import androidx.lifecycle.MutableLiveData
 import com.pretty.core.base.BaseViewModel
+import com.pretty.core.ext.launch
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.core.router.service.LoginReceiver
-import com.pretty.core.util.SingleLiveEvent
 import com.pretty.core.util.showToast
 import com.pretty.wandroid.user.service.LoginManager
 
 class LoginViewModel : BaseViewModel() {
 
-    val loginSuccess = SingleLiveEvent<LoginEntity>()
+    val loginSuccess = MutableLiveData<LoginEntity>()
     private var isLoginSuccess = false
 
     private val model by lazy { LoginModel() }

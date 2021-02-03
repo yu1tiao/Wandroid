@@ -2,28 +2,28 @@ package com.pretty.core.util.permission
 
 import android.content.Context
 import androidx.fragment.app.Fragment
-import com.pretty.core.util.L
+import com.pretty.core.ext.logi
 
 class RequestPermissionFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        L.i("${this.javaClass.name} is attached...")
+        "${this.javaClass.name} is attached...".logi()
     }
 
     override fun onDetach() {
         super.onDetach()
-        L.i("${this.javaClass.name} is detached...")
+        "${this.javaClass.name} is detached...".logi()
     }
 
     private fun detach() {
         if (parentFragment != null) {
-            parentFragment!!.childFragmentManager.beginTransaction()
+            requireParentFragment().childFragmentManager.beginTransaction()
                 .detach(this@RequestPermissionFragment)
                 .remove(this@RequestPermissionFragment)
                 .commit()
         } else if (activity != null) {
-            activity!!.supportFragmentManager.beginTransaction()
+            requireActivity().supportFragmentManager.beginTransaction()
                 .detach(this@RequestPermissionFragment)
                 .remove(this@RequestPermissionFragment)
                 .commit()

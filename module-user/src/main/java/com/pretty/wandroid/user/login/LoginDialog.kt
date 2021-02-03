@@ -5,7 +5,7 @@ import android.view.Gravity
 import android.view.WindowManager
 import com.blankj.utilcode.util.ScreenUtils
 import com.pretty.core.base.BaseDialog
-import com.pretty.core.ext.disableIfNoInput
+import com.pretty.core.ext.disableIfEmpty
 import com.pretty.core.ext.dp
 import com.pretty.core.ext.throttleClick
 import com.pretty.wandroid.user.R
@@ -30,7 +30,7 @@ class LoginDialog(context: Context) : BaseDialog(context) {
             setWindowAnimations(com.pretty.core.R.style.bottom_in_bottom_out)
         }
 
-        btnLogin.disableIfNoInput(etUserName, etPassWord)
+        btnLogin.disableIfEmpty(etUserName, etPassWord)
         btnLogin.throttleClick {
             loginBtnClick?.invoke(
                 etUserName.text.toString().trim(),

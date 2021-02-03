@@ -2,7 +2,6 @@ package com.pretty.core.base
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.MutableLiveData
-import com.pretty.core.util.SingleLiveEvent
 
 
 /**
@@ -13,9 +12,9 @@ abstract class BaseListViewModel<T> : BaseViewModel() {
 
     val dataSet: MutableLiveData<List<T>> = MutableLiveData()
     val loadMoreDataSet: MutableLiveData<List<T>> = MutableLiveData()
-    val loadCompleted: SingleLiveEvent<Void> = SingleLiveEvent()
-    val loadMoreError: SingleLiveEvent<Void> = SingleLiveEvent()
-    val noMore: SingleLiveEvent<Void> = SingleLiveEvent()
+    val loadCompleted: MutableLiveData<Void> = MutableLiveData()
+    val loadMoreError: MutableLiveData<Void> = MutableLiveData()
+    val noMore: MutableLiveData<Void> = MutableLiveData()
 
     abstract fun refresh()
 
@@ -33,17 +32,17 @@ abstract class BaseListViewModel<T> : BaseViewModel() {
 
     @MainThread
     protected fun loadCompleted() {
-        loadCompleted.call()
+        loadCompleted.value = null
     }
 
     @MainThread
     protected fun loadMoreError() {
-        loadMoreError.call()
+        loadMoreError.value = null
     }
 
     @MainThread
     protected fun noMore() {
-        noMore.call()
+        noMore.value = null
     }
 
 }
