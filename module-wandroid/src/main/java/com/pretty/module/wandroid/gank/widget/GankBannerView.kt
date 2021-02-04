@@ -1,7 +1,6 @@
 package com.pretty.module.wandroid.gank.widget
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -17,8 +16,6 @@ import com.pretty.module.wandroid.entity.BannerBean
 import com.youth.banner.Banner
 import com.youth.banner.adapter.BannerAdapter
 import com.youth.banner.indicator.CircleIndicator
-import com.youth.banner.transformer.ScaleInTransformer
-import kotlinx.android.synthetic.main.v_gank_banner.view.*
 
 
 class GankBannerView @JvmOverloads constructor(
@@ -27,10 +24,14 @@ class GankBannerView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
+    private var banner: Banner<*, *>
+
     init {
         LayoutInflater.from(context).inflate(R.layout.v_gank_banner, this)
         val padding = 10.dp().toInt()
         setPadding(padding, padding, padding, padding)
+
+        banner = findViewById(R.id.banner)
     }
 
     fun setBanner(lifecycle: LifecycleOwner, data: List<BannerBean>) {

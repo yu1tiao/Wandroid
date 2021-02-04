@@ -1,18 +1,22 @@
 package com.pretty.wandroid
 
 import android.animation.ObjectAnimator
+import androidx.activity.viewModels
 import androidx.core.animation.addListener
-import com.pretty.core.base.BaseSimpleActivity
+import com.pretty.core.base.BaseDataBindActivity
+import com.pretty.core.base.BaseViewModel
 import com.pretty.core.router.RC
+import com.pretty.wandroid.databinding.ActivitySplashBinding
 import com.sankuai.waimai.router.Router
-import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashActivity : BaseSimpleActivity() {
+class SplashActivity : BaseDataBindActivity<ActivitySplashBinding, BaseViewModel>() {
 
     override val mLayoutId: Int = R.layout.activity_splash
 
+    override val mViewModel: BaseViewModel by viewModels()
+
     override fun initPage() {
-        ObjectAnimator.ofFloat(iv_splash, "alpha", 0.5f, 1f)
+        ObjectAnimator.ofFloat(mBinding.ivSplash, "alpha", 0.5f, 1f)
             .apply {
                 duration = 1500
                 addListener(onEnd = {

@@ -1,50 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:id="@+id/top_bar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingStart="@dimen/m15"
-            android:paddingEnd="@dimen/m5"
-            android:src="@mipmap/ic_show_pwd" />
+        <LinearLayout
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:tabIndicatorColor="@color/gray700"
-            app:tabIndicatorFullWidth="true"
-            app:tabIndicatorHeight="@dimen/m3"
-            app:tabMaxWidth="80dp"
-            app:tabMode="auto"
-            app:tabSelectedTextColor="@color/gray700"
-            app:tabTextColor="@color/gray400" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/m15"
+                android:paddingEnd="@dimen/m5"
+                android:src="@mipmap/ic_show_pwd" />
 
-        <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingStart="@dimen/m5"
-            android:paddingEnd="@dimen/m15"
-            android:src="@mipmap/ic_search_icon" />
-    </LinearLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:tabIndicatorColor="@color/gray700"
+                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="@dimen/m3"
+                app:tabMaxWidth="80dp"
+                app:tabMode="auto"
+                app:tabSelectedTextColor="@color/gray700"
+                app:tabTextColor="@color/gray400" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_bar" />
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/m5"
+                android:paddingEnd="@dimen/m15"
+                android:src="@mipmap/ic_search_icon" />
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_bar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

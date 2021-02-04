@@ -7,10 +7,12 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
 import com.pretty.core.R
 import com.pretty.core.ext.dp
-import kotlinx.android.synthetic.main.v_prefs_menu_item.view.*
 
 /**
  * 菜单子项，可结合 [PrefsMenuGroup] 使用。
@@ -19,30 +21,37 @@ class PrefsMenuItem @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
+    private var tvSubtitle: TextView
+    private var tvTitle: TextView
+    private var tvRightText: TextView
+    private var imageMenu: ImageView
+    private var imageAction: ImageView
+    private var switchAction: SwitchCompat
+
     var subTitle: CharSequence?
-        get() = tv_subtitle?.text
+        get() = tvSubtitle.text
         set(value) {
             if (!TextUtils.isEmpty(value)) {
-                tv_subtitle.visibility = View.VISIBLE
-                tv_subtitle?.text = value
+                tvSubtitle.visibility = View.VISIBLE
+                tvSubtitle.text = value
             } else {
-                tv_subtitle.visibility = View.GONE
+                tvSubtitle.visibility = View.GONE
             }
         }
 
     var title: CharSequence?
-        get() = tv_title?.text
+        get() = tvTitle.text
         set(value) {
-            tv_title.text = value
+            tvTitle.text = value
         }
     var rightText: CharSequence?
-        get() = tv_right_text?.text
+        get() = tvRightText.text
         set(value) {
             if (TextUtils.isEmpty(value)) {
-                tv_right_text.visibility = View.GONE
+                tvRightText.visibility = View.GONE
             } else {
-                tv_right_text.visibility = View.VISIBLE
-                tv_right_text.text = value
+                tvRightText.visibility = View.VISIBLE
+                tvRightText.text = value
             }
         }
 
@@ -62,8 +71,15 @@ class PrefsMenuItem @JvmOverloads constructor(
         val type = array.getInt(R.styleable.PrefsMenuItem_itemType, 0)
         val icon = array.getDrawable(R.styleable.PrefsMenuItem_icon)
 
+        tvSubtitle = findViewById(R.id.tv_subtitle)
+        tvTitle = findViewById(R.id.tv_title)
+        tvRightText = findViewById(R.id.tv_right_text)
+        imageMenu = findViewById(R.id.image_menu_icon)
+        imageAction = findViewById(R.id.image_action_indicator)
+        switchAction = findViewById(R.id.switch_action)
+
         if (icon != null) {
-            image_menu_icon.background = icon
+            imageMenu.background = icon
         }
         this.title = title
         this.subTitle = subtitle
@@ -71,16 +87,16 @@ class PrefsMenuItem @JvmOverloads constructor(
 
         when (type) {
             0 -> {
-                image_action_indicator.visibility = View.GONE
-                switch_action.visibility = View.GONE
+                imageAction.visibility = View.GONE
+                switchAction.visibility = View.GONE
             }
             1 -> {
-                image_action_indicator.visibility = View.VISIBLE
-                switch_action.visibility = View.GONE
+                imageAction.visibility = View.VISIBLE
+                switchAction.visibility = View.GONE
             }
             2 -> {
-                image_action_indicator.visibility = View.GONE
-                switch_action.visibility = View.VISIBLE
+                imageAction.visibility = View.GONE
+                switchAction.visibility = View.VISIBLE
             }
         }
 
@@ -88,13 +104,13 @@ class PrefsMenuItem @JvmOverloads constructor(
     }
 
     fun setSwitchChangeListener(listener: (isChecked: Boolean) -> Unit) {
-        switch_action.setOnCheckedChangeListener { _, isChecked ->
+        switchAction.setOnCheckedChangeListener { _, isChecked ->
             listener.invoke(isChecked)
         }
     }
 
     fun setIcon(iconRes: Int) {
-        image_menu_icon.setImageResource(iconRes)
+        imageMenu.setImageResource(iconRes)
     }
 
 }

@@ -3,13 +3,14 @@ package com.pretty.wandroid.user.login
 import android.content.Context
 import android.view.Gravity
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
 import com.blankj.utilcode.util.ScreenUtils
 import com.pretty.core.base.BaseDialog
 import com.pretty.core.ext.disableIfEmpty
 import com.pretty.core.ext.dp
 import com.pretty.core.ext.throttleClick
 import com.pretty.wandroid.user.R
-import kotlinx.android.synthetic.main.d_login.*
 
 class LoginDialog(context: Context) : BaseDialog(context) {
 
@@ -29,6 +30,10 @@ class LoginDialog(context: Context) : BaseDialog(context) {
             this.attributes = lp
             setWindowAnimations(com.pretty.core.R.style.bottom_in_bottom_out)
         }
+
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
+        val etUserName = findViewById<EditText>(R.id.etUserName)
+        val etPassWord = findViewById<EditText>(R.id.etPassWord)
 
         btnLogin.disableIfEmpty(etUserName, etPassWord)
         btnLogin.throttleClick {

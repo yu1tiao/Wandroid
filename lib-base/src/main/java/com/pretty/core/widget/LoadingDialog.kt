@@ -3,13 +3,15 @@ package com.pretty.core.widget
 import android.app.Dialog
 import android.content.Context
 import android.view.Gravity
+import android.widget.TextView
 import com.pretty.core.R
-import kotlinx.android.synthetic.main.d_loading_dialog.*
 
 /**
  * 加载中转圈的弹窗
  */
 class LoadingDialog private constructor(context: Context, theme: Int) : Dialog(context, theme) {
+
+    private var tvMessage: TextView
 
     init {
         setContentView(R.layout.d_loading_dialog)
@@ -19,6 +21,8 @@ class LoadingDialog private constructor(context: Context, theme: Int) : Dialog(c
         val lp = window!!.attributes
         lp.dimAmount = 0.2f
         window!!.attributes = lp
+
+        tvMessage = findViewById(R.id.tvMessage)
     }
 
     fun show(message: String? = null) {

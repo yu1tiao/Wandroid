@@ -11,19 +11,17 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pretty.core.arch.state.StatePage
 import com.pretty.core.arch.state.StatePageManager
-import com.pretty.core.base.BaseFragment
+import com.pretty.core.base.BaseDataBindFragment
 import com.pretty.core.ext.dp
 import com.pretty.core.ext.observe
 import com.pretty.core.ext.toResColor
-import com.pretty.core.util.runOnMainThread
 import com.pretty.module.wandroid.R
+import com.pretty.module.wandroid.databinding.FGankTodayBinding
 import com.pretty.module.wandroid.gank.adapter.GankTodayAdapter
 import com.pretty.module.wandroid.gank.widget.GankBannerView
 import com.pretty.module.wandroid.gank.widget.GankCategoryView
-import kotlinx.android.synthetic.main.f_gank_girls.*
-import kotlinx.android.synthetic.main.f_gank_today.*
 
-class GankTodayFragment : BaseFragment<GankTodayViewModel>() {
+class GankTodayFragment : BaseDataBindFragment<FGankTodayBinding, GankTodayViewModel>() {
 
     private lateinit var adapter: GankTodayAdapter
     private lateinit var banner: GankBannerView
@@ -41,14 +39,14 @@ class GankTodayFragment : BaseFragment<GankTodayViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rl_today.setOnRefreshListener {
+        mBinding.rlToday.setOnRefreshListener {
             mViewModel.getBanner()
             mViewModel.getCategory()
             mViewModel.getHot()
         }
         this.adapter = createAdapter()
-        rv_today.layoutManager = LinearLayoutManager(requireContext())
-        rv_today.adapter = this.adapter
+        mBinding.rvToday.layoutManager = LinearLayoutManager(requireContext())
+        mBinding.rvToday.adapter = this.adapter
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -80,21 +78,21 @@ class GankTodayFragment : BaseFragment<GankTodayViewModel>() {
         observe(mViewModel.ldBanner) {
             banner.setBanner(this, it)
             statePage.showContent()
-            rl_today.refreshComplete()
+            mBinding.rlToday.refreshComplete()
         }
         observe(mViewModel.ldCategory) {
             category.bindData(it)
             statePage.showContent()
-            rl_today.refreshComplete()
+            mBinding.rlToday.refreshComplete()
         }
         observe(mViewModel.ldHot) {
             adapter.updateData(it)
             statePage.showContent()
-            rl_today.refreshComplete()
+            mBinding.rlToday.refreshComplete()
         }
         observe(mViewModel.ldError) {
             adapter.loadMoreCompleted()
-            rl_today.refreshComplete()
+            mBinding.rlToday.refreshComplete()
         }
     }
 
