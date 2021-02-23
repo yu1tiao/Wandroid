@@ -22,7 +22,7 @@ class LoginDialog(context: Context) : BaseDialog(context) {
             decorView.setPadding(0, 0, 0, 0)
 
             val lp = attributes
-            lp.width = ScreenUtils.getScreenWidth() - 80.dp().toInt()
+            lp.width = ScreenUtils.getScreenWidth() - 80.dp()
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT
             lp.dimAmount = 0.2f
             lp.gravity = Gravity.CENTER

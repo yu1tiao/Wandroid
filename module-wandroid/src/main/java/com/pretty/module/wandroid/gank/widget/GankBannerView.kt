@@ -28,7 +28,7 @@ class GankBannerView @JvmOverloads constructor(
 
     init {
         LayoutInflater.from(context).inflate(R.layout.v_gank_banner, this)
-        val padding = 10.dp().toInt()
+        val padding = 10.dp()
         setPadding(padding, padding, padding, padding)
 
         banner = findViewById(R.id.banner)
@@ -41,11 +41,11 @@ class GankBannerView @JvmOverloads constructor(
             .setIndicator(CircleIndicator(context))
             .setIndicatorSelectedColorRes(R.color.white)
             .setIndicatorNormalColorRes(R.color.gray400)
-            .setIndicatorWidth(6.dp().toInt(), 6.dp().toInt())
-            .setIndicatorRadius(3.dp().toInt())
+            .setIndicatorWidth(6.dp(), 6.dp())
+            .setIndicatorRadius(3.dp())
 //            .addPageTransformer(ScaleInTransformer())
-//            .setBannerGalleryEffect(20.dp().toInt(), 0)
-            .setBannerGalleryMZ(20.dp().toInt())
+//            .setBannerGalleryEffect(20.dp(), 0)
+            .setBannerGalleryMZ(20.dp())
     }
 }
 
@@ -58,7 +58,7 @@ private class GankBannerAdapter(data: List<BannerBean>) :
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
-        imageView.cornerRadius = 16.dp().toInt()
+        imageView.cornerRadius = 16.dp()
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         return ViewHolder(imageView)
     }

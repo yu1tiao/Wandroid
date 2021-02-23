@@ -60,7 +60,7 @@ class PrefsMenuItem @JvmOverloads constructor(
         gravity = Gravity.CENTER_VERTICAL
         isClickable = true
 
-        val padding = 14.dp().toInt()
+        val padding = 14.dp()
         setPadding(padding, 0, padding, 0)
 
         LayoutInflater.from(context).inflate(R.layout.v_prefs_menu_item, this)

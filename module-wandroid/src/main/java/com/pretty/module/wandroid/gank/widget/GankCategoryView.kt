@@ -26,7 +26,7 @@ class GankCategoryView @JvmOverloads constructor(
         LayoutInflater.from(context).inflate(R.layout.v_gank_category, this)
         orientation = VERTICAL
         layoutParams = LayoutParams(-1, -2)
-        val padding = 10.dp().toInt()
+        val padding = 10.dp()
         setPadding(padding, padding, padding, padding)
 
         adapter = CategoryAdapter(context)

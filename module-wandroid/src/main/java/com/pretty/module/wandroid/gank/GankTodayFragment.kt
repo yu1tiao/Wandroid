@@ -68,7 +68,7 @@ class GankTodayFragment : BaseDataBindFragment<FGankTodayBinding, GankTodayViewM
                 gravity = Gravity.CENTER
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
                 setTextColor(R.color.gray400.toResColor())
-                layoutParams = ViewGroup.LayoutParams(-1, 50.dp().toInt())
+                layoutParams = ViewGroup.LayoutParams(-1, 50.dp())
             })
         }
     }

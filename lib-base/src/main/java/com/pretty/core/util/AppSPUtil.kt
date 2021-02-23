@@ -13,7 +13,7 @@ import com.tencent.mmkv.MMKV
 object AppSPUtil {
 
     val sp: MMKV by lazy {
-        MMKV.defaultMMKV()
+        MMKV.defaultMMKV()!!
     }
 
     fun init() {

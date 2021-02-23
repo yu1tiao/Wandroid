@@ -30,15 +30,15 @@ class PrefsMenuGroup @JvmOverloads constructor(
         val titleView = if (TextUtils.isEmpty(title)) {
             View(context).apply {
                 setBackgroundColor(Color.parseColor("#ececec"))
-                layoutParams = LayoutParams(-1, 8.dp().toInt())
+                layoutParams = LayoutParams(-1, 8.dp())
             }
         } else {
             TextView(context).apply {
                 text = title
                 layoutParams = LayoutParams(-1, -2)
 
-                val paddingH = 10.dp().toInt()
-                val paddingV = 5.dp().toInt()
+                val paddingH = 10.dp()
+                val paddingV = 5.dp()
                 setPadding(paddingH, paddingV, paddingH, paddingV)
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
                 setBackgroundColor(Color.parseColor("#ececec"))
