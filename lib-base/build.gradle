@@ -65,8 +65,7 @@ dependencies {
 //    api jetpackDeps.arch_room
 //    api jetpackDeps.arch_room_rxjava
 //    kapt jetpackDeps.arch_room_compiler
-    api jetpackDeps.arch_core_extension
-    kapt jetpackDeps.arch_core_compiler
+    kapt jetpackDeps.lifecycle_compiler
     api jetpackDeps.lifecycle_ktx
     api jetpackDeps.lifecycle_viewmodel_ktx
     api jetpackDeps.lifecycle_livedata_ktx

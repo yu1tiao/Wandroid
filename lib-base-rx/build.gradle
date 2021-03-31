@@ -56,8 +56,4 @@ dependencies {
     api rxjavaDeps.autodispose_lifecycle
     api rxjavaDeps.autodispose_arch
 
-//    // rxbinding暂时没有支持rxjava3
-//    api(rxjavaDeps.rxbinding) {
-//        exclude group: 'io.reactivex.rxjava2'
-//    }
 }
