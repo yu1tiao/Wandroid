@@ -18,10 +18,14 @@ class StatePage @JvmOverloads constructor(
     private val statusViews = ArrayMap<Status, View>()
     private var retryTask: (() -> Unit)? = null
 
-    var currentState = Status.CONTENT
+    var currentStatus = Status.CONTENT
         private set
 
     lateinit var config: StatePageConfig
+
+    fun getStatusView(status: Status): View? {
+        return statusViews[status]
+    }
 
     /**
      * 更新StateConfig
@@ -58,7 +62,7 @@ class StatePage @JvmOverloads constructor(
     }
 
     private fun innerShow(status: Status) {
-        if (currentState == status) {
+        if (currentStatus == status) {
             return
         }
 
@@ -74,19 +78,27 @@ class StatePage @JvmOverloads constructor(
                 Status.EMPTY -> {
                     inflateLayout(config.emptyLayout).apply {
                         addView(this, ViewGroup.LayoutParams(-1, -1))
-                        config.callback?.onEmptyCreated(this@StatePage, this)
-                        throttleClick {
+
+                        val retryClickView = if (config.emptyRetryId == INVALID_ID) this
+                        else findViewById(config.emptyRetryId)
+                        retryClickView.throttleClick {
                             retryTask?.invoke()
                         }
+
+                        config.callback?.onEmptyCreated(this@StatePage, this)
                     }
                 }
                 Status.ERROR -> {
                     inflateLayout(config.errorLayout).apply {
                         addView(this, ViewGroup.LayoutParams(-1, -1))
-                        config.callback?.onErrorCreated(this@StatePage, this)
-                        throttleClick {
+
+                        val retryClickView = if (config.errorRetryId == INVALID_ID) this
+                        else findViewById(config.errorRetryId)
+                        retryClickView.throttleClick {
                             retryTask?.invoke()
                         }
+
+                        config.callback?.onErrorCreated(this@StatePage, this)
                     }
                 }
                 Status.CONTENT -> getChildAt(0)
@@ -96,12 +108,12 @@ class StatePage @JvmOverloads constructor(
             }
         }
 
-        config.callback?.onStatusChange(this, status, currentState)
+        config.callback?.onStatusChange(this, status, currentStatus)
 
-        statusViews[currentState]?.visibility = View.GONE
+        statusViews[currentStatus]?.visibility = View.GONE
         statusViews[status]?.visibility = View.VISIBLE
 
-        currentState = status
+        currentStatus = status
     }
 
     private fun inflateLayout(layoutId: Int): View {
