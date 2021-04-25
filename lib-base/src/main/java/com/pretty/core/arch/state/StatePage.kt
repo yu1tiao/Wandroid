@@ -1,13 +1,21 @@
 package com.pretty.core.arch.state
 
 import android.content.Context
+import android.util.ArrayMap
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.collection.ArrayMap
 import com.pretty.core.ext.throttleClick
+
+/**
+ * Copyright (c) 2021 北京嗨学网教育科技股份有限公司 All rights reserved.
+ *
+ * @author yuli
+ * @date 2021/4/10
+ * @description StatePage
+ */
 
 class StatePage @JvmOverloads constructor(
     context: Context,
@@ -16,7 +24,7 @@ class StatePage @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr), IStatePage {
 
     private val statusViews = ArrayMap<Status, View>()
-    private var retryTask: (() -> Unit)? = null
+    private var retryTask: ((id: Int) -> Unit)? = null
 
     var currentStatus = Status.CONTENT
         private set
@@ -40,7 +48,7 @@ class StatePage @JvmOverloads constructor(
     /**
      * 重试
      */
-    fun retry(retryTask: () -> Unit): StatePage {
+    fun retry(retryTask: (id: Int) -> Unit): StatePage {
         this.retryTask = retryTask
         return this
     }
@@ -79,10 +87,16 @@ class StatePage @JvmOverloads constructor(
                     inflateLayout(config.emptyLayout).apply {
                         addView(this, ViewGroup.LayoutParams(-1, -1))
 
-                        val retryClickView = if (config.emptyRetryId == INVALID_ID) this
-                        else findViewById(config.emptyRetryId)
-                        retryClickView.throttleClick {
-                            retryTask?.invoke()
+                        if (config.emptyRetryIds.isNullOrEmpty()) {
+                            this.throttleClick {
+                                retryTask?.invoke(id)
+                            }
+                        } else {
+                            config.emptyRetryIds.forEach { id ->
+                                findViewById<View>(id).throttleClick {
+                                    retryTask?.invoke(id)
+                                }
+                            }
                         }
 
                         config.callback?.onEmptyCreated(this@StatePage, this)
@@ -92,10 +106,16 @@ class StatePage @JvmOverloads constructor(
                     inflateLayout(config.errorLayout).apply {
                         addView(this, ViewGroup.LayoutParams(-1, -1))
 
-                        val retryClickView = if (config.errorRetryId == INVALID_ID) this
-                        else findViewById(config.errorRetryId)
-                        retryClickView.throttleClick {
-                            retryTask?.invoke()
+                        if (config.errorRetryIds.isNullOrEmpty()) {
+                            this.throttleClick {
+                                retryTask?.invoke(id)
+                            }
+                        } else {
+                            config.errorRetryIds.forEach { id ->
+                                findViewById<View>(id).throttleClick {
+                                    retryTask?.invoke(id)
+                                }
+                            }
                         }
 
                         config.callback?.onErrorCreated(this@StatePage, this)

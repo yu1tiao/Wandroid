@@ -14,12 +14,11 @@ import com.pretty.core.ext.observe
  * @author yu
  * @date 2018/10/29
  */
-abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
+abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
     protected abstract val mLayoutId: Int
     protected abstract val mViewModel: VM
-    override val mDisplayDelegate: IDisplayDelegate by lazy { Foundation.getGlobalConfig().displayDelegateFactory.invoke() }
-    override val mDisposableManager: IDisposableManager by lazy { DisposableManager() }
+    private val loadingManager by lazy { LoadingManager() }
     private var subscribed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,9 +45,12 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mDisposableManager.init(this)
         val root = inflateView(inflater, container)
-        mDisplayDelegate.init(requireActivity())
+        loadingManager.init(
+            requireActivity(),
+            lifecycle,
+            Foundation.getGlobalConfig().loadingFactory
+        )
         if (!subscribed) {
             subscribeLiveData()
             subscribed = true
@@ -67,8 +69,8 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment(), IView {
     protected open fun subscribeLoading(viewModel: BaseViewModel) {
         observe(viewModel.loading) {
             when (it) {
-                is LoadingState.Loading -> mDisplayDelegate.showLoading(it.message)
-                is LoadingState.Hide -> mDisplayDelegate.dismissLoading()
+                is LoadingState.Loading -> loadingManager.showLoading(it.message)
+                is LoadingState.Hide -> loadingManager.dismissLoading()
             }
         }
     }

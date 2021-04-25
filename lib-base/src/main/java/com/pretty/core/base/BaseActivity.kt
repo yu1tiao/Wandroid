@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import com.pretty.core.Foundation
-import com.pretty.core.arch.DisposableManager
-import com.pretty.core.arch.IDisplayDelegate
-import com.pretty.core.arch.IDisposableManager
-import com.pretty.core.arch.LoadingState
+import com.pretty.core.arch.*
 import com.pretty.core.ext.observe
 
 
@@ -18,21 +15,12 @@ import com.pretty.core.ext.observe
  * @author yu
  * @date 2018/10/29
  */
-abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
+abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
 
     protected abstract val mLayoutId: Int
     protected abstract val mViewModel: VM
     private var subscribed = false
-
-    /**
-     *  提供通用UI操作的能力，如显示隐藏loading
-     */
-    override val mDisplayDelegate: IDisplayDelegate by lazy { Foundation.getGlobalConfig().displayDelegateFactory.invoke() }
-
-    /**
-     * 提供在页面销毁时自动清理的能力，防止内存泄露
-     */
-    override val mDisposableManager: IDisposableManager by lazy { DisposableManager() }
+    private val loadingManager by lazy { LoadingManager() }
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +38,6 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
     abstract fun initPage()
 
     protected open fun beforeSetContent(savedInstanceState: Bundle?) {
-        mDisposableManager.init(this)
     }
 
     protected open fun prepareContentView(): View {
@@ -60,7 +47,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
     }
 
     protected open fun afterSetContent(root: View) {
-        mDisplayDelegate.init(this)
+        loadingManager.init(this, lifecycle, Foundation.getGlobalConfig().loadingFactory)
     }
 
     open fun subscribeLiveData() {
@@ -71,8 +58,8 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity(), IView {
     protected open fun subscribeLoading(viewModel: BaseViewModel) {
         observe(viewModel.loading) {
             when (it) {
-                is LoadingState.Loading -> mDisplayDelegate.showLoading(it.message)
-                is LoadingState.Hide -> mDisplayDelegate.dismissLoading()
+                is LoadingState.Loading -> loadingManager.showLoading(it.message)
+                is LoadingState.Hide -> loadingManager.dismissLoading()
             }
         }
     }

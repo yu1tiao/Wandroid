@@ -1,40 +1,33 @@
 package com.pretty.core.ext
 
-import timber.log.Timber
-import kotlin.properties.Delegates
+import android.util.Log
+import com.pretty.core.Foundation
 
 
-private var LOG_TAG by Delegates.notNull<String>()
+fun Any?.logV(tag: String? = null) {
+    printLog(Log.VERBOSE, tag)
+}
 
-fun initLogger(isDebug: Boolean, tag: String, releaseTree: Timber.Tree) {
-    LOG_TAG = tag
-    if (isDebug) {
-        Timber.plant(Timber.DebugTree())
-    } else {
-        Timber.plant(releaseTree)
+fun Any?.logD(tag: String? = null) {
+    printLog(Log.DEBUG, tag)
+}
+
+fun Any?.logI(tag: String? = null) {
+    printLog(Log.INFO, tag)
+}
+
+fun Any?.logW(tag: String? = null) {
+    printLog(Log.WARN, tag)
+}
+
+fun Any?.logE(tag: String? = null) {
+    printLog(Log.ERROR, tag)
+}
+
+private fun Any?.printLog(level: Int, tag: String? = null) {
+    if (this == null) return
+    Foundation.getGlobalConfig().logger.let {
+        val finalTag = if (tag.isNullOrEmpty()) it.globalTag else tag
+        it.print(level, finalTag, this.toString())
     }
-}
-
-fun String.logv(tag: String = LOG_TAG) {
-    Timber.tag(tag).v(this)
-}
-
-fun String.logd(tag: String = LOG_TAG) {
-    Timber.tag(tag).d(this)
-}
-
-fun String.logi(tag: String = LOG_TAG) {
-    Timber.tag(tag).i(this)
-}
-
-fun String.logw(tag: String = LOG_TAG) {
-    Timber.tag(tag).w(this)
-}
-
-fun String.loge(tag: String = LOG_TAG) {
-    Timber.tag(tag).e(this)
-}
-
-fun Throwable.loge(tag: String = LOG_TAG) {
-    Timber.tag(tag).e(this)
 }

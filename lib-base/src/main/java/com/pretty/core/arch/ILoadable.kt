@@ -3,8 +3,11 @@ package com.pretty.core.arch
 import androidx.annotation.MainThread
 
 /**
- * @author yu
- * @date 2018/10/26
+ * Copyright (c) 2021 北京嗨学网教育科技股份有限公司 All rights reserved.
+ *
+ * @author yuli
+ * @date 2021/4/10
+ * @description ILoadable
  */
 interface ILoadable {
     @MainThread

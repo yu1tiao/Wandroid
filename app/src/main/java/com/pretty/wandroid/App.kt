@@ -4,7 +4,7 @@ import com.pretty.core.base.BaseApplication
 import com.pretty.core.config.GlobalConfiguration
 import com.pretty.core.config.INetPolicy
 import com.pretty.core.config.NetPolicyProvider
-import com.pretty.core.ext.logd
+import com.pretty.core.ext.logD
 import com.pretty.core.http.CommonHeaderInterceptor
 import com.sankuai.waimai.router.Router
 import com.sankuai.waimai.router.common.DefaultRootUriHandler
@@ -29,7 +29,7 @@ class App : BaseApplication(), NetPolicyProvider {
                 .addInterceptor(CommonHeaderInterceptor())
                 .addInterceptor(
                     HttpLoggingInterceptor { message ->
-                        message.logd("http")
+                        message.logD("http")
                     }.apply {
                         level = HttpLoggingInterceptor.Level.BODY
                     })

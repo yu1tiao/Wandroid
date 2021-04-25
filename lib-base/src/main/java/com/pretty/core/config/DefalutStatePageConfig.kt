@@ -8,5 +8,4 @@ val globalStateConfig = StatePageConfig(
     R.layout.l_common_page_loading,
     R.layout.l_common_page_empty,
     R.layout.l_common_page_error,
-    null
 )

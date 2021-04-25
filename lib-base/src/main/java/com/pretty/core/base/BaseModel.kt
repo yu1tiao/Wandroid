@@ -10,7 +10,4 @@ abstract class BaseModel : IModel {
 
     }
 
-    override fun onDestroy() {
-
-    }
 }

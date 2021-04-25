@@ -3,7 +3,7 @@ package com.pretty.wandroid.user.service
 import android.content.IntentFilter
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.pretty.core.Foundation
-import com.pretty.core.ext.logi
+import com.pretty.core.ext.logI
 import com.pretty.core.router.RC
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.core.router.service.AccountService
@@ -15,23 +15,11 @@ import com.sankuai.waimai.router.annotation.RouterService
 class AccountServiceImpl : AccountService {
 
     override fun isLogin(): Boolean {
-        return LoginManager.isLogin()
-    }
-
-    override fun logout() {
-        LoginManager.clear()
+        TODO()
     }
 
     override fun getLoginUser(): LoginEntity? {
-        return LoginManager.getLoginEntity()
-    }
-
-    override fun registerUserObserver(observer: AccountService.UserObserver) {
-        LoginManager.addObserver(observer)
-    }
-
-    override fun unRegisterUserObserver(observer: AccountService.UserObserver) {
-        LoginManager.removeObserver(observer)
+        TODO()
     }
 
     override fun runIfLogin(onNext: (LoginEntity) -> Unit) {
@@ -62,7 +50,7 @@ class AccountServiceImpl : AccountService {
 
             override fun onCancel() {
                 // do nothing
-                "用户取消登录".logi()
+                "用户取消登录".logI()
             }
         }
     }

@@ -9,29 +9,19 @@ import com.pretty.core.router.entity.LoginEntity
 
 interface AccountService {
 
-    interface UserObserver {
-        fun onUserChange(user: LoginEntity?)
-    }
-
     interface Callback {
         fun onSuccess(user: LoginEntity)
         fun onCancel()
     }
 
-    fun logout()
-
     fun isLogin(): Boolean
 
     fun getLoginUser(): LoginEntity?
 
-    fun registerUserObserver(observer: UserObserver)
-
-    fun unRegisterUserObserver(observer: UserObserver)
-
     fun runIfLogin(onNext: (LoginEntity) -> Unit)
 }
 
-class LoginReceiver (private var callback: AccountService.Callback) : BroadcastReceiver() {
+class LoginReceiver(private var callback: AccountService.Callback) : BroadcastReceiver() {
     companion object {
         const val ACTION_LOGIN_SUC = "com.receiver.login.ACTION_LOGIN_SUC"
         const val ACTION_LOGIN_CANCEL = "com.receiver.login.ACTION_LOGIN_CANCEL"

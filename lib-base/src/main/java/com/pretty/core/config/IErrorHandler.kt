@@ -3,21 +3,25 @@ package com.pretty.core.config
 import android.net.ParseException
 import com.google.gson.JsonParseException
 import com.google.gson.stream.MalformedJsonException
-import com.pretty.core.BuildConfig
 import com.pretty.core.http.ApiException
-import com.pretty.core.util.showToast
+import com.pretty.core.ext.showToast
 import org.json.JSONException
 import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-class ToastErrorHandler : ErrorHandler {
+/**
+ * Copyright (c) 2021 北京嗨学网教育科技股份有限公司 All rights reserved.
+ *
+ * @author yuli
+ * @date 4/15/21
+ * @description Logger
+ */
+typealias IErrorHandler = (throwable: Throwable) -> Unit
 
+val toastErrorHandler = object : IErrorHandler {
     override fun invoke(throwable: Throwable) {
-        if (BuildConfig.DEBUG) {
-            throwable.printStackTrace()
-        }
         val msg = when (throwable) {
             is ApiException -> throwable.message
             is ConnectException -> "网络连接错误，请稍后再试"
@@ -30,15 +34,8 @@ class ToastErrorHandler : ErrorHandler {
     }
 }
 
-class IgnoreErrorHandler : ErrorHandler {
-
+val ignoreErrorHandler = object : IErrorHandler {
     override fun invoke(throwable: Throwable) {
-        if (BuildConfig.DEBUG) {
-            throwable.printStackTrace()
-        }
+        throwable.printStackTrace()
     }
 }
-
-val toastErrorHandler = ToastErrorHandler()
-
-val ignoreErrorHandler = IgnoreErrorHandler()

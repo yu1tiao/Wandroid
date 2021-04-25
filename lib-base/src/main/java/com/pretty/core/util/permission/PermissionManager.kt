@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity
  * 用法：
     PermissionManager.with(this)
         .permissions(Manifest.permission.CAMERA)
+        .onFirstTimeRequest {  } // 可选，某权限是第一次申请
         .onRationale {  } // 可选，第一次拒绝后，第二次回调这里，可以弹窗解释为何需要此权限，内部必须调用继续或者取消权限请求
         .onGranted {  }// 权限授予
         .onDenied {  }// 权限拒绝
@@ -59,7 +60,7 @@ object PermissionManager {
             request.callDenied(deniedList)
         }
 
-        request.cancelRequest()
+        request.cancel()
     }
 
     internal fun removeRequest(requestCode: Int) {

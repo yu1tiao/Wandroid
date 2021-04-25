@@ -4,13 +4,16 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.ActivityCompat
+import com.pretty.core.util.sp.getSp
 
 abstract class AbsPermissionRequest(internal val requestCode: Int) {
 
-    private var rationaleCallback: ((AbsPermissionRequest) -> Unit)? = null
+    private var firstRequestCallback: ((permissions: List<String>, Runnable) -> Unit)? = null
+    private var rationaleCallback: ((Runnable) -> Unit)? = null
     private var grantedCallback: (() -> Unit)? = null
     private var deniedCallback: ((List<String>) -> Unit)? = null
     private var permissions: Array<out String>? = null
+    private val sp by lazy { getSp("permission") }
 
     fun permissions(vararg permission: String): AbsPermissionRequest {
         this.permissions = permission
@@ -29,26 +32,30 @@ abstract class AbsPermissionRequest(internal val requestCode: Int) {
 
     /**
      * 第一次申请被拒绝后(没有选中总是拒绝)，第二次申请会回调这里，可以弹出对话框向用户解释为何需要此权限
-     * 必须在回调里调用 continueRequest()或者cancelRequest()，继续或取消权限请求
+     * 必须在回调里执行Runnable继续请求或者cancelRequest()取消权限请求
      *
      * ps: 有些厂商修改了shouldShowRequestPermissionRationale的逻辑，可能造成这个回调不调用
      */
-    fun onRationale(callback: (AbsPermissionRequest) -> Unit): AbsPermissionRequest {
+    fun onRationale(callback: (Runnable) -> Unit): AbsPermissionRequest {
         this.rationaleCallback = callback
         return this
     }
 
     /**
-     * onRationale回调中调用，继续申请权限
+     * 第一次申请某些权限时回调，可能需要弹框说明为什么要申请此权限
+     * 通过callback回调第一次申请的 permissions回去
+     *
+     * 必须在回调里执行Runnable继续请求或者cancelRequest()取消权限请求
      */
-    fun continueRequest() {
-        requestEach(permissions!!)
+    fun onFirstTimeRequest(callback: (permissions: List<String>, Runnable) -> Unit): AbsPermissionRequest {
+        this.firstRequestCallback = callback
+        return this
     }
 
     /**
      * onRationale回调中调用，取消申请权限
      */
-    fun cancelRequest() {
+    fun cancel() {
         PermissionManager.removeRequest(requestCode)
     }
 
@@ -90,17 +97,51 @@ abstract class AbsPermissionRequest(internal val requestCode: Int) {
             throw RuntimeException("request permissions = null")
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (havePermissions(permissions!!)) {
-                callGranted()
-            } else {
-                if (rationaleCallback != null && shouldShowRequestPermissionRationale(permissions!!)) {
-                    rationaleCallback?.invoke(this)
+
+            val runnable = Runnable {
+                if (havePermissions(permissions!!)) {
+                    callGranted()
                 } else {
-                    continueRequest()
+                    if (rationaleCallback != null && shouldShowRequestPermissionRationale(
+                            permissions!!
+                        )
+                    ) {
+                        rationaleCallback?.invoke {
+                            requestEach(permissions!!)
+                        }
+                    } else {
+                        requestEach(permissions!!)
+                    }
                 }
+            }
+
+
+            if (firstRequestCallback != null) {
+                // 如果某权限是第一次申请，回调第一次申请的callback
+                val firstRequest = permissions!!.filter {
+                    isFirstRequest(it)
+                }
+                if (firstRequest.isEmpty()) {
+                    runnable.run()
+                } else {
+                    firstRequestCallback?.invoke(firstRequest, runnable)
+                    firstRequest.forEach {
+                        saveFirstRequest(it)
+                    }
+                }
+            } else {
+                runnable.run()
             }
         } else {
             callGranted()
         }
+    }
+
+    private fun isFirstRequest(permission: String): Boolean {
+        return sp.getBoolean(permission, true)
+    }
+
+    private fun saveFirstRequest(permission: String) {
+        sp.edit().putBoolean(permission, false).apply()
     }
 }

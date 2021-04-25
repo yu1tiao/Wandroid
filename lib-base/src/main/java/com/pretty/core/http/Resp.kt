@@ -1,5 +1,7 @@
 package com.pretty.core.http
 
+import com.pretty.core.Foundation
+import com.pretty.core.config.Condition
 import java.io.Serializable
 
 /**
@@ -17,10 +19,12 @@ open class Resp<T>(
     }
 }
 
-fun <T : Resp<*>> T.check(): T {
-    return if (isSuccessful()) {
+fun <T : Resp<*>> T.check(condition: Condition? = null): T {
+    val c = condition ?: Foundation.getGlobalConfig().httpCondition
+    return if (c()) {
         this
     } else {
         throw ApiException(errorCode.orEmpty(), errorMsg)
     }
 }
+

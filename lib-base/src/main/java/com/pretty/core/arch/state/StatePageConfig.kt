@@ -4,17 +4,20 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 
 /**
- * 配置
+ * Copyright (c) 2021 北京嗨学网教育科技股份有限公司 All rights reserved.
+ *
+ * @author yuli
+ * @date 2021/4/10
+ * @description StatePageConfig
  */
-const val INVALID_ID = -1
 
 class StatePageConfig(
     @LayoutRes var loadingLayout: Int,
     @LayoutRes var emptyLayout: Int,
     @LayoutRes var errorLayout: Int,
-    @IdRes var emptyRetryId: Int = INVALID_ID,
-    @IdRes var errorRetryId: Int = INVALID_ID,
-    var callback: StatePageCallback?
+    @IdRes var emptyRetryIds: Array<Int> = emptyArray(),
+    @IdRes var errorRetryIds: Array<Int> = emptyArray(),
+    var callback: StatePageCallback? = null
 ) {
 
     /**
@@ -26,8 +29,8 @@ class StatePageConfig(
                 this.loadingLayout,
                 this.emptyLayout,
                 this.errorLayout,
-                this.emptyRetryId,
-                this.errorRetryId,
+                this.emptyRetryIds,
+                this.errorRetryIds,
                 this.callback
             )
         )

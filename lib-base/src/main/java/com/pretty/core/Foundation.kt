@@ -5,8 +5,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.pretty.core.arch.state.StatePageManager
 import com.pretty.core.base.BaseApplication
 import com.pretty.core.config.GlobalConfiguration
-import com.pretty.core.ext.initLogger
-import com.pretty.core.util.AppSPUtil
+import com.tencent.mmkv.MMKV
 import kotlin.properties.Delegates
 
 object Foundation {
@@ -18,9 +17,10 @@ object Foundation {
     fun init(context: BaseApplication) {
         app = context
 
-        AppSPUtil.init()
-        StatePageManager.initDefault(getGlobalConfig().statePageConfig)
-        initLogger(BuildConfig.DEBUG, "timber", getGlobalConfig().releaseLogTree)
+        MMKV.initialize(context)
+        getGlobalConfig().statePageConfig?.let {
+            StatePageManager.initDefault(it)
+        }
     }
 
     @JvmStatic

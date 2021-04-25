@@ -3,10 +3,9 @@ package com.pretty.wandroid.user.login
 import androidx.lifecycle.MutableLiveData
 import com.pretty.core.base.BaseViewModel
 import com.pretty.core.ext.launch
+import com.pretty.core.ext.showToast
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.core.router.service.LoginReceiver
-import com.pretty.core.util.showToast
-import com.pretty.wandroid.user.service.LoginManager
 
 class LoginViewModel : BaseViewModel() {
 
@@ -28,9 +27,8 @@ class LoginViewModel : BaseViewModel() {
             model.login(username, password)
         }, {
             isLoginSuccess = true
-            LoginManager.saveLoginEntity(it.data!!)
             LoginReceiver.sendLoginSuccess(it.data!!)
-            loginSuccess.postValue(it.data)
+            loginSuccess.postValue(it.data!!)
         })
     }
 

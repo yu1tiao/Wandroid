@@ -4,14 +4,18 @@ import android.view.View
 import android.view.ViewGroup
 
 /**
+ * Copyright (c) 2021 北京嗨学网教育科技股份有限公司 All rights reserved.
  *
- * 1, 获取全局配置的
-val statePage = StatePageManager.getDefault().wrap(this)
-StatePageManager.with {
-// 会copy全局设置，修改需要自定义的选项就可以
-}.wrap(this)
+ * @author yuli
+ * @date 2021/4/10
+ * @description StatePageManager
  *
  *
+    val statePage = StatePageManager.getDefault().wrap(this)
+    2, 或者自定义配置
+    StatePageManager.with {
+    // 会copy全局设置，修改需要自定义的选项就可以
+    }.wrap(this)
  */
 class StatePageManager(private val config: StatePageConfig) {
 
@@ -41,7 +45,7 @@ class StatePageManager(private val config: StatePageConfig) {
 
         private val defaultInstance: StatePageManager by lazy {
             requireNotNull(defaultConfig) {
-                "u must call 'initDefault' before use"
+                "u must call 'initDefault' before use, 请在GlobalConfig中配置StatePageConfig"
             }
             StatePageManager(defaultConfig!!)
         }
