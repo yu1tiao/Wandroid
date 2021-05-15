@@ -2,7 +2,7 @@ package com.pretty.wandroid.user.login
 
 import androidx.lifecycle.MutableLiveData
 import com.pretty.core.base.BaseViewModel
-import com.pretty.core.ext.launch
+import com.pretty.core.ext.safeLaunch
 import com.pretty.core.ext.showToast
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.core.router.service.LoginReceiver
@@ -23,12 +23,13 @@ class LoginViewModel : BaseViewModel() {
             showToast("密码为空")
             return
         }
-        launch({
+
+        safeLaunch({
             model.login(username, password)
         }, {
             isLoginSuccess = true
-            LoginReceiver.sendLoginSuccess(it.data!!)
-            loginSuccess.postValue(it.data!!)
+            LoginReceiver.sendLoginSuccess(it!!)
+            loginSuccess.postValue(it)
         })
     }
 
