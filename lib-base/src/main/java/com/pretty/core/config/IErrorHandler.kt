@@ -3,21 +3,15 @@ package com.pretty.core.config
 import android.net.ParseException
 import com.google.gson.JsonParseException
 import com.google.gson.stream.MalformedJsonException
-import com.pretty.core.http.ApiException
 import com.pretty.core.ext.showToast
+import com.pretty.core.http.ApiException
 import org.json.JSONException
 import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-/**
- * Copyright (c) 2021 北京嗨学网教育科技股份有限公司 All rights reserved.
- *
- * @author yuli
- * @date 4/15/21
- * @description Logger
- */
+
 typealias IErrorHandler = (throwable: Throwable) -> Unit
 
 val toastErrorHandler = object : IErrorHandler {

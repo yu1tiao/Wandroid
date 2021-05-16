@@ -10,23 +10,12 @@ interface NetPolicyProvider {
  */
 interface INetPolicy {
     companion object {
-        const val DEV = "开发环境"
-        const val QA = "测试环境"
-        const val RELEASE = "生产环境"
+        const val DEV = "DEV"
+        const val SIT = "SIT"
+        const val RELEASE = "RELEASE"
     }
 
-    /**
-     * 策略名字
-     */
     fun getPolicyName(): String
 
-    /**
-     * 获取设置的API地址
-     */
     fun getApiBaseUrl(): String
-
-    /**
-     * 获取默认H5 host
-     */
-    fun getWebHostUrl(): String
 }

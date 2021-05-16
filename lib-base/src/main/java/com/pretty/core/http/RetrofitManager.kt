@@ -14,7 +14,7 @@ import retrofit2.Retrofit
 object RetrofitManager {
 
     private var mRetrofit: Retrofit? = null
-    private val mRetrofitServiceCache = mutableMapOf<String, Any>()
+    private val mApiCache = mutableMapOf<String, Any>()
 
     private fun <T> createApiService(clazz: Class<T>): T {
         if (mRetrofit == null) {
@@ -31,8 +31,10 @@ object RetrofitManager {
         }
 
         val client = generateHttpClient()
-        val baseUrl =
-            configuration.netPolicyProvider?.getNetPolicy(BuildConfig.BUILD_TYPE)?.getApiBaseUrl()?.toHttpUrlOrNull()
+        val baseUrl = configuration.netPolicyProvider
+            ?.getNetPolicy(BuildConfig.BUILD_TYPE)
+            ?.getApiBaseUrl()
+            ?.toHttpUrlOrNull()
 
         buildRetrofit(baseUrl!!, client)
     }
@@ -62,8 +64,8 @@ object RetrofitManager {
      */
     fun changeServer(baseUrl: HttpUrl) {
         buildRetrofit(baseUrl, generateHttpClient())
-        synchronized(mRetrofitServiceCache) {
-            mRetrofitServiceCache.clear()
+        synchronized(mApiCache) {
+            mApiCache.clear()
         }
     }
 
@@ -72,11 +74,11 @@ object RetrofitManager {
      */
     fun <T> obtainService(service: Class<T>): T {
         var apiService: T?
-        synchronized(mRetrofitServiceCache) {
-            apiService = mRetrofitServiceCache[service.name] as T
+        synchronized(mApiCache) {
+            apiService = mApiCache[service.name] as T
             if (apiService == null) {
                 apiService = createApiService(service)
-                mRetrofitServiceCache[service.name] = apiService!! as Any
+                mApiCache[service.name] = apiService!! as Any
             }
         }
         return apiService!!

@@ -1,4 +1,4 @@
-package com.pretty.core.arch.container
+package com.pretty.core.arch
 
 import android.app.Activity
 import android.content.Context
@@ -41,18 +41,17 @@ class ContainerActivity : AppCompatActivity() {
 
 }
 
-inline fun <reified T : Fragment> launchFragmentInContainer(
-    context: Context,
+inline fun <reified T : Fragment> Context.launchFragmentInContainer(
     fragment: Class<T>,
     args: Bundle? = null
 ) {
-    val intent = Intent(context, ContainerActivity::class.java)
+    val intent = Intent(this, ContainerActivity::class.java)
     intent.putExtra(ContainerActivity.KEY_CLASS, fragment)
     if (args != null) {
         intent.putExtra(ContainerActivity.KEY_ARGS, args)
     }
-    if (context !is Activity) {
+    if (this !is Activity) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
-    context.startActivity(intent)
+    this.startActivity(intent)
 }

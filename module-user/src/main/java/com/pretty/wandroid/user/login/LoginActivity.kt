@@ -3,6 +3,7 @@ package com.pretty.wandroid.user.login
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.view.View
 import androidx.activity.viewModels
 import com.blankj.utilcode.util.BarUtils
 import com.pretty.core.base.BaseDataBindActivity
@@ -20,7 +21,7 @@ class LoginActivity : BaseDataBindActivity<ALoginBinding, LoginViewModel>() {
     override val mLayoutId: Int = com.pretty.wandroid.user.R.layout.a_login
     override val mViewModel: LoginViewModel by viewModels()
 
-    override fun initPage() {
+    override fun initPage(contentView: View) {
         BarUtils.transparentStatusBar(this)
         startAnimation()
 

@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import com.pretty.core.R
 import com.pretty.core.widget.LoadingView
 
 /**
@@ -22,12 +21,6 @@ abstract class AbsLoadingDialog(context: Context, theme: Int) : Dialog(context, 
 
     interface Factory {
         fun createDialog(context: Context): AbsLoadingDialog
-    }
-}
-
-val defaultLoadingFactory = object : AbsLoadingDialog.Factory {
-    override fun createDialog(context: Context): AbsLoadingDialog {
-        return DefaultLoadingDialog(context, R.style.LightDialog)
     }
 }
 

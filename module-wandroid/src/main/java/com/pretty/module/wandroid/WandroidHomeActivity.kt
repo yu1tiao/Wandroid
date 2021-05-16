@@ -1,5 +1,6 @@
 package com.pretty.module.wandroid
 
+import android.view.View
 import androidx.activity.viewModels
 import com.pretty.core.arch.container.launchFragmentInContainer
 import com.pretty.core.base.BaseDataBindActivity
@@ -19,7 +20,7 @@ class WandroidHomeActivity : BaseDataBindActivity<AWandroidHomeBinding, BaseView
 
     override val mViewModel: BaseViewModel by viewModels()
 
-    override fun initPage() {
+    override fun initPage(contentView: View) {
         // 跳转登录页
         mBinding.btnLogin.throttleClick {
             Router.startUri(this, RC.WANDROID_LOGIN_ACTIVITY)
@@ -29,7 +30,7 @@ class WandroidHomeActivity : BaseDataBindActivity<AWandroidHomeBinding, BaseView
             Router.startUri(this, RC.WANDROID_COLLECT_ACTIVITY)
         }
         mBinding.btnGank.throttleClick {
-            launchFragmentInContainer(this, GankHomeFragment::class.java)
+            launchFragmentInContainer(GankHomeFragment::class.java)
         }
     }
 

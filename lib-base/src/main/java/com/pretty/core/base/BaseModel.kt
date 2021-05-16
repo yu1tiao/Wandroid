@@ -6,8 +6,4 @@ package com.pretty.core.base
  */
 abstract class BaseModel : IModel {
 
-    override fun onCreate() {
-
-    }
-
 }

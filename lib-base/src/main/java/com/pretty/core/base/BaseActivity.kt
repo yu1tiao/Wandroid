@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import com.pretty.core.Foundation
-import com.pretty.core.arch.*
+import com.pretty.core.arch.LoadingManager
+import com.pretty.core.arch.LoadingState
 import com.pretty.core.ext.observe
 
 
@@ -25,19 +26,17 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        beforeSetContent(savedInstanceState)
+        initParams(savedInstanceState)
         val root = prepareContentView()
         afterSetContent(root)
+        initPage(root)
         if (!subscribed) {
             subscribeLiveData()
             subscribed = true
         }
-        initPage()
     }
 
-    abstract fun initPage()
-
-    protected open fun beforeSetContent(savedInstanceState: Bundle?) {
+    protected open fun initParams(savedInstanceState: Bundle?) {
     }
 
     protected open fun prepareContentView(): View {
@@ -45,6 +44,8 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
         setContentView(view, ViewGroup.LayoutParams(-1, -1))
         return view
     }
+
+    abstract fun initPage(contentView: View)
 
     protected open fun afterSetContent(root: View) {
         loadingManager.init(this, lifecycle, Foundation.getGlobalConfig().loadingFactory)

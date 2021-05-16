@@ -1,6 +1,7 @@
 package com.pretty.wandroid
 
 import android.animation.ObjectAnimator
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.animation.addListener
 import com.pretty.core.base.BaseDataBindActivity
@@ -15,7 +16,7 @@ class SplashActivity : BaseDataBindActivity<ActivitySplashBinding, BaseViewModel
 
     override val mViewModel: BaseViewModel by viewModels()
 
-    override fun initPage() {
+    override fun initPage(contentView: View) {
         ObjectAnimator.ofFloat(mBinding.ivSplash, "alpha", 0.5f, 1f)
             .apply {
                 duration = 1500

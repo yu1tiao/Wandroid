@@ -1,18 +1,15 @@
 package com.pretty.core.config
 
 import com.pretty.core.http.Resp
-
-/**
- * Copyright (c) 2021 北京嗨学网教育科技股份有限公司 All rights reserved.
- *
- * @author yuli
- * @date 4/25/21
- * @description Condition
- */
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
 
 
+/** 网络请求是否成功的判断规则 */
 typealias Condition = Resp<*>.() -> Boolean
 
-val defaultCondition: Condition = {
-    this.isSuccessful()
-}
+/** 回调配置OkHttp */
+typealias HttpClientConfigCallback = (OkHttpClient.Builder) -> OkHttpClient.Builder
+
+/** 回调配置Retrofit */
+typealias RetrofitConfigCallback = (Retrofit.Builder) -> Retrofit.Builder
