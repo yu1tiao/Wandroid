@@ -1,11 +1,15 @@
 package com.pretty.wandroid.user.login
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.pretty.core.base.BaseViewModel
+import com.pretty.core.config.toastErrorHandler
+import com.pretty.core.ext.handApiResult
 import com.pretty.core.ext.safeLaunch
 import com.pretty.core.ext.showToast
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.core.router.service.LoginReceiver
+import kotlinx.coroutines.launch
 
 class LoginViewModel : BaseViewModel() {
 
@@ -24,13 +28,23 @@ class LoginViewModel : BaseViewModel() {
             return
         }
 
-        safeLaunch({
+        viewModelScope.launch {
             model.login(username, password)
-        }, {
-            isLoginSuccess = true
-            LoginReceiver.sendLoginSuccess(it!!)
-            loginSuccess.postValue(it)
-        })
+                .onSuccess {
+                    isLoginSuccess = true
+                    LoginReceiver.sendLoginSuccess(it!!)
+                    loginSuccess.postValue(it)
+                }
+                .onError(toastErrorHandler)
+        }
+
+//        safeLaunch({
+//            model.login(username, password)
+//        }, {
+//            isLoginSuccess = true
+//            LoginReceiver.sendLoginSuccess(it!!)
+//            loginSuccess.postValue(it)
+//        })
     }
 
     override fun onCleared() {

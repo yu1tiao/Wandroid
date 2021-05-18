@@ -113,9 +113,10 @@ inline fun <reified T> handApiResult(
     noinline success: (T?) -> Unit,
     noinline failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler
 ) {
-    when (result) {
-        is ApiResult.Success<T> -> success(result.data)
-        is ApiResult.Error<T> -> failure(result.throwable)
+    if (result.isSuccess) {
+        success(result.getOrNull())
+    } else {
+        failure(result.exceptionOrNull()!!)
     }
 }
 
