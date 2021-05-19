@@ -1,10 +1,11 @@
 package com.pretty.module.wandroid.gank
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.pretty.core.base.BaseViewModel
 import com.pretty.core.config.toastErrorHandler
-import com.pretty.core.ext.safeLaunch
 import com.pretty.module.wandroid.entity.GankBean
+import kotlinx.coroutines.launch
 
 class GankGirlsViewModel : BaseViewModel() {
 
@@ -29,21 +30,24 @@ class GankGirlsViewModel : BaseViewModel() {
 
     private fun getGirl(pageIndex: Int, count: Int) {
         val isLoadMore = pageIndex > 1
-        safeLaunch({ model.getCategoryData("Girl", "Girl", pageIndex, count) }, {
-            if (isLoadMore) {
-                if (it?.isNullOrEmpty() == true) {
-                    ldNoMore.value = ""
-                } else {
-                    ldGirlsLoadMore.value = it
+        viewModelScope.launch {
+            model.getCategoryData("Girl", "Girl", pageIndex, count)
+                .onSuccess {
+                    if (isLoadMore) {
+                        if (it?.isNullOrEmpty() == true) {
+                            ldNoMore.value = ""
+                        } else {
+                            ldGirlsLoadMore.value = it
+                        }
+                    } else {
+                        ldGirls.value = it
+                    }
+                }.onError {
+                    toastErrorHandler(it)
+                    page--
+                    ldError.value = ""
                 }
-            } else {
-                ldGirls.value = it
-            }
-        }, {
-            toastErrorHandler(it)
-            page--
-            ldError.value = ""
-        })
+        }
     }
 
 }

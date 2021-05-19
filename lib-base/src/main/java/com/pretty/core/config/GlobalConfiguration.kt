@@ -1,15 +1,14 @@
 package com.pretty.core.config
 
+import android.app.Application
 import android.content.Context
 import android.util.Log
-import android.view.Gravity
-import android.widget.Toast
+import com.hjq.toast.ToastUtils
 import com.pretty.core.Foundation
 import com.pretty.core.R
 import com.pretty.core.arch.AbsLoadingDialog
 import com.pretty.core.arch.DefaultLoadingDialog
 import com.pretty.core.arch.state.StatePageConfig
-import es.dmoral.toasty.Toasty
 
 /** 全局配置 */
 class GlobalConfiguration {
@@ -33,25 +32,13 @@ class GlobalConfiguration {
     }
 
     var toaster: IToaster = object : IToaster {
-        init {
-            Toasty.Config.getInstance()
-                .allowQueue(false)
-                .apply()
+        override fun init(context: Context) {
+            ToastUtils.init(context as Application)
         }
 
         override fun show(style: ToastStyle, message: String?) {
             if (message.isNullOrEmpty()) return
-            val duration = if (message.length > 10) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
-            val context = Foundation.getAppContext()
-            when (style) {
-                ToastStyle.INFO -> Toasty.info(context, message, duration, true)
-                ToastStyle.SUCCESS -> Toasty.success(context, message, duration, true)
-                ToastStyle.WARNING -> Toasty.warning(context, message, duration, true)
-                ToastStyle.ERROR -> Toasty.error(context, message, duration, true)
-                else -> Toasty.normal(context, message, duration)
-            }.apply {
-                setGravity(Gravity.CENTER, 0, 0)
-            }
+            ToastUtils.show(message)
         }
     }
 
@@ -59,6 +46,10 @@ class GlobalConfiguration {
 
         override var globalTag: String = "HxLogger"
         override var isDebug: Boolean = true
+
+        override fun init(context: Context) {
+
+        }
 
         override fun print(level: Int, tag: String, message: String?) {
             if (!isDebug || message.isNullOrEmpty()) return
@@ -84,9 +75,15 @@ class GlobalConfiguration {
 
 
     companion object {
-        fun create(initializer: GlobalConfiguration.() -> Unit): GlobalConfiguration {
+        fun create(
+            context: Context,
+            initializer: GlobalConfiguration.() -> Unit
+        ): GlobalConfiguration {
             return GlobalConfiguration().apply {
                 initializer()
+
+                toaster.init(context)
+                logger.init(context)
             }
         }
     }

@@ -2,7 +2,7 @@ package com.pretty.module.wandroid
 
 import android.view.View
 import androidx.activity.viewModels
-import com.pretty.core.arch.container.launchFragmentInContainer
+import com.pretty.core.arch.launchFragmentInContainer
 import com.pretty.core.base.BaseDataBindActivity
 import com.pretty.core.base.BaseViewModel
 import com.pretty.core.ext.throttleClick

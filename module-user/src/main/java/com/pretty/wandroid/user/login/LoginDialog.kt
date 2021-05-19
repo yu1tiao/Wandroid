@@ -24,7 +24,7 @@ class LoginDialog(context: Context) : BaseDialog(context) {
             val lp = attributes
             lp.width = ScreenUtils.getScreenWidth() - 80.dp()
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-            lp.dimAmount = 0.2f
+            lp.dimAmount = 0f
             lp.gravity = Gravity.CENTER
 
             this.attributes = lp

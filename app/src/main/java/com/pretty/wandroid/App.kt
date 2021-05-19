@@ -22,7 +22,7 @@ class App : BaseApplication(), NetPolicyProvider {
         initRouter()
     }
 
-    override var mConfiguration = GlobalConfiguration.create {
+    override var mConfiguration = GlobalConfiguration.create(this) {
         netPolicyProvider = this@App
         okHttpConfigCallback = {
             it.connectTimeout(20, TimeUnit.SECONDS)

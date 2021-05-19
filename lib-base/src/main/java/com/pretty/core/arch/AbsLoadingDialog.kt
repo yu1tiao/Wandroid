@@ -3,6 +3,7 @@ package com.pretty.core.arch
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
+import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.pretty.core.widget.LoadingView
@@ -34,6 +35,11 @@ class DefaultLoadingDialog(context: Context, theme: Int) : AbsLoadingDialog(cont
             addView(loadingImage, FrameLayout.LayoutParams(60, 60))
         }.let {
             setContentView(it)
+
+            window!!.attributes.gravity = Gravity.CENTER
+            val lp = window!!.attributes
+            lp.dimAmount = 0f
+            window!!.attributes = lp
         }
     }
 

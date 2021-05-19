@@ -2,8 +2,8 @@ package com.pretty.core.binding
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import coil.load
-import coil.transform.CircleCropTransformation
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 
 /**
@@ -12,35 +12,35 @@ import coil.transform.CircleCropTransformation
  */
 @BindingAdapter(value = ["bind_url", "bind_place_holder", "bind_error"], requireAll = false)
 fun loadImage(imageView: ImageView, url: String?, placeHolder: Int?, error: Int?) {
-//    GlideApp.with(imageView.context)
-//        .load(url)
-//        .apply(RequestOptions().placeholder(placeHolder ?: 0).error(error ?: 0))
-//        .into(imageView)
-    imageView.load(url.orEmpty()) {
-        crossfade(true)
-        if (placeHolder != null) {
-            placeholder(placeHolder)
-        }
-        if (error != null) {
-            error(error)
-        }
-    }
+    Glide.with(imageView.context)
+        .load(url)
+        .apply(RequestOptions().placeholder(placeHolder ?: 0).error(error ?: 0))
+        .into(imageView)
+//    imageView.load(url.orEmpty()) {
+//        crossfade(true)
+//        if (placeHolder != null) {
+//            placeholder(placeHolder)
+//        }
+//        if (error != null) {
+//            error(error)
+//        }
+//    }
 }
 
 @BindingAdapter(value = ["bind_url_circle", "bind_place_holder", "bind_error"], requireAll = false)
 fun loadImageCircle(imageView: ImageView, url: String?, placeHolder: Int?, error: Int?) {
-//    GlideApp.with(imageView.context)
-//        .load(url)
-//        .apply(RequestOptions().placeholder(placeHolder ?: 0).error(error ?: 0).circleCrop())
-//        .into(imageView)
-    imageView.load(url.orEmpty()) {
-        crossfade(true)
-        if (placeHolder != null) {
-            placeholder(placeHolder)
-        }
-        if (error != null) {
-            error(error)
-        }
-        transformations(CircleCropTransformation())
-    }
+    Glide.with(imageView.context)
+        .load(url)
+        .apply(RequestOptions().placeholder(placeHolder ?: 0).error(error ?: 0).circleCrop())
+        .into(imageView)
+//    imageView.load(url.orEmpty()) {
+//        crossfade(true)
+//        if (placeHolder != null) {
+//            placeholder(placeHolder)
+//        }
+//        if (error != null) {
+//            error(error)
+//        }
+//        transformations(CircleCropTransformation())
+//    }
 }

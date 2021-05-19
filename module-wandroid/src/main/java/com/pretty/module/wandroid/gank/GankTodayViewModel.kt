@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.pretty.core.Foundation
 import com.pretty.core.base.BaseViewModel
+import com.pretty.core.config.toastErrorHandler
 import com.pretty.core.ext.handApiResult
-import com.pretty.core.ext.safeLaunch
 import com.pretty.module.wandroid.entity.BannerBean
 import com.pretty.module.wandroid.entity.GankCategoryBean
 import kotlinx.coroutines.launch
@@ -20,28 +20,32 @@ class GankTodayViewModel : BaseViewModel() {
     private val model by lazy { GankTodayModel() }
 
     fun getBanner() {
-        safeLaunch({ model.getBanner() }, {
-            ldBanner.value = it
-        }, {
-            Foundation.getGlobalConfig().errorHandler.invoke(it)
-            ldError.value = ""
-        })
+        viewModelScope.launch {
+            model.getBanner()
+                .onError {
+                    toastErrorHandler.invoke(it)
+                    ldError.value = ""
+                }
+                .onSuccess {
+                    ldBanner.value = it
+                }
+        }
     }
 
     fun getHot() {
         viewModelScope.launch {
             try {
-                val article = model.getHotData("views", "Article", 10)
-                val ganHuo = model.getHotData("views", "GanHuo", 10)
-
                 val list = mutableListOf<Any>()
 
+                val ganHuo = model.getHotData("views", "GanHuo", 10)
                 handApiResult(ganHuo, {
                     it?.run {
                         list.add("热门干货")
                         list.addAll(this)
                     }
                 })
+
+                val article = model.getHotData("views", "Article", 10)
                 handApiResult(article, {
                     it?.run {
                         list.add("热门文章")
@@ -51,21 +55,22 @@ class GankTodayViewModel : BaseViewModel() {
 
                 ldHot.value = list
             } catch (e: Exception) {
-                Foundation.getGlobalConfig().errorHandler.invoke(e)
+                toastErrorHandler.invoke(e)
                 ldError.value = ""
             }
         }
     }
 
     fun getCategory() {
-        safeLaunch({
+        viewModelScope.launch {
             model.getCategory()
-        }, {
-            ldCategory.value = it
-        }, {
-            Foundation.getGlobalConfig().errorHandler.invoke(it)
-            ldError.value = ""
-        })
+                .onSuccess {
+                    ldCategory.value = it
+                }.onError {
+                    toastErrorHandler(it)
+                    ldError.value = ""
+                }
+        }
     }
 
 }

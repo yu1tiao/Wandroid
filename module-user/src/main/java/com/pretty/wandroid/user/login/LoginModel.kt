@@ -2,9 +2,12 @@ package com.pretty.wandroid.user.login
 
 import com.pretty.core.base.BaseModel
 import com.pretty.core.ext.safeApi
-import com.pretty.core.http.*
+import com.pretty.core.ext.toFlow
+import com.pretty.core.http.ApiResult
+import com.pretty.core.http.RetrofitManager
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.wandroid.user.api.UserApi
+import kotlinx.coroutines.flow.Flow
 
 
 class LoginModel : BaseModel() {
@@ -15,6 +18,10 @@ class LoginModel : BaseModel() {
         return safeApi {
             api.login(username, password)
         }
+    }
+
+    suspend fun loginFlow(username: String, password: String): Flow<LoginEntity> {
+        return api.login(username, password).toFlow()
     }
 
 }

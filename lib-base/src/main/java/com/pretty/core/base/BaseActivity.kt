@@ -51,6 +51,14 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
         loadingManager.init(this, lifecycle, Foundation.getGlobalConfig().loadingFactory)
     }
 
+    fun showLoading(message: String? = null) {
+        loadingManager.showLoading(message)
+    }
+
+    fun hideLoading() {
+        loadingManager.dismissLoading()
+    }
+
     open fun subscribeLiveData() {
         subscribeLoading(mViewModel)
     }
@@ -59,8 +67,8 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
     protected open fun subscribeLoading(viewModel: BaseViewModel) {
         observe(viewModel.loading) {
             when (it) {
-                is LoadingState.Loading -> loadingManager.showLoading(it.message)
-                is LoadingState.Hide -> loadingManager.dismissLoading()
+                is LoadingState.Loading -> showLoading(it.message)
+                is LoadingState.Hide -> hideLoading()
             }
         }
     }

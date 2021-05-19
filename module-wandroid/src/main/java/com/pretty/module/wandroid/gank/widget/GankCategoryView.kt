@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.pretty.core.ext.dp
+import com.pretty.core.ext.load
 import com.pretty.module.wandroid.R
 import com.pretty.module.wandroid.entity.GankCategoryBean
 import me.yuu.liteadapter.core.LiteAdapter

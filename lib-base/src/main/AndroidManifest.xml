@@ -2,7 +2,7 @@
     package="com.pretty.core">
 
     <application>
-        <activity android:name=".arch.container.ContainerActivity" />
+        <activity android:name=".arch.ContainerActivity" />
     </application>
 
 </manifest>

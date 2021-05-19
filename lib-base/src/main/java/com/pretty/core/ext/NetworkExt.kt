@@ -1,18 +1,12 @@
 package com.pretty.core.ext
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.pretty.core.Foundation
-import com.pretty.core.base.BaseViewModel
 import com.pretty.core.http.ApiResult
 import com.pretty.core.http.Resp
 import com.pretty.core.http.check
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
 
 /**
  * @author mathew
@@ -28,75 +22,84 @@ suspend fun <T> safeApi(req: suspend () -> Resp<T>): ApiResult<T> {
     }
 }
 
-inline fun <reified T> CoroutineScope.safeLaunch(
-    noinline block: suspend () -> ApiResult<T>,
-    noinline success: (T?) -> Unit,
-    noinline failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler,
-): Job {
-    return launch {
-        runCatching {
-            block()
-        }.onSuccess {
-            handApiResult(it, success, failure)
-        }.onFailure {
-            failure(it)
-        }
+fun <T> Resp<T>.toFlow(): Flow<T> {
+    return flow {
+        val data = this@toFlow.check().data
+            ?: throw NullPointerException("flow 不允许发射空值，请用safeApi处理可空的请求")
+        emit(data)
     }
 }
 
-inline fun <reified T> CoroutineScope.safeFlow(
-    noinline block: suspend () -> ApiResult<T>,
-    noinline success: (T?) -> Unit,
-    noinline failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler,
-): Job {
-    return launch {
-        flow<ApiResult<T>> {
-            block()
-        }.catch {
-            failure(it)
-        }.collectLatest {
-            handApiResult(it, success, failure)
-        }
-    }
-}
-
-inline fun <reified T> BaseViewModel.safeLaunch(
-    noinline block: suspend () -> ApiResult<T>,
-    noinline success: (T?) -> Unit,
-    noinline failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler,
-    showLoading: Boolean = true
-): Job {
-    return viewModelScope.launch {
-        if (showLoading) showLoading()
-        runCatching {
-            block()
-        }.onSuccess {
-            handApiResult(it, success, failure)
-        }.onFailure {
-            failure(it)
-        }
-        if (showLoading) hideLoading()
-    }
-}
-
-inline fun <reified T> BaseViewModel.safeFlow(
-    noinline block: suspend () -> ApiResult<T>,
-    noinline success: (T?) -> Unit,
-    noinline failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler,
-    showLoading: Boolean = true
-): Job {
-    return viewModelScope.launch {
-        if (showLoading) showLoading()
-        flow<ApiResult<T>> {
-            block()
-        }.catch {
-            failure(it)
-        }.collectLatest {
-            handApiResult(it, success, failure)
-        }
-        if (showLoading) hideLoading()
-    }
-}
+//
+//inline fun <reified T> CoroutineScope.safeLaunch(
+//    noinline block: suspend () -> ApiResult<T>,
+//    noinline success: (T?) -> Unit,
+//    noinline failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler,
+//    noinline start: (() -> Unit)? = null,
+//    noinline end: (() -> Unit)? = null
+//): Job {
+//    return launch {
+//        start?.invoke()
+//        runCatching {
+//            block()
+//        }.onSuccess {
+//            handApiResult(it, success, failure)
+//        }.onFailure {
+//            failure(it)
+//        }
+//        end?.invoke()
+//    }
+//}
+//
+//inline fun <reified T> BaseViewModel.safeLaunch(
+//    noinline block: suspend () -> ApiResult<T>,
+//    noinline success: (T?) -> Unit,
+//    noinline failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler,
+//    showLoading: Boolean = true
+//): Job {
+//    return viewModelScope.safeLaunch(
+//        block, success, failure,
+//        start = {
+//            if (showLoading) showLoading()
+//        },
+//        end = {
+//            if (showLoading) hideLoading()
+//        })
+//}
+//
+//inline fun <reified T> CoroutineScope.safeFlow(
+//    noinline block: suspend () -> Flow<T>,
+//    noinline success: (T) -> Unit,
+//    noinline failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler,
+//    noinline start: (() -> Unit)? = null,
+//    noinline end: (() -> Unit)? = null
+//): Job {
+//    return launch {
+//        start?.invoke()
+//        block().catch {
+//            failure(it)
+//        }.collectLatest {
+//            success(it)
+//        }
+//        end?.invoke()
+//    }
+//}
+//
+//inline fun <reified T> BaseViewModel.safeFlow(
+//    noinline block: suspend () -> Flow<T>,
+//    noinline success: (T) -> Unit,
+//    noinline failure: (Throwable) -> Unit = Foundation.getGlobalConfig().errorHandler,
+//    showLoading: Boolean = true
+//): Job {
+//    return viewModelScope.safeFlow(
+//        block, success, failure,
+//        start = {
+//            if (showLoading) showLoading()
+//        },
+//        end = {
+//            if (showLoading) hideLoading()
+//        })
+//}
 
 inline fun <reified T> handApiResult(
     result: ApiResult<T>,

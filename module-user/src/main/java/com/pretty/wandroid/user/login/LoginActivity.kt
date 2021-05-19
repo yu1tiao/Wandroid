@@ -5,6 +5,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.BarUtils
 import com.pretty.core.base.BaseDataBindActivity
 import com.pretty.core.ext.observe
@@ -12,6 +13,8 @@ import com.pretty.core.ext.throttleClick
 import com.pretty.core.router.RC
 import com.pretty.wandroid.user.databinding.ALoginBinding
 import com.sankuai.waimai.router.annotation.RouterUri
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @RouterUri(path = [RC.WANDROID_LOGIN_ACTIVITY])
 class LoginActivity : BaseDataBindActivity<ALoginBinding, LoginViewModel>() {
@@ -27,6 +30,13 @@ class LoginActivity : BaseDataBindActivity<ALoginBinding, LoginViewModel>() {
 
         mBinding.btnLogin.throttleClick {
             showLoginDialog()
+        }
+        mBinding.btnRegister.throttleClick {
+            lifecycleScope.launch {
+                showLoading()
+                delay(2000)
+                hideLoading()
+            }
         }
     }
 

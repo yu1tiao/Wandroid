@@ -4,8 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.pretty.core.base.BaseViewModel
 import com.pretty.core.config.toastErrorHandler
-import com.pretty.core.ext.handApiResult
-import com.pretty.core.ext.safeLaunch
 import com.pretty.core.ext.showToast
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.core.router.service.LoginReceiver
@@ -37,14 +35,6 @@ class LoginViewModel : BaseViewModel() {
                 }
                 .onError(toastErrorHandler)
         }
-
-//        safeLaunch({
-//            model.login(username, password)
-//        }, {
-//            isLoginSuccess = true
-//            LoginReceiver.sendLoginSuccess(it!!)
-//            loginSuccess.postValue(it)
-//        })
     }
 
     override fun onCleared() {
