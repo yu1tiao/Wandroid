@@ -151,7 +151,8 @@ fun ViewPager2.setFragments(
  */
 fun ViewPager.setFragments(
     manager: FragmentManager,
-    fragments: MutableList<Fragment>
+    fragments: List<Fragment>,
+    titles: Array<String>? = null
 ): ViewPager {
     //设置适配器
     adapter = object : FragmentStatePagerAdapter(
@@ -162,6 +163,10 @@ fun ViewPager.setFragments(
 
         override fun getItem(position: Int): Fragment {
             return fragments[position]
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return if (titles == null) null else titles[position]
         }
 
         override fun saveState(): Parcelable? {

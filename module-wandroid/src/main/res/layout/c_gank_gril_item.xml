@@ -29,16 +29,6 @@
         app:layout_constraintTop_toBottomOf="@id/iv"
         tools:text="author" />
 
-    <com.like.LikeButton
-        android:id="@+id/lb_favorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon_size="18dp"
-        app:icon_type="heart"
-        app:layout_constraintBottom_toBottomOf="@id/tv_author"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_author" />
-
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"

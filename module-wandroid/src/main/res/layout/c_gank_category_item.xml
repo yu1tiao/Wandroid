@@ -10,6 +10,7 @@
         android:id="@+id/iv"
         android:layout_width="140dp"
         android:layout_height="80dp"
+        android:background="@color/gray200"
         android:scaleType="centerCrop"
         app:corner_radius="@dimen/m10" />
 

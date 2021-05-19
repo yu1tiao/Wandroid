@@ -8,8 +8,8 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.pretty.core.ext.dp
-import com.pretty.core.ext.load
 import com.pretty.core.widget.RadiusImageView
 import com.pretty.module.wandroid.R
 import com.pretty.module.wandroid.entity.BannerBean

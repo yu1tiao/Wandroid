@@ -81,9 +81,9 @@ dependencies {
     api httpDeps.retrofit_rxjava
 
     // image
-//    api imageDeps.coil
-    api imageDeps.glide
-    kapt imageDeps.glide_compiler
+    api imageDeps.coil
+//    api imageDeps.glide
+//    kapt imageDeps.glide_compiler
 
 //    api uiDeps.material_dialog
     api toolDeps.utilCode

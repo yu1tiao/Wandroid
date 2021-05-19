@@ -2,7 +2,7 @@ package com.pretty.module.wandroid.gank.adapter
 
 import android.content.Context
 import android.widget.ImageView
-import com.pretty.core.ext.load
+import coil.load
 import com.pretty.core.ext.safeCast
 import com.pretty.module.wandroid.R
 import com.pretty.module.wandroid.entity.GankBean
