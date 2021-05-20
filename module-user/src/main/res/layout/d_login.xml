@@ -90,7 +90,7 @@
 
         <com.pretty.core.widget.qmui.layout.QMUIButton
             android:id="@+id/btnLogin"
-            android:layout_width="160dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginTop="@dimen/m15"
             android:background="@drawable/selector_main_button"

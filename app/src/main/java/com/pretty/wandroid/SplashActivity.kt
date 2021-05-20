@@ -12,12 +12,13 @@ import com.sankuai.waimai.router.Router
 
 class SplashActivity : BaseDataBindActivity<ActivitySplashBinding, BaseViewModel>() {
 
+    private lateinit var anim: ObjectAnimator
     override val mLayoutId: Int = R.layout.activity_splash
 
     override val mViewModel: BaseViewModel by viewModels()
 
     override fun initPage(contentView: View) {
-        ObjectAnimator.ofFloat(mBinding.ivSplash, "alpha", 0.5f, 1f)
+        anim = ObjectAnimator.ofFloat(mBinding.ivSplash, "alpha", 0.5f, 1f)
             .apply {
                 duration = 1500
                 addListener(onEnd = {
@@ -25,6 +26,13 @@ class SplashActivity : BaseDataBindActivity<ActivitySplashBinding, BaseViewModel
                     finish()
                 })
             }
-            .start()
+        anim.start()
+    }
+
+    override fun onDestroy() {
+        if (this::anim.isInitialized) {
+            anim.cancel()
+        }
+        super.onDestroy()
     }
 }

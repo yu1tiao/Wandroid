@@ -20,8 +20,8 @@ class LoginModel : BaseModel() {
         }
     }
 
-    suspend fun loginFlow(username: String, password: String): Flow<LoginEntity> {
-        return api.login(username, password).toFlow()
+    suspend fun register(username: String, password: String): Flow<LoginEntity> {
+        return api.register(username, password, password).toFlow()
     }
 
 }

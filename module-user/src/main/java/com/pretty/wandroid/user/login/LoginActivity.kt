@@ -32,11 +32,8 @@ class LoginActivity : BaseDataBindActivity<ALoginBinding, LoginViewModel>() {
             showLoginDialog()
         }
         mBinding.btnRegister.throttleClick {
-            lifecycleScope.launch {
-                showLoading()
-                delay(2000)
-                hideLoading()
-            }
+            // 只是演示，懒得写了
+            mViewModel.register("yuli", "123456", "123456")
         }
     }
 

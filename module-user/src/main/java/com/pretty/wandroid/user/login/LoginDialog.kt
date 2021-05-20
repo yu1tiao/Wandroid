@@ -28,7 +28,7 @@ class LoginDialog(context: Context) : BaseDialog(context) {
             lp.gravity = Gravity.CENTER
 
             this.attributes = lp
-            setWindowAnimations(com.pretty.core.R.style.bottom_in_bottom_out)
+//            setWindowAnimations(com.pretty.core.R.style.bottom_in_bottom_out)
         }
 
         val btnLogin = findViewById<Button>(R.id.btnLogin)

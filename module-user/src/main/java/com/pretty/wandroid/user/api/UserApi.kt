@@ -21,6 +21,6 @@ interface UserApi {
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("repassword") repassword: String
-    ): Resp<Any>
+    ): Resp<LoginEntity>
 
 }

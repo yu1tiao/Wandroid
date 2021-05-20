@@ -8,6 +8,7 @@ import com.pretty.core.router.RC
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.core.router.service.AccountService
 import com.pretty.core.router.service.LoginReceiver
+import com.pretty.wandroid.user.login.UserStorage
 import com.sankuai.waimai.router.Router
 import com.sankuai.waimai.router.annotation.RouterService
 
@@ -15,11 +16,11 @@ import com.sankuai.waimai.router.annotation.RouterService
 class AccountServiceImpl : AccountService {
 
     override fun isLogin(): Boolean {
-        TODO()
+        return UserStorage.isLogin
     }
 
     override fun getLoginUser(): LoginEntity? {
-        TODO()
+        return UserStorage.getUser()
     }
 
     override fun runIfLogin(onNext: (LoginEntity) -> Unit) {

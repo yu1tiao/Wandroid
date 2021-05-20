@@ -8,7 +8,7 @@ import com.pretty.core.base.BaseViewModel
 import com.pretty.core.ext.throttleClick
 import com.pretty.core.router.RC
 import com.pretty.module.wandroid.databinding.AWandroidHomeBinding
-import com.pretty.module.wandroid.gank.GankHomeFragment
+import com.pretty.module.wandroid.home.HomeFragment
 import com.sankuai.waimai.router.Router
 import com.sankuai.waimai.router.annotation.RouterUri
 
@@ -30,7 +30,7 @@ class WandroidHomeActivity : BaseDataBindActivity<AWandroidHomeBinding, BaseView
             Router.startUri(this, RC.WANDROID_COLLECT_ACTIVITY)
         }
         mBinding.btnGank.throttleClick {
-            launchFragmentInContainer(GankHomeFragment::class.java)
+            launchFragmentInContainer(HomeFragment::class.java)
         }
     }
 
