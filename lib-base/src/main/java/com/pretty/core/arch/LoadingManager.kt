@@ -28,17 +28,15 @@ class LoadingManager : LifecycleObserver {
     }
 
     fun showLoading(message: String?) {
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            if (loadingDialog == null)
-                loadingDialog = dialogFactory.createDialog(
-                    context ?: throw NullPointerException("can not get context after destroy")
-                )
+        if (loadingDialog == null)
+            loadingDialog = dialogFactory.createDialog(
+                context ?: throw NullPointerException("can not get context after destroy")
+            )
 
-            if (loadingDialog?.isShowing == true && !message.isNullOrEmpty())
-                loadingDialog?.updateMessage(message)
-            else
-                loadingDialog?.show(message)
-        }
+        if (loadingDialog?.isShowing == true && !message.isNullOrEmpty())
+            loadingDialog?.updateMessage(message)
+        else
+            loadingDialog?.show(message)
     }
 
     fun dismissLoading() {

@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.pretty.core.base.BaseViewModel
 import com.pretty.core.config.toastErrorHandler
+import com.pretty.core.ext.ignoreError
 import com.pretty.core.ext.showToast
+import com.pretty.core.ext.toastError
 import com.pretty.core.router.entity.LoginEntity
 import com.pretty.core.router.service.LoginReceiver
 import kotlinx.coroutines.flow.catch
@@ -31,13 +33,12 @@ class LoginViewModel : BaseViewModel() {
         viewModelScope.launch {
             model.login(username, password)
                 .onSuccess {
-                    UserStorage.userJsonString = Gson().toJson(it!!)
+                    UserStorage.userJsonString = Gson().toJson(it)
                     UserStorage.isLogin = true
                     LoginReceiver.sendLoginSuccess(it)
                     loginSuccess.postValue(it)
                 }
-                .onError(toastErrorHandler)
-
+                .onFailure(toastErrorHandler)
         }
     }
 
@@ -57,7 +58,7 @@ class LoginViewModel : BaseViewModel() {
         viewModelScope.launch {
             showLoading()
             model.register(username, password)
-                .catch { toastErrorHandler(it) }
+                .toastError() // or ignoreError()
                 .collectLatest {
                     UserStorage.userJsonString = Gson().toJson(it)
                     UserStorage.isLogin = true
