@@ -29,9 +29,6 @@ class WandroidHomeActivity : BaseDataBindActivity<AWandroidHomeBinding, BaseView
         mBinding.btnCollect.throttleClick {
             Router.startUri(this, RC.WANDROID_COLLECT_ACTIVITY)
         }
-        mBinding.btnGank.throttleClick {
-            launchFragmentInContainer(HomeFragment::class.java)
-        }
     }
 
 }

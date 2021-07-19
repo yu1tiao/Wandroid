@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.ActivityCompat
-import com.pretty.core.util.sp.getSp
 
 abstract class AbsPermissionRequest(internal val requestCode: Int) {
 
@@ -13,7 +12,7 @@ abstract class AbsPermissionRequest(internal val requestCode: Int) {
     private var grantedCallback: (() -> Unit)? = null
     private var deniedCallback: ((List<String>) -> Unit)? = null
     private var permissions: Array<out String>? = null
-    private val sp by lazy { getSp("permission") }
+    private val sp by lazy { PermissionSp() }
 
     fun permissions(vararg permission: String): AbsPermissionRequest {
         this.permissions = permission
@@ -115,18 +114,17 @@ abstract class AbsPermissionRequest(internal val requestCode: Int) {
                 }
             }
 
-
             if (firstRequestCallback != null) {
                 // 如果某权限是第一次申请，回调第一次申请的callback
                 val firstRequest = permissions!!.filter {
-                    isFirstRequest(it)
+                    sp.isFirstRequest(it)
                 }
                 if (firstRequest.isEmpty()) {
                     runnable.run()
                 } else {
                     firstRequestCallback?.invoke(firstRequest, runnable)
                     firstRequest.forEach {
-                        saveFirstRequest(it)
+                        sp.saveFirstRequest(it)
                     }
                 }
             } else {
@@ -135,13 +133,5 @@ abstract class AbsPermissionRequest(internal val requestCode: Int) {
         } else {
             callGranted()
         }
-    }
-
-    private fun isFirstRequest(permission: String): Boolean {
-        return sp.getBoolean(permission, true)
-    }
-
-    private fun saveFirstRequest(permission: String) {
-        sp.edit().putBoolean(permission, false).apply()
     }
 }

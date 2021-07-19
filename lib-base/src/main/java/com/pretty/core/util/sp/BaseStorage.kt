@@ -19,16 +19,15 @@ abstract class BaseStorage(private val prefName: String) {
 
     // 腾讯MMKV实现了SharedPreferences，效率更高、支持多进程且没有sp的线程ANR问题
     // 如果有问题，只需修改一句代码就可以快速切回原生
-    private val prefs by lazy {
-        getSp(prefName)
+    val prefs by lazy {
+        initSp(prefName)
     }
 
     protected fun <T> sp(defaultValue: T, key: String? = null): SpDelegate<T> {
         return SpDelegate(key = key, defValue = defaultValue, prefs = prefs)
     }
 
-}
-
-fun getSp(prefName: String): SharedPreferences {
-    return MMKV.mmkvWithID(prefName)!!
+    open fun initSp(prefName: String): SharedPreferences {
+        return MMKV.mmkvWithID(prefName)!!
+    }
 }

@@ -2,53 +2,28 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.pretty.core.widget.qmui.layout.QMUIButton
+        <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/m15"
             android:background="#f34567"
             android:gravity="center"
-            android:padding="@dimen/m8"
             android:text="登录页面"
-            android:textColor="@color/white"
-            app:qmui_radius="@dimen/m10"
-            app:qmui_shadowColor="@color/gray500"
-            app:qmui_shadowElevation="8dp" />
+            android:textColor="@color/white" />
 
-        <com.pretty.core.widget.qmui.layout.QMUIButton
+        <Button
             android:id="@+id/btn_collect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/m15"
+            android:layout_marginTop="@dimen/m1"
             android:background="#f34567"
-            android:gravity="center"
-            android:padding="@dimen/m8"
             android:text="通过登录拦截器跳转收藏页面"
-            android:textColor="@color/white"
-            app:qmui_radius="@dimen/m10"
-            app:qmui_shadowColor="@color/gray500"
-            app:qmui_shadowElevation="8dp" />
-
-        <com.pretty.core.widget.qmui.layout.QMUIButton
-            android:id="@+id/btn_gank"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/m15"
-            android:background="#f34567"
-            android:gravity="center"
-            android:padding="@dimen/m8"
-            android:text="干货集中营"
-            android:textColor="@color/white"
-            app:qmui_radius="@dimen/m10"
-            app:qmui_shadowColor="@color/gray500"
-            app:qmui_shadowElevation="8dp" />
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </layout>
