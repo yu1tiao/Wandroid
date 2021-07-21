@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.pretty.core.Foundation
-import com.pretty.core.arch.*
+import com.pretty.core.arch.LoadingManager
+import com.pretty.core.arch.LoadingState
 import com.pretty.core.ext.observe
 
 /**
@@ -16,10 +17,8 @@ import com.pretty.core.ext.observe
  */
 abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
 
-    protected abstract val mLayoutId: Int
     protected abstract val mViewModel: VM
     private val loadingManager by lazy { LoadingManager() }
-    private var subscribed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,26 +44,17 @@ abstract class BaseFragment<VM : BaseViewModel> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflateView(inflater, container)
+        val root = prepareContentView(inflater, container)
         loadingManager.init(
             requireActivity(),
             lifecycle,
             Foundation.getGlobalConfig().loadingFactory
         )
-        if (!subscribed) {
-            subscribeLiveData()
-            subscribed = true
-        }
+        subscribeLoading(mViewModel)
         return root
     }
 
-    protected open fun inflateView(inflater: LayoutInflater, container: ViewGroup?): View {
-        return inflater.inflate(mLayoutId, container, false)
-    }
-
-    open fun subscribeLiveData() {
-        subscribeLoading(mViewModel)
-    }
+    abstract fun prepareContentView(inflater: LayoutInflater, container: ViewGroup?): View
 
     protected open fun subscribeLoading(viewModel: BaseViewModel) {
         observe(viewModel.loading) {

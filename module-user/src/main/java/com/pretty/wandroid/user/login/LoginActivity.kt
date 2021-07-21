@@ -3,9 +3,7 @@ package com.pretty.wandroid.user.login
 import android.animation.Animator
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.BarUtils
 import com.pretty.core.base.BaseDataBindActivity
 import com.pretty.core.ext.observe
@@ -13,18 +11,19 @@ import com.pretty.core.ext.throttleClick
 import com.pretty.core.router.RC
 import com.pretty.wandroid.user.databinding.ALoginBinding
 import com.sankuai.waimai.router.annotation.RouterUri
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @RouterUri(path = [RC.WANDROID_LOGIN_ACTIVITY])
 class LoginActivity : BaseDataBindActivity<ALoginBinding, LoginViewModel>() {
 
     private lateinit var animatorSet: AnimatorSet
     private lateinit var loginDialog: LoginDialog
-    override val mLayoutId: Int = com.pretty.wandroid.user.R.layout.a_login
     override val mViewModel: LoginViewModel by viewModels()
 
-    override fun initPage(contentView: View) {
+    override fun initBinding(): ALoginBinding {
+        return ALoginBinding.inflate(layoutInflater)
+    }
+
+    override fun initView() {
         BarUtils.transparentStatusBar(this)
         startAnimation()
 
@@ -35,6 +34,16 @@ class LoginActivity : BaseDataBindActivity<ALoginBinding, LoginViewModel>() {
             // 只是演示，懒得写了
             mViewModel.register("yuli", "123456", "123456")
         }
+    }
+
+    override fun initObserver() {
+        observe(mViewModel.loginSuccess) {
+            loginDialog.dismiss()
+            finish()
+        }
+    }
+
+    override fun initData() {
     }
 
     private fun showLoginDialog() {
@@ -104,13 +113,5 @@ class LoginActivity : BaseDataBindActivity<ALoginBinding, LoginViewModel>() {
     override fun onDestroy() {
         animatorSet.cancel()
         super.onDestroy()
-    }
-
-    override fun subscribeLiveData() {
-        super.subscribeLiveData()
-        observe(mViewModel.loginSuccess) {
-            loginDialog.dismiss()
-            finish()
-        }
     }
 }

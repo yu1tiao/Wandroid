@@ -26,7 +26,7 @@
             android:src="@mipmap/user_login_bg4" />
 
 
-        <com.pretty.core.widget.qmui.layout.QMUIButton
+        <Button
             android:id="@+id/btn_login"
             android:layout_width="100dp"
             android:layout_height="36dp"
@@ -39,10 +39,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_register"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:qmui_radius="@dimen/m20" />
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <com.pretty.core.widget.qmui.layout.QMUIButton
+        <Button
             android:id="@+id/btn_register"
             android:layout_width="100dp"
             android:layout_height="36dp"
@@ -54,8 +53,7 @@
             android:textSize="@dimen/f6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_login"
-            app:qmui_radius="@dimen/m20" />
+            app:layout_constraintStart_toEndOf="@id/btn_login" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,16 +6,12 @@
 
     </data>
 
-    <com.pretty.core.widget.qmui.layout.QMUIConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="@dimen/m15"
-        app:qmui_radius="@dimen/m15"
-        app:qmui_shadowAlpha="0.3"
-        app:qmui_shadowColor="@color/gray500"
-        app:qmui_shadowElevation="@dimen/m5">
+        android:padding="@dimen/m15">
 
         <ImageView
             android:id="@+id/imageHeader"
@@ -88,7 +84,7 @@
                 android:textSize="@dimen/f4" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.pretty.core.widget.qmui.layout.QMUIButton
+        <Button
             android:id="@+id/btnLogin"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -101,9 +97,8 @@
             android:textSize="@dimen/f6"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tilPassWord"
-            app:qmui_radius="22dp" />
+            app:layout_constraintTop_toBottomOf="@+id/tilPassWord" />
 
-    </com.pretty.core.widget.qmui.layout.QMUIConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

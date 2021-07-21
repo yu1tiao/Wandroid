@@ -3,9 +3,7 @@ package com.pretty.core.base
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.pretty.core.arch.ILoadable
 
 
 /**
@@ -18,9 +16,11 @@ abstract class BaseDataBindFragment<B : ViewDataBinding, VM : BaseViewModel>
 
     protected lateinit var mBinding: B
 
-    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): View {
-        mBinding = DataBindingUtil.inflate<B>(inflater, mLayoutId, container, false)
-            .apply { lifecycleOwner = this@BaseDataBindFragment }
+    override fun prepareContentView(inflater: LayoutInflater, container: ViewGroup?): View {
+        mBinding = initBinding(inflater, container)
+        mBinding.lifecycleOwner = this
         return mBinding.root
     }
+
+    abstract fun initBinding(inflater: LayoutInflater, container: ViewGroup?): B
 }

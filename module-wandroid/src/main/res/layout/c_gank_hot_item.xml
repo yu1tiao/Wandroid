@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.pretty.core.widget.qmui.layout.QMUIConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,11 +9,7 @@
     android:layout_marginEnd="@dimen/m10"
     android:layout_marginBottom="@dimen/m5"
     android:background="@color/white"
-    android:padding="@dimen/m10"
-    app:qmui_radius="@dimen/m10"
-    app:qmui_shadowAlpha=".3"
-    app:qmui_shadowColor="@color/gray500"
-    app:qmui_shadowElevation="@dimen/m5">
+    android:padding="@dimen/m10">
 
     <com.pretty.core.widget.RadiusImageView
         android:id="@+id/iv"
@@ -64,5 +60,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv"
         tools:text="Android" />
-
-</com.pretty.core.widget.qmui.layout.QMUIConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

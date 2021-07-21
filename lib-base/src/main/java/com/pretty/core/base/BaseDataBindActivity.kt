@@ -1,7 +1,6 @@
 package com.pretty.core.base
 
 import android.view.View
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 
@@ -15,9 +14,11 @@ abstract class BaseDataBindActivity<B : ViewDataBinding, VM : BaseViewModel> : B
     protected lateinit var mBinding: B
 
     override fun prepareContentView(): View {
-        mBinding = DataBindingUtil.setContentView(this, mLayoutId)
+        mBinding = initBinding()
         mBinding.lifecycleOwner = this
         return mBinding.root
     }
+
+    abstract fun initBinding(): B
 
 }
