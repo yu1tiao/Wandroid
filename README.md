@@ -5,7 +5,6 @@
 ## 提供的一些功能组件
 * CommonPage 封装了空页面、错误页面、和加载中页面，提供全局的默认配置，也可以在具体页面进行自定义配置，并且在activity和fragment中懒加载，不使用则不注入。
 * [XBus](https://github.com/yu1tiao/EventBus) 采用编译时注解技术实现的轻量级消息总线，使用方式和EventBus一致，但是效率更高
-* [LiteAdapter](https://github.com/yu1tiao/LiteAdapter) 非常好用的adapter
 * PermissionManager
 * DataBinding 可选，集成BaseDataBindActivity或者BaseDataBindFragment
 * RxJava 可选，默认使用Retrofit+协程请求数据，加载lib-base-rx即可切换到rxjava

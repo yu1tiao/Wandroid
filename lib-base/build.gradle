@@ -87,7 +87,6 @@ dependencies {
 
 //    api uiDeps.material_dialog
     api toolDeps.utilCode
-    api toolDeps.liteAdapter
     api toolDeps.mmkv
     api toolDeps.timber
     api toolDeps.toast
